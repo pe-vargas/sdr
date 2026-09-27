@@ -93,12 +93,15 @@ details:not([open]) summary.field-title::after{content:"[ + ]";}
 .attr-sum.ok{color:#33691e; font-weight:700;}
 
 .skills{border:1px solid var(--rule);}
-.skill-row{display:grid; grid-template-columns:22px 1fr 34px 44px; align-items:center; gap:8px; padding:5px 10px; border-bottom:1px solid var(--rule); font-size:12.5px;}
+.skill-row{display:grid; grid-template-columns:22px 1fr 34px 44px; align-items:center; gap:8px; padding:7px 10px; border-bottom:1px solid var(--rule); font-size:12.5px;}
 .skill-row:last-child{border-bottom:none;}
 .skill-row input[type=checkbox]{appearance:none; width:13px; height:13px; border:1.5px solid var(--ink); background:var(--field-bg); cursor:pointer;}
 .skill-row input[type=checkbox]:checked{background:var(--stamp-red); border-color:var(--stamp-red);}
 .skill-row .satr{font-size:9px; color:var(--stamp-purple); font-weight:700;}
 .skill-row input[type=text]{width:100%; text-align:center; border:none; border-bottom:1px solid var(--rule); background:transparent; font-family:'IBM Plex Mono',monospace; font-size:12px;}
+.sname-wrap{display:flex; flex-direction:column; gap:1px; line-height:1.25;}
+.sname-wrap .sname{font-size:12.5px;}
+.sname-wrap .sdesc{font-size:9.5px; color:#5a5140; font-style:italic;}
 
 .meter{background:var(--field-bg); border:1px solid var(--rule); padding:10px 12px;}
 .meter .lbl{font-size:9px; letter-spacing:1px; text-transform:uppercase; color:var(--stamp-purple); font-weight:700; display:flex; justify-content:space-between;}
@@ -263,20 +266,20 @@ table.equip input{border:none; background:transparent; font-family:'IBM Plex Mon
     <details class="field" id="c04" open>
       <summary class="field-title"><span class="field-num">04</span> Perícias</summary>
       <div class="skills">
-        <div class="skill-row" data-attr="FOR" data-physical="1"><input type="checkbox"><span>Vigor</span><span class="satr">FOR</span><input type="text" class="skill-bonus" readonly></div>
-        <div class="skill-row" data-attr="DES" data-physical="1"><input type="checkbox"><span>Furtividade</span><span class="satr">DES</span><input type="text" class="skill-bonus" readonly></div>
-        <div class="skill-row" data-attr="DES" data-physical="1"><input type="checkbox"><span>Equilíbrio</span><span class="satr">DES</span><input type="text" class="skill-bonus" readonly></div>
-        <div class="skill-row" data-attr="DES" data-physical="1"><input type="checkbox"><span>Roubo</span><span class="satr">DES</span><input type="text" class="skill-bonus" readonly></div>
-        <div class="skill-row" data-attr="INT"><input type="checkbox"><span>Faro</span><span class="satr">INT</span><input type="text" class="skill-bonus" readonly></div>
-        <div class="skill-row" data-attr="INT"><input type="checkbox" checked><span>Manha de Rua</span><span class="satr">INT</span><input type="text" class="skill-bonus" readonly></div>
-        <div class="skill-row" data-attr="INT"><input type="checkbox"><span>Mecânica</span><span class="satr">INT</span><input type="text" class="skill-bonus" readonly></div>
-        <div class="skill-row" data-attr="SAB"><input type="checkbox"><span>Alerta</span><span class="satr">SAB</span><input type="text" class="skill-bonus" readonly></div>
-        <div class="skill-row" data-attr="SAB"><input type="checkbox"><span>Leitura</span><span class="satr">SAB</span><input type="text" class="skill-bonus" readonly></div>
-        <div class="skill-row" data-attr="SAB"><input type="checkbox"><span>Resistência</span><span class="satr">SAB</span><input type="text" class="skill-bonus" readonly></div>
-        <div class="skill-row" data-attr="CAR"><input type="checkbox"><span>Lábia</span><span class="satr">CAR</span><input type="text" class="skill-bonus" readonly></div>
-        <div class="skill-row" data-attr="CAR"><input type="checkbox"><span>Ameaça</span><span class="satr">CAR</span><input type="text" class="skill-bonus" readonly></div>
-        <div class="skill-row" data-attr="CAR"><input type="checkbox"><span>Disfarce</span><span class="satr">CAR</span><input type="text" class="skill-bonus" readonly></div>
-        <div class="skill-row" data-attr="CAR"><input type="checkbox"><span>Presença</span><span class="satr">CAR</span><input type="text" class="skill-bonus" readonly></div>
+        <div class="skill-row" data-attr="FOR" data-physical="1"><input type="checkbox"><span class="sname-wrap"><span class="sname">Vigor</span><span class="sdesc">Força física, correr, escalar, arrombar</span></span><span class="satr">FOR</span><input type="text" class="skill-bonus" readonly></div>
+        <div class="skill-row" data-attr="DES" data-physical="1"><input type="checkbox"><span class="sname-wrap"><span class="sname">Furtividade</span><span class="sdesc">Se esconder, seguir sem ser visto</span></span><span class="satr">DES</span><input type="text" class="skill-bonus" readonly></div>
+        <div class="skill-row" data-attr="DES" data-physical="1"><input type="checkbox"><span class="sname-wrap"><span class="sname">Equilíbrio</span><span class="sdesc">Cair de pé, se manter firme no caos</span></span><span class="satr">DES</span><input type="text" class="skill-bonus" readonly></div>
+        <div class="skill-row" data-attr="DES" data-physical="1"><input type="checkbox"><span class="sname-wrap"><span class="sname">Roubo</span><span class="sdesc">Mãos rápidas, destravar, bater carteira</span></span><span class="satr">DES</span><input type="text" class="skill-bonus" readonly></div>
+        <div class="skill-row" data-attr="INT"><input type="checkbox"><span class="sname-wrap"><span class="sname">Faro</span><span class="sdesc">Juntar pista, dedução</span></span><span class="satr">INT</span><input type="text" class="skill-bonus" readonly></div>
+        <div class="skill-row" data-attr="INT"><input type="checkbox" checked><span class="sname-wrap"><span class="sname">Manha de Rua</span><span class="sdesc">Código do submundo, território, gíria</span></span><span class="satr">INT</span><input type="text" class="skill-bonus" readonly></div>
+        <div class="skill-row" data-attr="INT"><input type="checkbox"><span class="sname-wrap"><span class="sname">Mecânica</span><span class="sdesc">Consertar, montar, forjar documento</span></span><span class="satr">INT</span><input type="text" class="skill-bonus" readonly></div>
+        <div class="skill-row" data-attr="SAB"><input type="checkbox"><span class="sname-wrap"><span class="sname">Alerta</span><span class="sdesc">Notar perigo, reagir rápido</span></span><span class="satr">SAB</span><input type="text" class="skill-bonus" readonly></div>
+        <div class="skill-row" data-attr="SAB"><input type="checkbox"><span class="sname-wrap"><span class="sname">Leitura</span><span class="sdesc">Perceber mentira, ler intenção</span></span><span class="satr">SAB</span><input type="text" class="skill-bonus" readonly></div>
+        <div class="skill-row" data-attr="SAB"><input type="checkbox"><span class="sname-wrap"><span class="sname">Resistência</span><span class="sdesc">Aguentar dor, pressão psicológica</span></span><span class="satr">SAB</span><input type="text" class="skill-bonus" readonly></div>
+        <div class="skill-row" data-attr="CAR"><input type="checkbox"><span class="sname-wrap"><span class="sname">Lábia</span><span class="sdesc">Convencer sem ameaçar</span></span><span class="satr">CAR</span><input type="text" class="skill-bonus" readonly></div>
+        <div class="skill-row" data-attr="CAR"><input type="checkbox"><span class="sname-wrap"><span class="sname">Ameaça</span><span class="sdesc">Convencer com medo</span></span><span class="satr">CAR</span><input type="text" class="skill-bonus" readonly></div>
+        <div class="skill-row" data-attr="CAR"><input type="checkbox"><span class="sname-wrap"><span class="sname">Disfarce</span><span class="sdesc">Mentir, blefar, se passar por outra pessoa</span></span><span class="satr">CAR</span><input type="text" class="skill-bonus" readonly></div>
+        <div class="skill-row" data-attr="CAR"><input type="checkbox"><span class="sname-wrap"><span class="sname">Presença</span><span class="sdesc">Magnetismo, dominar uma cena</span></span><span class="satr">CAR</span><input type="text" class="skill-bonus" readonly></div>
       </div>
       <div class="attr-sum" id="woundPenaltyLabel"></div>
     </details>
@@ -372,7 +375,7 @@ let hpUsed = 0;
 function currentHPMax(){
   const conMod = attrMod(document.querySelector('.attr-box[data-attr="CON"] .attr-score').value) ?? 0;
   const forMod = attrMod(document.querySelector('.attr-box[data-attr="FOR"] .attr-score').value) ?? 0;
-  const vigorRow = [...document.querySelectorAll('.skill-row')].find(r=> r.querySelector('span:not(.satr)').textContent === 'Vigor');
+  const vigorRow = [...document.querySelectorAll('.skill-row')].find(r=> r.querySelector('.sname').textContent.trim() === 'Vigor');
   const trained = vigorRow ? vigorRow.querySelector('input[type=checkbox]').checked : false;
   const calibre = parseInt(document.getElementById('profBonus').value,10) || 0;
   const vigorBonus = forMod + (trained ? calibre : 0);
@@ -420,13 +423,13 @@ const ORIGIN_DATA = {
 let lastOriginSkillChecked = null;
 function applyOriginSkill(value){
   if(lastOriginSkillChecked){
-    const prevRow = [...document.querySelectorAll('.skill-row')].find(r=> r.querySelector('span:not(.satr)').textContent === lastOriginSkillChecked);
+    const prevRow = [...document.querySelectorAll('.skill-row')].find(r=> r.querySelector('.sname').textContent.trim() === lastOriginSkillChecked);
     if(prevRow) prevRow.querySelector('input[type=checkbox]').dataset.fromOrigin = '';
   }
   const data = ORIGIN_DATA[value];
   document.getElementById('originEffectLabel').textContent = data ? data.text : '';
   if(data){
-    const row = [...document.querySelectorAll('.skill-row')].find(r=> r.querySelector('span:not(.satr)').textContent === data.skill);
+    const row = [...document.querySelectorAll('.skill-row')].find(r=> r.querySelector('.sname').textContent.trim() === data.skill);
     if(row){
       const cb = row.querySelector('input[type=checkbox]');
       cb.checked = true;
