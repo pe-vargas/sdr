@@ -2,1404 +2,308 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ashgate — Uma História da Cidade</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Libre+Baskerville:wght@400;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
-
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap');
 
-/* =========================================================
-   ASHGATE — ARQUIVO HISTÓRICO
-   ========================================================= */
-
-:root {
-    --paper: #eee5cf;
-    --paper-light: #f5eedc;
-    --paper-dark: #d9ccb0;
-
-    --ink: #292219;
-    --ink-soft: #4b4131;
-    --muted: #756951;
-
-    --brown: #70452d;
-    --brown-dark: #43291d;
-    --gold: #a38b5c;
-
-    --line: rgba(92, 70, 39, .38);
-
-    --outside: #110e0a;
-    --outside-light: #1d1710;
-
-    --page-width: 820px;
-
-    --serif: "Cormorant Garamond", Georgia, serif;
-    --display: "Playfair Display", Georgia, serif;
-    --body: "Libre Baskerville", Georgia, serif;
+:root{
+  --page:#f3ead4;
+  --page-shadow:#d9cba3;
+  --ink:#2b2318;
+  --rule:#a9976b;
+  --accent:#7a4a2b;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:#1b160f;
+  font-family:'EB Garamond', serif;
+  color:var(--ink);
+  padding:40px 16px 100px;
+}
+.book{
+  max-width:720px;
+  margin:0 auto;
+  background:var(--page);
+  box-shadow:0 40px 90px rgba(0,0,0,0.6), inset 0 0 60px rgba(0,0,0,0.04);
+  border:1px solid var(--page-shadow);
 }
 
-
-/* =========================================================
-   RESET
-   ========================================================= */
-
-* {
-    box-sizing: border-box;
+/* ---------- title page ---------- */
+.titlepage{
+  min-height:78vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:60px 40px;
+  border-bottom:double 6px var(--rule);
+}
+.titlepage .kicker{
+  font-size:13px;
+  letter-spacing:5px;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:22px;
+}
+.titlepage h1{
+  font-family:'Playfair Display', serif;
+  font-weight:700;
+  font-size:64px;
+  letter-spacing:2px;
+  margin:0 0 14px;
+}
+.titlepage .subtitle{
+  font-style:italic;
+  font-size:20px;
+  color:#4a3d28;
+  margin-bottom:40px;
+}
+.titlepage .ornament{
+  width:120px; height:1px; background:var(--rule); margin:24px 0;
+  position:relative;
+}
+.titlepage .ornament::before{
+  content:"❧"; position:absolute; top:-11px; left:50%; transform:translateX(-50%);
+  color:var(--accent); font-size:18px; background:var(--page); padding:0 10px;
+}
+.titlepage .imprint{
+  font-size:12.5px; color:#6b5d40; letter-spacing:0.5px; margin-top:30px; line-height:1.8;
 }
 
-html {
-    scroll-behavior: smooth;
+/* ---------- table of contents ---------- */
+.toc{padding:50px 50px 40px; border-bottom:1px solid var(--rule);}
+.toc h2{
+  font-family:'Playfair Display', serif; font-size:15px; letter-spacing:4px; text-transform:uppercase;
+  text-align:center; margin:0 0 30px; color:var(--accent);
+}
+.toc ol{list-style:none; margin:0; padding:0; counter-reset:chap;}
+.toc li{
+  counter-increment:chap;
+  display:flex; align-items:baseline; gap:6px;
+  font-size:15px; margin-bottom:12px;
+}
+.toc li a{
+  color:var(--ink); text-decoration:none; display:flex; align-items:baseline; gap:6px; width:100%;
+}
+.toc li .roman{
+  font-variant:small-caps; color:var(--accent); font-weight:600; min-width:26px;
+}
+.toc li .dots{flex:1; border-bottom:1px dotted var(--rule); position:relative; top:-4px; margin:0 4px;}
+.toc li .years{font-size:12.5px; color:#6b5d40; font-style:italic;}
+
+/* ---------- chapters ---------- */
+.chapter{padding:48px 50px 10px; border-bottom:1px solid var(--rule);}
+.chapter:last-of-type{border-bottom:none;}
+.chapter-label{
+  text-align:center; font-family:'Playfair Display',serif; font-size:13px; letter-spacing:5px;
+  text-transform:uppercase; color:var(--accent); margin-bottom:6px;
+}
+.chapter h2{
+  font-family:'Playfair Display', serif; font-weight:700; font-size:26px; text-align:center;
+  margin:0 0 6px; letter-spacing:0.5px;
+}
+.chapter .years{
+  display:block; text-align:center; font-style:italic; font-size:14px; color:#6b5d40; margin-bottom:30px;
+}
+.chapter .ornament-small{
+  text-align:center; color:var(--accent); font-size:15px; margin-bottom:26px;
+}
+.chapter p{
+  font-size:17px; line-height:1.85; margin:0 0 20px; text-align:justify; hyphens:auto;
+}
+.chapter p.first::first-letter{
+  font-family:'Playfair Display', serif;
+  font-weight:700;
+  font-size:64px;
+  float:left;
+  line-height:0.8;
+  padding:8px 8px 0 0;
+  color:var(--accent);
 }
 
-body {
-    margin: 0;
-    padding: 55px 20px 120px;
-
-    color: var(--ink);
-
-    background:
-        radial-gradient(
-            ellipse at center,
-            #282016 0%,
-            var(--outside) 65%
-        );
-
-    font-family: var(--body);
+.closing{
+  padding:40px 50px 60px; text-align:center;
+}
+.closing p{
+  font-size:14px; font-style:italic; color:#5a4c33; line-height:1.7; max-width:480px; margin:0 auto;
+}
+.closing .ornament{
+  width:120px; height:1px; background:var(--rule); margin:0 auto 24px; position:relative;
+}
+.closing .ornament::before{
+  content:"❧"; position:absolute; top:-11px; left:50%; transform:translateX(-50%);
+  color:var(--accent); font-size:18px; background:var(--page); padding:0 10px;
 }
 
-
-/* =========================================================
-   LIVRO
-   ========================================================= */
-
-.book {
-    position: relative;
-
-    width: 100%;
-    max-width: var(--page-width);
-    margin: 0 auto;
-
-    overflow: hidden;
-
-    background:
-        linear-gradient(
-            90deg,
-            rgba(70, 45, 20, .045),
-            transparent 4%,
-            transparent 96%,
-            rgba(70, 45, 20, .055)
-        ),
-        var(--paper);
-
-    border: 1px solid rgba(126, 101, 61, .65);
-
-    box-shadow:
-        0 60px 120px rgba(0,0,0,.75),
-        0 15px 35px rgba(0,0,0,.45),
-        inset 0 0 100px rgba(72,48,20,.08);
+@media (max-width:640px){
+  .titlepage h1{font-size:42px;}
+  .toc, .chapter, .closing{padding-left:24px; padding-right:24px;}
+  .chapter p{font-size:16px;}
+}
+@media print{
+  body{background:#fff; padding:0;}
+  .book{box-shadow:none; border:none;}
+  .back-link{display:none;}
 }
 
-
-/* textura extremamente sutil do papel */
-
-.book::before {
-    content: "";
-
-    position: absolute;
-    inset: 0;
-
-    pointer-events: none;
-
-    opacity: .20;
-
-    background-image:
-        radial-gradient(
-            rgba(50, 35, 20, .16) .6px,
-            transparent .7px
-        );
-
-    background-size: 5px 5px;
-
-    mix-blend-mode: multiply;
+.back-link{
+  position:fixed;
+  top:18px;
+  left:18px;
+  font-family:'EB Garamond', serif;
+  font-size:14px;
+  letter-spacing:0.5px;
+  color:var(--page);
+  background:var(--accent);
+  text-decoration:none;
+  padding:8px 16px;
+  border-radius:2px;
+  box-shadow:0 4px 14px rgba(0,0,0,0.4);
+  z-index:10;
 }
-
-
-/* =========================================================
-   CAPA / PÁGINA DE TÍTULO
-   ========================================================= */
-
-.titlepage {
-    position: relative;
-
-    min-height: 820px;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    padding: 80px 55px;
-
-    text-align: center;
-
-    border-bottom: 3px double var(--gold);
+.back-link:hover{opacity:0.88;}
+@media (max-width:640px){
+  .back-link{top:10px; left:10px; font-size:12px; padding:7px 12px;}
 }
-
-
-/* moldura interna */
-
-.titlepage::before {
-    content: "";
-
-    position: absolute;
-
-    inset: 24px;
-
-    border: 1px solid rgba(112, 69, 45, .30);
-
-    pointer-events: none;
-}
-
-
-/* pequenos cantos decorativos */
-
-.titlepage::after {
-    content: "◆";
-
-    position: absolute;
-
-    top: 17px;
-    left: 50%;
-
-    transform: translateX(-50%);
-
-    padding: 0 15px;
-
-    color: var(--brown);
-    background: var(--paper);
-
-    font-size: 12px;
-}
-
-
-.kicker {
-    margin-bottom: 25px;
-
-    color: var(--brown);
-
-    font-family: var(--body);
-    font-size: 11px;
-    font-weight: 700;
-
-    letter-spacing: 6px;
-    text-transform: uppercase;
-}
-
-
-.titlepage h1 {
-    margin: 0;
-
-    color: var(--brown-dark);
-
-    font-family: var(--display);
-    font-size: clamp(55px, 11vw, 94px);
-    font-weight: 800;
-
-    letter-spacing: 8px;
-    line-height: .95;
-
-    text-shadow:
-        1px 1px 0 rgba(255,255,255,.25);
-}
-
-
-.subtitle {
-    margin-top: 25px;
-
-    color: var(--ink-soft);
-
-    font-family: var(--serif);
-    font-size: 25px;
-    font-style: italic;
-
-    letter-spacing: .5px;
-}
-
-
-.ornament {
-    position: relative;
-
-    width: 190px;
-    height: 1px;
-
-    margin: 45px 0 30px;
-
-    background: var(--gold);
-}
-
-
-.ornament::before,
-.ornament::after {
-    content: "◆";
-
-    position: absolute;
-    top: -7px;
-
-    color: var(--brown);
-
-    background: var(--paper);
-
-    font-size: 9px;
-}
-
-
-.ornament::before {
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 0 14px;
-}
-
-
-.imprint {
-    max-width: 500px;
-
-    color: var(--muted);
-
-    font-family: var(--serif);
-    font-size: 15px;
-
-    line-height: 1.8;
-
-    letter-spacing: .2px;
-}
-
-
-/* =========================================================
-   CABEÇALHO DECORATIVO
-   ========================================================= */
-
-.section-divider {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-
-    margin: 10px 0 30px;
-
-    color: var(--gold);
-}
-
-.section-divider::before,
-.section-divider::after {
-    content: "";
-
-    flex: 1;
-
-    height: 1px;
-
-    background: var(--line);
-}
-
-.section-divider span {
-    font-size: 10px;
-}
-
-
-/* =========================================================
-   SUMÁRIO
-   ========================================================= */
-
-.toc {
-    position: relative;
-
-    padding: 70px 75px 65px;
-
-    border-bottom: 1px solid var(--line);
-}
-
-
-.toc::before {
-    content: "ARQUIVO MUNICIPAL • ASHGATE";
-
-    display: block;
-
-    margin-bottom: 30px;
-
-    color: var(--muted);
-
-    font-size: 9px;
-    font-weight: 700;
-
-    letter-spacing: 4px;
-
-    text-align: center;
-}
-
-
-.toc h2 {
-    margin: 0 0 45px;
-
-    color: var(--brown-dark);
-
-    font-family: var(--display);
-    font-size: 27px;
-
-    letter-spacing: 1px;
-
-    text-align: center;
-}
-
-
-.toc ol {
-    margin: 0;
-    padding: 0;
-
-    list-style: none;
-
-    counter-reset: chapter;
-}
-
-
-.toc li {
-    counter-increment: chapter;
-
-    margin-bottom: 18px;
-}
-
-
-.toc a {
-    display: flex;
-    align-items: baseline;
-
-    width: 100%;
-
-    gap: 10px;
-
-    color: var(--ink);
-
-    text-decoration: none;
-
-    transition:
-        color .2s ease,
-        transform .2s ease;
-}
-
-
-.toc a:hover {
-    color: var(--brown);
-
-    transform: translateX(4px);
-}
-
-
-.toc .roman {
-    min-width: 32px;
-
-    color: var(--brown);
-
-    font-family: var(--display);
-    font-size: 15px;
-    font-weight: 700;
-}
-
-
-.toc .title {
-    font-family: var(--serif);
-    font-size: 19px;
-}
-
-
-.toc .dots {
-    position: relative;
-    top: -4px;
-
-    flex: 1;
-
-    border-bottom: 1px dotted var(--gold);
-}
-
-
-.toc .years {
-    color: var(--muted);
-
-    font-family: var(--serif);
-    font-size: 14px;
-    font-style: italic;
-
-    white-space: nowrap;
-}
-
-
-/* =========================================================
-   CAPÍTULOS
-   ========================================================= */
-
-.chapter {
-    position: relative;
-
-    padding: 75px 75px 65px;
-
-    border-bottom: 1px solid var(--line);
-}
-
-
-.chapter:last-of-type {
-    border-bottom: none;
-}
-
-
-/* marcador lateral */
-
-.chapter::before {
-    content: "";
-
-    position: absolute;
-
-    left: 22px;
-    top: 75px;
-
-    width: 2px;
-    height: 55px;
-
-    background:
-        linear-gradient(
-            to bottom,
-            transparent,
-            var(--brown),
-            transparent
-        );
-
-    opacity: .55;
-}
-
-
-.chapter-label {
-    margin-bottom: 12px;
-
-    color: var(--brown);
-
-    font-family: var(--body);
-    font-size: 10px;
-    font-weight: 700;
-
-    letter-spacing: 5px;
-
-    text-align: center;
-    text-transform: uppercase;
-}
-
-
-.chapter h2 {
-    margin: 0;
-
-    color: var(--brown-dark);
-
-    font-family: var(--display);
-    font-size: 34px;
-    font-weight: 700;
-
-    line-height: 1.15;
-
-    text-align: center;
-}
-
-
-.chapter > .years {
-    display: block;
-
-    margin-top: 12px;
-    margin-bottom: 25px;
-
-    color: var(--muted);
-
-    font-family: var(--serif);
-    font-size: 16px;
-    font-style: italic;
-
-    text-align: center;
-}
-
-
-.ornament-small {
-    position: relative;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    gap: 12px;
-
-    margin: 0 auto 35px;
-
-    width: 180px;
-
-    color: var(--brown);
-
-    font-size: 14px;
-}
-
-
-.ornament-small::before,
-.ornament-small::after {
-    content: "";
-
-    width: 55px;
-    height: 1px;
-
-    background: var(--line);
-}
-
-
-/* =========================================================
-   TEXTO
-   ========================================================= */
-
-.chapter p {
-    margin: 0 0 24px;
-
-    color: var(--ink);
-
-    font-family: var(--serif);
-    font-size: 20px;
-
-    line-height: 1.72;
-
-    text-align: justify;
-
-    hyphens: auto;
-}
-
-
-.chapter p:last-child {
-    margin-bottom: 0;
-}
-
-
-/* capitular */
-
-.chapter p.first::first-letter {
-    float: left;
-
-    margin:
-        8px 10px 0 0;
-
-    color: var(--brown);
-
-    font-family: var(--display);
-    font-size: 76px;
-    font-weight: 700;
-
-    line-height: .72;
-}
-
-
-/* =========================================================
-   MARCAS DE ARQUIVO
-   ========================================================= */
-
-.chapter:nth-of-type(2)::after,
-.chapter:nth-of-type(4)::after,
-.chapter:nth-of-type(6)::after,
-.chapter:nth-of-type(8)::after {
-    content: "DOCUMENTO PRESERVADO";
-
-    position: absolute;
-
-    right: 24px;
-    bottom: 22px;
-
-    color: rgba(112,69,45,.38);
-
-    font-family: var(--body);
-    font-size: 7px;
-    font-weight: 700;
-
-    letter-spacing: 2px;
-
-    transform: rotate(-90deg);
-    transform-origin: right bottom;
-}
-
-
-/* =========================================================
-   ENCERRAMENTO
-   ========================================================= */
-
-.closing {
-    position: relative;
-
-    padding: 70px 75px 85px;
-
-    text-align: center;
-
-    background:
-        linear-gradient(
-            rgba(100,70,35,.025),
-            rgba(100,70,35,.025)
-        );
-}
-
-
-.closing .ornament {
-    margin:
-        0 auto 30px;
-}
-
-
-.closing p {
-    max-width: 580px;
-
-    margin: 0 auto;
-
-    color: var(--muted);
-
-    font-family: var(--serif);
-    font-size: 16px;
-    font-style: italic;
-
-    line-height: 1.8;
-}
-
-
-/* =========================================================
-   RODAPÉ DO ARQUIVO
-   ========================================================= */
-
-.closing::after {
-    content: "ASHGATE  •  ARQUIVO HISTÓRICO  •  1990";
-
-    display: block;
-
-    margin-top: 45px;
-
-    color: rgba(75,65,49,.55);
-
-    font-family: var(--body);
-    font-size: 8px;
-    font-weight: 700;
-
-    letter-spacing: 3px;
-}
-
-
-/* =========================================================
-   SELEÇÃO
-   ========================================================= */
-
-::selection {
-    color: var(--paper);
-    background: var(--brown);
-}
-
-
-/* =========================================================
-   SCROLLBAR
-   ========================================================= */
-
-::-webkit-scrollbar {
-    width: 10px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--outside);
-}
-
-::-webkit-scrollbar-thumb {
-    background: #4b3424;
-    border: 2px solid var(--outside);
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--brown);
-}
-
-
-/* =========================================================
-   RESPONSIVO
-   ========================================================= */
-
-@media (max-width: 700px) {
-
-    body {
-        padding: 0;
-    }
-
-    .book {
-        border: none;
-    }
-
-    .titlepage {
-        min-height: 700px;
-
-        padding:
-            70px 30px;
-    }
-
-    .titlepage::before {
-        inset: 14px;
-    }
-
-    .titlepage h1 {
-        letter-spacing: 4px;
-    }
-
-    .subtitle {
-        font-size: 21px;
-    }
-
-    .toc,
-    .chapter,
-    .closing {
-        padding-left: 30px;
-        padding-right: 30px;
-    }
-
-    .chapter::before {
-        display: none;
-    }
-
-    .chapter h2 {
-        font-size: 29px;
-    }
-
-    .chapter p {
-        font-size: 18px;
-
-        text-align: left;
-
-        line-height: 1.7;
-    }
-
-    .chapter p.first::first-letter {
-        font-size: 65px;
-    }
-
-    .toc .title {
-        font-size: 17px;
-    }
-
-    .toc .years {
-        font-size: 12px;
-    }
-
-    .toc .dots {
-        display: none;
-    }
-
-    .toc a {
-        align-items: center;
-    }
-
-    .chapter:nth-of-type(2)::after,
-    .chapter:nth-of-type(4)::after,
-    .chapter:nth-of-type(6)::after,
-    .chapter:nth-of-type(8)::after {
-        display: none;
-    }
-}
-
-
-/* =========================================================
-   CELULARES PEQUENOS
-   ========================================================= */
-
-@media (max-width: 430px) {
-
-    .titlepage {
-        min-height: 620px;
-    }
-
-    .kicker {
-        font-size: 8px;
-        letter-spacing: 4px;
-    }
-
-    .titlepage h1 {
-        font-size: 49px;
-    }
-
-    .subtitle {
-        font-size: 19px;
-    }
-
-    .toc,
-    .chapter,
-    .closing {
-        padding:
-            55px 22px;
-    }
-
-    .toc h2 {
-        font-size: 24px;
-    }
-
-    .chapter-label {
-        font-size: 8px;
-        letter-spacing: 4px;
-    }
-
-    .chapter h2 {
-        font-size: 26px;
-    }
-
-    .chapter p {
-        font-size: 17px;
-    }
-
-    .chapter p.first::first-letter {
-        font-size: 58px;
-    }
-}
-
-
-/* =========================================================
-   IMPRESSÃO
-   ========================================================= */
-
-@media print {
-
-    @page {
-        size: A4;
-        margin: 18mm;
-    }
-
-    body {
-        padding: 0;
-
-        background: white;
-    }
-
-    .book {
-        max-width: none;
-
-        border: none;
-
-        box-shadow: none;
-
-        background: var(--paper);
-    }
-
-    .titlepage {
-        min-height: 100vh;
-    }
-
-    .chapter {
-        break-inside: avoid;
-    }
-
-    .chapter p {
-        font-size: 12pt;
-    }
-
-    .toc a {
-        color: black;
-    }
-}
-
 </style>
 </head>
-
-
 <body>
-
+<a href="index.html" class="back-link">· Página Inicial ·</a>
 <div class="book">
 
-
-    <!-- =====================================================
-         PÁGINA DE TÍTULO
-         ===================================================== -->
-
-    <section class="titlepage">
-
-        <div class="kicker">
-            Uma crônica municipal
-        </div>
-
-        <h1>ASHGATE</h1>
-
-        <div class="subtitle">
-            Notas Para uma História da Cidade
-        </div>
-
-        <div class="ornament"></div>
-
-        <div class="imprint">
-
-            Compilado a partir de registros municipais
-            parcialmente preservados,<br>
-
-            depoimentos orais e reportagens de veículos
-            locais hoje extintos.
-
-            <br><br>
-
-            <strong>Edição de 1990</strong>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         SUMÁRIO
-         ===================================================== -->
-
-    <section class="toc">
-
-        <h2>Sumário</h2>
-
-        <ol>
-
-            <li>
-                <a href="#cap1">
-                    <span class="roman">I</span>
-                    <span class="title">Fundação e Formação</span>
-                    <span class="dots"></span>
-                    <span class="years">1871–1895</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="#cap2">
-                    <span class="roman">II</span>
-                    <span class="title">Apogeu e Declínio</span>
-                    <span class="dots"></span>
-                    <span class="years">1895–1955</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="#cap3">
-                    <span class="roman">III</span>
-                    <span class="title">O Vácuo Administrativo</span>
-                    <span class="dots"></span>
-                    <span class="years">1955–1977</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="#cap4">
-                    <span class="roman">IV</span>
-                    <span class="title">A Guerra Ferroviária</span>
-                    <span class="dots"></span>
-                    <span class="years">1977–1980</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="#cap5">
-                    <span class="roman">V</span>
-                    <span class="title">O Incêndio de 1980</span>
-                    <span class="dots"></span>
-                    <span class="years">1980</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="#cap6">
-                    <span class="roman">VI</span>
-                    <span class="title">O Arranjo Territorial Atual</span>
-                    <span class="dots"></span>
-                    <span class="years">1980–1990</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="#cap7">
-                    <span class="roman">VII</span>
-                    <span class="title">A Paisagem Cotidiana</span>
-                    <span class="dots"></span>
-                    <span class="years">Hoje</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="#cap8">
-                    <span class="roman">VIII</span>
-                    <span class="title">A Questão da População em Situação de Rua</span>
-                    <span class="dots"></span>
-                    <span class="years">Hoje</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="#cap9">
-                    <span class="roman">IX</span>
-                    <span class="title">O Fenômeno Conhecido como "Despertar"</span>
-                    <span class="dots"></span>
-                    <span class="years">1978–</span>
-                </a>
-            </li>
-
-        </ol>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         CAPÍTULO I
-         ===================================================== -->
-
-    <section class="chapter" id="cap1">
-
-        <div class="chapter-label">
-            Capítulo Primeiro
-        </div>
-
-        <h2>Fundação e Formação</h2>
-
-        <span class="years">
-            1871 – 1895
-        </span>
-
-        <div class="ornament-small">◆</div>
-
-        <p class="first">
-            Ashgate foi fundada em 1871, originalmente como entreposto ferroviário destinado a escoar produção agrícola da região para os portos do litoral. O traçado das primeiras ruas, ainda hoje reconhecível no bairro conhecido como Distrito Velho, seguia a linha férrea que deu origem ao povoado.
-        </p>
-
-        <p>
-            O crescimento acelerou nas duas décadas seguintes, quando um conjunto de investidores decidiu instalar ali as primeiras fundições e oficinas metalúrgicas da região, aproveitando a proximidade da ferrovia e a disponibilidade de mão de obra migrante. Entre 1890 e 1920, a população da cidade multiplicou-se por mais de dez vezes. Bairros operários foram erguidos às pressas ao redor de cada nova fábrica, e a cidade ganhou, junto com a chaminé industrial, o apelido de "cidade cinza" que mais tarde emprestaria seu nome oficial.
-        </p>
-
-        <p>
-            Ashgate foi elevada à condição de município autônomo em 1912, e por quase meio século funcionou como um dos principais polos industriais da região — não sem os problemas comuns a cidades de crescimento rápido demais: habitação precária, disputas trabalhistas frequentes e uma desigualdade que, segundo relatos da época, já se fazia notar entre os bairros centrais e as periferias operárias.
-        </p>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         CAPÍTULO II
-         ===================================================== -->
-
-    <section class="chapter" id="cap2">
-
-        <div class="chapter-label">
-            Capítulo Segundo
-        </div>
-
-        <h2>Apogeu e Declínio</h2>
-
-        <span class="years">
-            1895 – 1955
-        </span>
-
-        <div class="ornament-small">◆</div>
-
-        <p class="first">
-            O período entre 1895 e 1925 é geralmente descrito como o auge de Ashgate. A cidade abrigava, à época, mais de uma dezena de grandes complexos industriais, uma rede ferroviária extensa e uma vida urbana comparável à de centros regionais bem maiores. Teatros, escolas técnicas e um sistema de bondes elétricos surgiram nesse período.
-        </p>
-
-        <p>
-            O declínio começou de forma gradual a partir da década de 1920, acompanhando um movimento mais amplo de desindustrialização que afetou diversas cidades de perfil semelhante. Fábricas foram fechando ou se transferindo para regiões com custos de produção menores; a primeira delas, a antiga Fundição Aurora, encerrou operações em 1932. O processo se estendeu por três décadas, e cada fechamento levava consigo parte da população que dependia direta ou indiretamente daquele emprego.
-        </p>
-
-        <p>
-            O governo estadual, que sustentava parte da infraestrutura da cidade através de subsídios e investimento direto, reduziu progressivamente sua presença ao longo da década de 1940, em meio a um período de contenção orçamentária que atingiu diversos municípios do interior. Ashgate, sem base econômica própria para se sustentar, foi uma das cidades mais afetadas por esse recuo.
-        </p>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         CAPÍTULO III
-         ===================================================== -->
-
-    <section class="chapter" id="cap3">
-
-        <div class="chapter-label">
-            Capítulo Terceiro
-        </div>
-
-        <h2>O Vácuo Administrativo</h2>
-
-        <span class="years">
-            1955 – 1977
-        </span>
-
-        <div class="ornament-small">◆</div>
-
-        <p class="first">
-            Por volta de 1960, Ashgate já operava, na prática, com uma estrutura administrativa incapaz de exercer autoridade efetiva sobre boa parte do seu próprio território. A prefeitura manteve-se formalmente ativa, mas relatórios da época já descreviam dificuldade de acesso a bairros inteiros por parte de serviços públicos básicos. O policiamento oficial, reduzido em efetivo e em orçamento, concentrou-se progressivamente na região central e nos poucos bairros ainda considerados economicamente relevantes.
-        </p>
-
-        <p>
-            Esse recuo do Estado não ocorreu num vácuo. Historiadores locais apontam que já existiam, desde ao menos a década de 1930, organizações criminosas operando às margens da economia industrial de Ashgate — dedicadas sobretudo a contrabando ligado à movimentação ferroviária e portuária da região. Durante décadas, essas organizações coexistiram de forma relativamente estável, dividindo entre si rotas e mercados, num arranjo informal que raramente resultava em confronto aberto. Esse equilíbrio, no entanto, dependia de recursos suficientes para todas as partes — e ao longo da década de 1960, com a base econômica da cidade cada vez mais reduzida, essa margem foi se estreitando.
-        </p>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         CAPÍTULO IV
-         ===================================================== -->
-
-    <section class="chapter" id="cap4">
-
-        <div class="chapter-label">
-            Capítulo Quarto
-        </div>
-
-        <h2>A Guerra Ferroviária</h2>
-
-        <span class="years">
-            1977 – 1980
-        </span>
-
-        <div class="ornament-small">◆</div>
-
-        <p class="first">
-            Esse equilíbrio se rompeu de forma definitiva entre 1977 e 1980, num episódio que a historiografia local viria a chamar de "Guerra Ferroviária" — em referência ao ramal ferroviário que esteve no centro da disputa.
-        </p>
-
-        <p>
-            Com a base econômica de Ashgate já reduzida a uma fração do que fora décadas antes, os territórios antes secundários — armazéns abandonados, ramais ferroviários ociosos, bairros inteiros esvaziados de autoridade — tornaram-se ativos disputados diretamente entre as três maiores organizações então atuantes na cidade, que até então mantinham entre si um equilíbrio tácito.
-        </p>
-
-        <p>
-            O estopim imediato da guerra, segundo o relato mais aceito, foi a morte de um intermediário responsável havia anos pela administração do único ramal ferroviário ainda em operação regular na cidade — a última via de escoamento e abastecimento de Ashgate com o exterior. Sua morte, nunca formalmente esclarecida, foi atribuída por cada uma das três organizações às demais, e serviu de justificativa para a escalada armada que se seguiu.
-        </p>
-
-        <p>
-            A guerra, embora nunca tenha sido oficialmente reconhecida como tal pelas autoridades estaduais, estendeu-se por pouco mais de três anos e é hoje estimada — sem que exista um levantamento definitivo — como responsável por várias centenas de mortos, número que a maior parte dos relatos locais considera subdimensionado.
-        </p>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         CAPÍTULO V
-         ===================================================== -->
-
-    <section class="chapter" id="cap5">
-
-        <div class="chapter-label">
-            Capítulo Quinto
-        </div>
-
-        <h2>O Incêndio de 1980</h2>
-
-        <span class="years">
-            1980
-        </span>
-
-        <div class="ornament-small">◆</div>
-
-        <p class="first">
-            O episódio final da Guerra Ferroviária ocorreu em 1980, durante um encontro de negociação organizado com mediação de remanescentes da administração civil da cidade, num esforço tardio de encerrar as hostilidades e formalizar uma divisão de território entre as três organizações.
-        </p>
-
-        <p>
-            No decorrer dessa negociação, duas das três organizações voltaram-se contra a terceira. Simultaneamente, um incêndio de origem nunca esclarecida destruiu por completo o arquivo administrativo municipal, no qual constavam registros de propriedade, dívidas e acordos anteriores entre as partes envolvidas. A destruição desses registros tornou impossível, dali em diante, estabelecer com precisão a responsabilidade de cada organização pelos eventos daquela noite — e essa ausência de prova documental permanece, até hoje, como uma das fontes centrais de desconfiança mútua entre os grupos sobreviventes.
-        </p>
-
-        <p>
-            O episódio ficou conhecido, na tradição oral da cidade, como o Incêndio de 1980 ou, mais informalmente, como a Noite das Cinzas — expressão que se popularizou nos anos seguintes e que hoje serve como marco temporal comum entre os habitantes mais antigos da cidade, que costumam situar acontecimentos como "antes" ou "depois" desse episódio.
-        </p>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         CAPÍTULO VI
-         ===================================================== -->
-
-    <section class="chapter" id="cap6">
-
-        <div class="chapter-label">
-            Capítulo Sexto
-        </div>
-
-        <h2>O Arranjo Territorial Atual</h2>
-
-        <span class="years">
-            1980 – 1990
-        </span>
-
-        <div class="ornament-small">◆</div>
-
-        <p class="first">
-            Da destruição da Guerra Ferroviária emergiram três organizações sobreviventes — hoje conhecidas nas ruas de Ashgate como Il Piacere, Besy e Der Prozess — que dividiram entre si o território da cidade num arranjo informal, sem qualquer reconhecimento legal ou tratado formal — apenas um entendimento tácito, sustentado pela memória do que ocorreu em 1980, de que a violação das fronteiras não escritas tende a ter consequências severas.
-        </p>
-
-        <p>
-            Il Piacere controla hoje a região norte da cidade, historicamente a mais próxima do que restou da malha ferroviária e dos poucos armazéns ainda em operação — motivo pelo qual é também, entre as três, a organização mais capitalizada e estruturada. Besy domina a região leste, e Der Prozess responde pela região oeste.
-        </p>
-
-        <p>
-            Nos anos seguintes, no entanto, as três organizações não permaneceram estáticas. Cada uma delas utilizou o período de relativa acalmia para se reestruturar internamente, consolidar hierarquias mais estáveis e ampliar sua influência sobre a economia informal de seu respectivo território. O resultado, uma década depois, é que Ashgate é hoje administrada, na prática, por três organizações significativamente mais fortes, mais organizadas e mais capazes do que eram no momento em que a trégua foi selada — o que tem, paradoxalmente, tornado o equilíbrio entre elas mais tenso, não menos.
-        </p>
-
-        <p>
-            Analistas informais da situação de Ashgate — na ausência de qualquer instituição oficial disposta a produzir esse tipo de análise — apontam que o crescimento das três organizações não ocorreu de forma equivalente. Il Piacere, em particular, teria ampliado sua influência a partir da região norte a um ritmo superior às demais nos últimos anos, o que tem gerado desconfiança crescente por parte de Besy e Der Prozess quanto à disposição real de manter os termos da divisão original de 1980. Não houve, até o momento, ruptura aberta do arranjo — mas é consenso, entre quem acompanha de perto a dinâmica da cidade, que o equilíbrio de uma década atrás já não corresponde ao equilíbrio de poder real hoje, e que essa discrepância dificilmente permanecerá sem consequência por muito mais tempo.
-        </p>
-
-        <p>
-            Há ainda um segundo tipo de tensão, menos discutido abertamente mas sentido por qualquer um que preste atenção: pela primeira vez em décadas, há sinais — ainda dispersos, ainda inconclusivos — de que autoridades de fora de Ashgate voltaram a demonstrar interesse pela cidade. Operações policiais de maior porte em outras regiões do país, motivadas por legislação mais recente contra organizações criminosas, têm sido acompanhadas de perto pelas três potências, que discutem entre si, com a desconfiança de sempre, se e quando esse tipo de atenção chegaria até aqui. Nenhuma das três trata o assunto como urgente. Todas, no entanto, já o mencionaram o suficiente para que se torne difícil ignorar.
-        </p>
-
-        <p>
-            Além dessas três organizações principais, formou-se nos anos seguintes à Guerra Ferroviária um quarto grupo, de composição mais heterogênea: remanescentes sem afiliação clara às três facções vencedoras, desertores e indivíduos que, por diferentes razões, não foram incorporados à divisão territorial de 1980. Conhecido como Le Voleur, esse grupo ocupa hoje a região sul de Ashgate — a mais pobre e menos disputada das quatro, justamente por ser a de menor valor econômico restante. Trata-se do menor e mais vulnerável dos quatro grupos hoje ativos na cidade, e também o que enfrenta maior pressão por parte tanto das outras organizações quanto do que resta das forças de segurança oficiais.
-        </p>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         CAPÍTULO VII
-         ===================================================== -->
-
-    <section class="chapter" id="cap7">
-
-        <div class="chapter-label">
-            Capítulo Sétimo
-        </div>
-
-        <h2>A Paisagem Cotidiana</h2>
-
-        <span class="years">
-            Situação atual
-        </span>
-
-        <div class="ornament-small">◆</div>
-
-        <p class="first">
-            Quem visita Ashgate pela primeira vez costuma notar, antes de qualquer outra coisa, o contraste. A região central — onde ainda opera o pouco de comércio legal que sobrou, e onde residem os poucos que enriqueceram administrando o que restou da cidade — mantém iluminação pública funcional, ruas relativamente limpas e uma aparência de normalidade que não se sustenta a mais de dez quarteirões de distância em qualquer direção.
-        </p>
-
-        <p>
-            Fora desse núcleo, a paisagem muda rápido. Prédios residenciais erguidos ainda no auge industrial permanecem ocupados muito além da capacidade e das condições para as quais foram projetados, muitos sem manutenção estrutural há décadas. Fiação elétrica exposta é comum. Vazamentos de água e esgoto raramente são reparados por qualquer autoridade pública, e passaram a ser resolvidos, quando resolvidos, por conta dos próprios moradores ou das organizações que controlam o território. Áreas inteiras permanecem sem iluminação pública funcional à noite, e não é incomum que letreiros comerciais de estabelecimentos fechados há anos continuem acesos de forma intermitente, ligados a fiação que ninguém se dá ao trabalho de desativar.
-        </p>
-
-        <p>
-            A poluição industrial acumulada ao longo de mais de um século de operação fabril nunca foi tratada de forma sistemática após o fechamento das fábricas, e determinadas regiões da cidade — sobretudo próximas aos antigos complexos metalúrgicos do norte — ainda apresentam índices de contaminação do solo e da água significativamente acima do que seria considerado seguro em qualquer outro contexto. A população residente nessas áreas raramente tem alternativa habitacional.
-        </p>
-
-        <p>
-            Incêndios em terrenos baldios, usados como forma improvisada de descarte de lixo pela ausência de coleta regular, são ocorrência comum o suficiente para não gerarem mais alarme entre os moradores. O mesmo vale para sirenes — de origem raramente identificável, já que tanto a segurança pública oficial quanto a segurança extraoficial das organizações que controlam o território fazem uso de veículos com equipamento semelhante.
-        </p>
-
-        <p>
-            Não existe, atualmente, nenhum levantamento oficial e atualizado sobre condições sanitárias, expectativa de vida ou indicadores básicos de qualidade de vida em Ashgate. A ausência desses dados é, para a maior parte dos pesquisadores que já tentaram reuni-los, tão reveladora quanto qualquer número que pudesse substituí-la.
-        </p>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         CAPÍTULO VIII
-         ===================================================== -->
-
-    <section class="chapter" id="cap8">
-
-        <div class="chapter-label">
-            Capítulo Oitavo
-        </div>
-
-        <h2>A Questão da População em Situação de Rua</h2>
-
-        <span class="years">
-            Situação atual
-        </span>
-
-        <div class="ornament-small">◆</div>
-
-        <p class="first">
-            Um fenômeno amplamente discutido, embora pouco documentado com rigor, é o crescimento acentuado da população em situação de rua em Ashgate nas últimas duas décadas, particularmente concentrado nos bairros de menor renda.
-        </p>
-
-        <p>
-            Parte considerável dessa discussão atribui o fenômeno a causas econômicas evidentes — o colapso industrial, a ausência de rede de assistência social funcional e a consequente falta de alternativas para famílias que dependiam da indústria já extinta. Essa é, de fato, a explicação predominante entre pesquisadores que já se debruçaram sobre o tema.
-        </p>
-
-        <p>
-            Ainda assim, há quem aponte inconsistências nessa leitura puramente econômica: o crescimento da população em situação de rua não acompanhou de forma proporcional os períodos de maior desemprego registrado, continuando a aumentar mesmo em anos de relativa estabilidade. Não existe, até o momento, nenhum estudo conclusivo sobre essa discrepância, e o tema permanece, na prática, sem investigação institucional ativa.
-        </p>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         CAPÍTULO IX
-         ===================================================== -->
-
-    <section class="chapter" id="cap9">
-
-        <div class="chapter-label">
-            Capítulo Nono
-        </div>
-
-        <h2>O Fenômeno Conhecido como "Despertar"</h2>
-
-        <span class="years">
-            1978 até hoje
-        </span>
-
-        <div class="ornament-small">◆</div>
-
-        <p class="first">
-            Nos anos posteriores à Guerra Ferroviária, começaram a ser registrados na cidade casos do que a população local passou a chamar de Despertar: manifestações, em determinados indivíduos, de capacidades que extrapolam a compreensão médica ou científica convencional.
-        </p>
-
-        <p>
-            Não existe consenso oficial sobre a origem do fenômeno, tampouco qualquer estudo institucional que o tenha investigado de forma sistemática — em parte pela ausência de instituições de pesquisa funcionais na própria cidade, em parte pela desconfiança da população em relação a qualquer tentativa de catalogação oficial desses casos. Ainda assim, a explicação mais aceita entre quem acompanha o tema de perto está diretamente ligada à própria Guerra Ferroviária.
-        </p>
-
-        <p>
-            Durante a Guerra Ferroviária, ao menos duas das três organizações envolvidas fizeram uso de artefatos explosivos de fabricação improvisada, montados a partir de material obtido de instalações industriais desativadas — algumas delas antigas unidades ligadas ao processamento de minério e à produção de componentes eletrônicos, cujos resíduos nunca foram devidamente descartados após o fechamento das fábricas nas décadas anteriores. Relatos de sobreviventes descrevem ao menos três episódios, entre 1978 e 1979, em que esse tipo de artefato foi detonado em áreas densamente povoadas, liberando não apenas os efeitos imediatos da explosão, mas também contaminação de natureza ainda mal compreendida sobre os bairros atingidos.
-        </p>
-
-        <p>
-            A hipótese mais repetida — sem respaldo científico formal, mas amplamente aceita na ausência de qualquer alternativa mais convincente — é a de que a exposição a essa contaminação, direta ou por meio de gerações seguintes nascidas em áreas afetadas, tenha alterado algo na fisiologia de parte da população de Ashgate, tornando possível a manifestação do Despertar. Essa hipótese ganhou força adicional pelo fato de que a concentração de casos registrados é notavelmente mais alta em bairros próximos aos locais das detonações — padrão que, apesar de nunca ter sido submetido a um levantamento estatístico formal, é amplamente reconhecido de forma anedótica pela população local.
-        </p>
-
-        <p>
-            O que se sabe com mais segurança é o padrão de manifestação em si: o Despertar costuma emergir associado a um momento de ruptura pessoal significativa — perda, violência extrema ou convicção levada a um ponto limite —, e a capacidade manifestada tende a refletir de forma bastante específica alguma característica central de quem a manifesta. Por essa razão, nenhum caso registrado até hoje é idêntico a outro, mesmo entre indivíduos expostos à mesma área contaminada: a contaminação parece ter tornado o fenômeno possível, mas não determina sua forma final, que segue sendo, aparentemente, produto de cada indivíduo.
-        </p>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         ENCERRAMENTO
-         ===================================================== -->
-
-    <footer class="closing">
-
-        <div class="ornament"></div>
-
-        <p>
-            Este documento reúne informações de fontes diversas —
-            registros municipais parcialmente preservados,
-            depoimentos orais e reportagens de veículos locais
-            hoje extintos — e não deve ser tomado como registro
-            histórico definitivo.
-
-            <br><br>
-
-            Parte significativa dos arquivos oficiais de Ashgate
-            foi perdida no incêndio de 1980.
-        </p>
-
-    </footer>
-
+  <div class="titlepage">
+    <div class="kicker">Uma crônica municipal</div>
+    <h1>ASHGATE</h1>
+    <div class="subtitle">Notas Para uma História da Cidade</div>
+    <div class="ornament"></div>
+    <div class="imprint">
+      Compilado a partir de registros municipais parcialmente preservados,<br>
+      depoimentos orais e reportagens de veículos locais hoje extintos.<br><br>
+      Edição de 1990
+    </div>
+  </div>
+
+  <div class="toc">
+    <h2>Sumário</h2>
+    <ol>
+      <li><a href="#cap1"><span class="roman">I</span><span class="dots"></span><span class="years">1871–1895</span></a></li>
+      <li><a href="#cap2"><span class="roman">II</span><span class="dots"></span><span class="years">1895–1955</span></a></li>
+      <li><a href="#cap3"><span class="roman">III</span><span class="dots"></span><span class="years">1955–1977</span></a></li>
+      <li><a href="#cap4"><span class="roman">IV</span><span class="dots"></span><span class="years">1977–1980</span></a></li>
+      <li><a href="#cap5"><span class="roman">V</span><span class="dots"></span><span class="years">1980</span></a></li>
+      <li><a href="#cap6"><span class="roman">VI</span><span class="dots"></span><span class="years">1980–1990</span></a></li>
+      <li><a href="#cap7"><span class="roman">VII</span><span class="dots"></span><span class="years">Hoje</span></a></li>
+      <li><a href="#cap8"><span class="roman">VIII</span><span class="dots"></span><span class="years">Hoje</span></a></li>
+      <li><a href="#cap9"><span class="roman">IX</span><span class="dots"></span><span class="years">1978–</span></a></li>
+    </ol>
+  </div>
+
+  <div class="chapter" id="cap1">
+    <div class="chapter-label">Capítulo Primeiro</div>
+    <h2>Fundação e Formação</h2>
+    <span class="years">1871 – 1895</span>
+    <div class="ornament-small">❧</div>
+    <p class="first">Ashgate foi fundada em 1871, originalmente como entreposto ferroviário destinado a escoar produção agrícola da região para os portos do litoral. O traçado das primeiras ruas, ainda hoje reconhecível no bairro conhecido como Distrito Velho, seguia a linha férrea que deu origem ao povoado.</p>
+    <p>O crescimento acelerou nas duas décadas seguintes, quando um conjunto de investidores decidiu instalar ali as primeiras fundições e oficinas metalúrgicas da região, aproveitando a proximidade da ferrovia e a disponibilidade de mão de obra migrante. Entre 1890 e 1920, a população da cidade multiplicou-se por mais de dez vezes. Bairros operários foram erguidos às pressas ao redor de cada nova fábrica, e o portão original de acesso à cidade — ponto de entrada da ferrovia, sempre coberto por uma fina camada de cinza vinda das fundições próximas — deu origem ao apelido que, com o tempo, se tornaria o nome oficial do município.</p>
+    <p>Ashgate foi elevada à condição de município autônomo em 1912, e por quase meio século funcionou como um dos principais polos industriais da região — não sem os problemas comuns a cidades de crescimento rápido demais: habitação precária, disputas trabalhistas frequentes e uma desigualdade que, segundo relatos da época, já se fazia notar entre os bairros centrais e as periferias operárias.</p>
+  </div>
+
+  <div class="chapter" id="cap2">
+    <div class="chapter-label">Capítulo Segundo</div>
+    <h2>Apogeu e Declínio</h2>
+    <span class="years">1895 – 1955</span>
+    <div class="ornament-small">❧</div>
+    <p class="first">O período entre 1895 e 1925 é geralmente descrito como o auge de Ashgate. A cidade abrigava, à época, mais de uma dezena de grandes complexos industriais, uma rede ferroviária extensa e uma vida urbana comparável à de centros regionais bem maiores. Teatros, escolas técnicas e um sistema de bondes elétricos surgiram nesse período.</p>
+    <p>O declínio começou de forma gradual a partir da década de 1920, acompanhando um movimento mais amplo de desindustrialização que afetou diversas cidades de perfil semelhante. Fábricas foram fechando ou se transferindo para regiões com custos de produção menores; a primeira delas, a antiga Fundição Aurora, encerrou operações em 1932. O processo se estendeu por três décadas, e cada fechamento levava consigo parte da população que dependia direta ou indiretamente daquele emprego.</p>
+    <p>O governo estadual, que sustentava parte da infraestrutura da cidade através de subsídios e investimento direto, reduziu progressivamente sua presença ao longo da década de 1940, em meio a um período de contenção orçamentária que atingiu diversos municípios do interior. Ashgate, sem base econômica própria para se sustentar, foi uma das cidades mais afetadas por esse recuo.</p>
+  </div>
+
+  <div class="chapter" id="cap3">
+    <div class="chapter-label">Capítulo Terceiro</div>
+    <h2>O Vácuo Administrativo</h2>
+    <span class="years">1955 – 1977</span>
+    <div class="ornament-small">❧</div>
+    <p class="first">Por volta de 1960, Ashgate já operava, na prática, com uma estrutura administrativa incapaz de exercer autoridade efetiva sobre boa parte do seu próprio território. A prefeitura manteve-se formalmente ativa, mas relatórios da época já descreviam dificuldade de acesso a bairros inteiros por parte de serviços públicos básicos. O policiamento oficial, reduzido em efetivo e em orçamento, concentrou-se progressivamente na região central e nos poucos bairros ainda considerados economicamente relevantes.</p>
+    <p>Esse recuo do Estado não ocorreu num vácuo. Historiadores locais apontam que já existiam, desde ao menos a década de 1930, organizações criminosas operando às margens da economia industrial de Ashgate — dedicadas sobretudo a contrabando ligado à movimentação ferroviária e portuária da região. Durante décadas, essas organizações coexistiram de forma relativamente estável, dividindo entre si rotas e mercados, num arranjo informal que raramente resultava em confronto aberto. Esse equilíbrio, no entanto, dependia de recursos suficientes para todas as partes — e ao longo da década de 1960, com a base econômica da cidade cada vez mais reduzida, essa margem foi se estreitando.</p>
+  </div>
+
+  <div class="chapter" id="cap4">
+    <div class="chapter-label">Capítulo Quarto</div>
+    <h2>A Guerra Ferroviária</h2>
+    <span class="years">1977 – 1980</span>
+    <div class="ornament-small">❧</div>
+    <p class="first">Esse equilíbrio se rompeu de forma definitiva entre 1977 e 1980, num episódio que a historiografia local viria a chamar de "Guerra Ferroviária" — em referência ao ramal ferroviário que esteve no centro da disputa.</p>
+    <p>Com a base econômica de Ashgate já reduzida a uma fração do que fora décadas antes, os territórios antes secundários — armazéns abandonados, ramais ferroviários ociosos, bairros inteiros esvaziados de autoridade — tornaram-se ativos disputados diretamente entre as três maiores organizações então atuantes na cidade, que até então mantinham entre si um equilíbrio tácito.</p>
+    <p>O estopim imediato da guerra, segundo o relato mais aceito, foi a morte de um intermediário responsável havia anos pela administração do único ramal ferroviário ainda em operação regular na cidade — a última via de escoamento e abastecimento de Ashgate com o exterior. Sua morte, nunca formalmente esclarecida, foi atribuída por cada uma das três organizações às demais, e serviu de justificativa para a escalada armada que se seguiu.</p>
+    <p>A guerra, embora nunca tenha sido oficialmente reconhecida como tal pelas autoridades estaduais, estendeu-se por pouco mais de três anos e é hoje estimada — sem que exista um levantamento definitivo — como responsável por várias centenas de mortos, número que a maior parte dos relatos locais considera subdimensionado.</p>
+  </div>
+
+  <div class="chapter" id="cap5">
+    <div class="chapter-label">Capítulo Quinto</div>
+    <h2>O Incêndio de 1980</h2>
+    <span class="years">1980</span>
+    <div class="ornament-small">❧</div>
+    <p class="first">O episódio final da Guerra Ferroviária ocorreu em 1980, durante um encontro de negociação organizado com mediação de remanescentes da administração civil da cidade, num esforço tardio de encerrar as hostilidades e formalizar uma divisão de território entre as três organizações.</p>
+    <p>No decorrer dessa negociação, duas das três organizações voltaram-se contra a terceira. Simultaneamente, um incêndio de origem nunca esclarecida destruiu por completo o arquivo administrativo municipal, no qual constavam registros de propriedade, dívidas e acordos anteriores entre as partes envolvidas. A destruição desses registros tornou impossível, dali em diante, estabelecer com precisão a responsabilidade de cada organização pelos eventos daquela noite — e essa ausência de prova documental permanece, até hoje, como uma das fontes centrais de desconfiança mútua entre os grupos sobreviventes.</p>
+    <p>O episódio ficou conhecido, na tradição oral da cidade, como o Incêndio de 1980 ou, mais informalmente, como a Noite das Cinzas — expressão que se popularizou nos anos seguintes e que hoje serve como marco temporal comum entre os habitantes mais antigos da cidade, que costumam situar acontecimentos como "antes" ou "depois" desse episódio.</p>
+  </div>
+
+  <div class="chapter" id="cap6">
+    <div class="chapter-label">Capítulo Sexto</div>
+    <h2>O Arranjo Territorial Atual</h2>
+    <span class="years">1980 – 1990</span>
+    <div class="ornament-small">❧</div>
+    <p class="first">Da destruição da Guerra Ferroviária emergiram três organizações sobreviventes — hoje conhecidas nas ruas de Ashgate como Il Piacere, Besy e Der Prozess — que dividiram entre si o território da cidade num arranjo informal, sem qualquer reconhecimento legal ou tratado formal — apenas um entendimento tácito, sustentado pela memória do que ocorreu em 1980, de que a violação das fronteiras não escritas tende a ter consequências severas.</p>
+    <p>Il Piacere controla hoje a região norte da cidade, historicamente a mais próxima do que restou da malha ferroviária e dos poucos armazéns ainda em operação — motivo pelo qual é também, entre as três, a organização mais capitalizada e estruturada. Besy domina a região leste, e Der Prozess responde pela região oeste.</p>
+    <p>Nos anos seguintes, no entanto, as três organizações não permaneceram estáticas. Cada uma delas utilizou o período de relativa acalmia para se reestruturar internamente, consolidar hierarquias mais estáveis e ampliar sua influência sobre a economia informal de seu respectivo território. O resultado, uma década depois, é que Ashgate é hoje administrada, na prática, por três organizações significativamente mais fortes, mais organizadas e mais capazes do que eram no momento em que a trégua foi selada — o que tem, paradoxalmente, tornado o equilíbrio entre elas mais tenso, não menos.</p>
+    <p>Analistas informais da situação de Ashgate — na ausência de qualquer instituição oficial disposta a produzir esse tipo de análise — apontam que o crescimento das três organizações não ocorreu de forma equivalente. Il Piacere, em particular, teria ampliado sua influência a partir da região norte a um ritmo superior às demais nos últimos anos, o que tem gerado desconfiança crescente por parte de Besy e Der Prozess quanto à disposição real de manter os termos da divisão original de 1980. Não houve, até o momento, ruptura aberta do arranjo — mas é consenso, entre quem acompanha de perto a dinâmica da cidade, que o equilíbrio de uma década atrás já não corresponde ao equilíbrio de poder real hoje, e que essa discrepância dificilmente permanecerá sem consequência por muito mais tempo.</p>
+    <p>Há ainda um segundo tipo de tensão, menos discutido abertamente mas sentido por qualquer um que preste atenção: pela primeira vez em décadas, há sinais — ainda dispersos, ainda inconclusivos — de que autoridades de fora de Ashgate voltaram a demonstrar interesse pela cidade. Operações policiais de maior porte em outras regiões do país, motivadas por legislação mais recente contra organizações criminosas, têm sido acompanhadas de perto pelas três potências, que discutem entre si, com a desconfiança de sempre, se e quando esse tipo de atenção chegaria até aqui. Nenhuma das três trata o assunto como urgente. Todas, no entanto, já o mencionaram o suficiente para que se torne difícil ignorar.</p>
+    <p>Além dessas três organizações principais, formou-se nos anos seguintes à Guerra Ferroviária um quarto grupo, de composição mais heterogênea: remanescentes sem afiliação clara às três facções vencedoras, desertores e indivíduos que, por diferentes razões, não foram incorporados à divisão territorial de 1980. Conhecido como Le Voleur, esse grupo ocupa hoje a região sul de Ashgate — a mais pobre e menos disputada das quatro, justamente por ser a de menor valor econômico restante. Trata-se do menor e mais vulnerável dos quatro grupos hoje ativos na cidade, e também o que enfrenta maior pressão por parte tanto das outras organizações quanto do que resta das forças de segurança oficiais.</p>
+  </div>
+
+  <div class="chapter" id="cap7">
+    <div class="chapter-label">Capítulo Sétimo</div>
+    <h2>A Paisagem Cotidiana</h2>
+    <span class="years">Situação atual</span>
+    <div class="ornament-small">❧</div>
+    <p class="first">Quem visita Ashgate pela primeira vez costuma notar, antes de qualquer outra coisa, o contraste. A região central — onde ainda opera o pouco de comércio legal que sobrou, e onde residem os poucos que enriqueceram administrando o que restou da cidade — mantém iluminação pública funcional, ruas relativamente limpas e uma aparência de normalidade que não se sustenta a mais de dez quarteirões de distância em qualquer direção.</p>
+    <p>Fora desse núcleo, a paisagem muda rápido. Prédios residenciais erguidos ainda no auge industrial permanecem ocupados muito além da capacidade e das condições para as quais foram projetados, muitos sem manutenção estrutural há décadas. Fiação elétrica exposta é comum. Vazamentos de água e esgoto raramente são reparados por qualquer autoridade pública, e passaram a ser resolvidos, quando resolvidos, por conta dos próprios moradores ou das organizações que controlam o território. Áreas inteiras permanecem sem iluminação pública funcional à noite, e não é incomum que letreiros comerciais de estabelecimentos fechados há anos continuem acesos de forma intermitente, ligados a fiação que ninguém se dá ao trabalho de desativar.</p>
+    <p>A poluição industrial acumulada ao longo de mais de um século de operação fabril nunca foi tratada de forma sistemática após o fechamento das fábricas, e determinadas regiões da cidade — sobretudo próximas aos antigos complexos metalúrgicos do norte — ainda apresentam índices de contaminação do solo e da água significativamente acima do que seria considerado seguro em qualquer outro contexto. A população residente nessas áreas raramente tem alternativa habitacional.</p>
+    <p>Incêndios em terrenos baldios, usados como forma improvisada de descarte de lixo pela ausência de coleta regular, são ocorrência comum o suficiente para não gerarem mais alarme entre os moradores. O mesmo vale para sirenes — de origem raramente identificável, já que tanto a segurança pública oficial quanto a segurança extraoficial das organizações que controlam o território fazem uso de veículos com equipamento semelhante.</p>
+    <p>Não existe, atualmente, nenhum levantamento oficial e atualizado sobre condições sanitárias, expectativa de vida ou indicadores básicos de qualidade de vida em Ashgate. A ausência desses dados é, para a maior parte dos pesquisadores que já tentaram reuni-los, tão reveladora quanto qualquer número que pudesse substituí-la.</p>
+  </div>
+
+  <div class="chapter" id="cap8">
+    <div class="chapter-label">Capítulo Oitavo</div>
+    <h2>A Questão da População em Situação de Rua</h2>
+    <span class="years">Situação atual</span>
+    <div class="ornament-small">❧</div>
+    <p class="first">Um fenômeno amplamente discutido, embora pouco documentado com rigor, é o crescimento acentuado da população em situação de rua em Ashgate nas últimas duas décadas, particularmente concentrado nos bairros de menor renda.</p>
+    <p>Parte considerável dessa discussão atribui o fenômeno a causas econômicas evidentes — o colapso industrial, a ausência de rede de assistência social funcional e a consequente falta de alternativas para famílias que dependiam da indústria já extinta. Essa é, de fato, a explicação predominante entre pesquisadores que já se debruçaram sobre o tema.</p>
+    <p>Ainda assim, há quem aponte inconsistências nessa leitura puramente econômica: o crescimento da população em situação de rua não acompanhou de forma proporcional os períodos de maior desemprego registrado, continuando a aumentar mesmo em anos de relativa estabilidade. Não existe, até o momento, nenhum estudo conclusivo sobre essa discrepância, e o tema permanece, na prática, sem investigação institucional ativa.</p>
+  </div>
+
+  <div class="chapter" id="cap9">
+    <div class="chapter-label">Capítulo Nono</div>
+    <h2>O Fenômeno Conhecido como "Despertar"</h2>
+    <span class="years">1978 até hoje</span>
+    <div class="ornament-small">❧</div>
+    <p class="first">Nos anos posteriores à Guerra Ferroviária, começaram a ser registrados na cidade casos do que a população local passou a chamar de Despertar: manifestações, em determinados indivíduos, de capacidades que extrapolam a compreensão médica ou científica convencional.</p>
+    <p>Não existe consenso oficial sobre a origem do fenômeno, tampouco qualquer estudo institucional que o tenha investigado de forma sistemática — em parte pela ausência de instituições de pesquisa funcionais na própria cidade, em parte pela desconfiança da população em relação a qualquer tentativa de catalogação oficial desses casos. Ainda assim, a explicação mais aceita entre quem acompanha o tema de perto está diretamente ligada à própria Guerra Ferroviária.</p>
+    <p>Durante a Guerra Ferroviária, ao menos duas das três organizações envolvidas fizeram uso de artefatos explosivos de fabricação improvisada, montados a partir de material obtido de instalações industriais desativadas — algumas delas antigas unidades ligadas ao processamento de minério e à produção de componentes eletrônicos, cujos resíduos nunca foram devidamente descartados após o fechamento das fábricas nas décadas anteriores. Relatos de sobreviventes descrevem ao menos três episódios, entre 1978 e 1979, em que esse tipo de artefato foi detonado em áreas densamente povoadas, liberando não apenas os efeitos imediatos da explosão, mas também contaminação de natureza ainda mal compreendida sobre os bairros atingidos.</p>
+    <p>A hipótese mais repetida — sem respaldo científico formal, mas amplamente aceita na ausência de qualquer alternativa mais convincente — é a de que a exposição a essa contaminação, direta ou por meio de gerações seguintes nascidas em áreas afetadas, tenha alterado algo na fisiologia de parte da população de Ashgate, tornando possível a manifestação do Despertar. Essa hipótese ganhou força adicional pelo fato de que a concentração de casos registrados é notavelmente mais alta em bairros próximos aos locais das detonações — padrão que, apesar de nunca ter sido submetido a um levantamento estatístico formal, é amplamente reconhecido de forma anedótica pela população local.</p>
+    <p>O que se sabe com mais segurança é o padrão de manifestação em si: o Despertar costuma emergir associado a um momento de ruptura pessoal significativa — perda, violência extrema ou convicção levada a um ponto limite —, e a capacidade manifestada tende a refletir de forma bastante específica alguma característica central de quem a manifesta. Por essa razão, nenhum caso registrado até hoje é idêntico a outro, mesmo entre indivíduos expostos à mesma área contaminada: a contaminação parece ter tornado o fenômeno possível, mas não determina sua forma final, que segue sendo, aparentemente, produto de cada indivíduo.</p>
+  </div>
+
+  <div class="closing">
+    <div class="ornament"></div>
+    <p>Este documento reúne informações de fontes diversas — registros municipais parcialmente preservados, depoimentos orais e reportagens de veículos locais hoje extintos — e não deve ser tomado como registro histórico definitivo.<br><br>Parte significativa dos arquivos oficiais de Ashgate foi perdida no incêndio de 1980.</p>
+  </div>
 
 </div>
-
 </body>
 </html>

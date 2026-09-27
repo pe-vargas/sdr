@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ficha de Personagem — Spina di Rosula</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
+
+:root{
+  --paper:#e7e3d6; --paper-light:#f1eee2; --ink:#1c1a16;
+  --stamp-red:#a3271f; --stamp-purple:#4b3e6b; --rule:#8a8471;
+  --field-bg:#dcd7c6; --night:#100e0b;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0; background:var(--night); font-family:'IBM Plex Mono', monospace;
+  color:var(--ink); display:flex; min-height:100vh;
+}
+
+/* ---------- sidebar nav ---------- */
+nav{
+  width:220px; flex-shrink:0; background:var(--paper-light); border-right:1px solid var(--rule);
+  padding:20px 14px; position:sticky; top:0; height:100vh; overflow-y:auto;
+}
+nav .navtitle{font-family:'Courier Prime',monospace; font-weight:700; font-size:13px; letter-spacing:1px; margin-bottom:14px; color:var(--stamp-purple);}
+nav a{
+  display:block; font-size:11px; text-decoration:none; color:var(--ink); padding:6px 8px;
+  border-left:2px solid transparent; margin-bottom:2px;
+}
+nav a:hover{border-left-color:var(--stamp-red); background:var(--field-bg);}
+
+/* ---------- toolbar ---------- */
+.toolbar{
+  background:var(--paper-light); border-bottom:1px solid var(--rule);
+  padding:12px 16px; display:flex; flex-wrap:wrap; align-items:flex-end; gap:12px; font-size:11px;
+}
+.toolbar .tgroup{display:flex; flex-direction:column; gap:4px;}
+.toolbar label{font-size:9px; letter-spacing:1px; text-transform:uppercase; color:var(--stamp-purple); font-weight:700;}
+.toolbar input, .toolbar select{
+  font-family:'IBM Plex Mono', monospace; font-size:12px; padding:6px 8px; border:1px solid var(--rule);
+  background:var(--paper); min-width:150px;
+}
+.toolbar button{
+  font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:700; letter-spacing:0.4px; text-transform:uppercase;
+  padding:8px 12px; border:1px solid var(--ink); background:var(--ink); color:var(--paper-light); cursor:pointer;
+}
+.toolbar button.secondary{background:var(--paper); color:var(--ink);}
+.toolbar button:hover{opacity:0.85;}
+.toolbar .status{font-size:10px; color:var(--stamp-red); align-self:center; min-height:12px;}
+
+/* ---------- main doc ---------- */
+main{flex:1; display:flex; flex-direction:column;}
+.docwrap{flex:1; padding:32px 20px 90px; display:flex; justify-content:center;}
+.doc{max-width:760px; width:100%; background:var(--paper); border:1px solid #55503f; box-shadow:0 30px 70px rgba(0,0,0,0.6);}
+
+.cover{padding:22px 34px 18px; border-bottom:3px double var(--ink); position:relative;}
+.org-line{font-size:10px; letter-spacing:2.5px; text-transform:uppercase; color:var(--stamp-purple); font-weight:700;}
+.doc-title{font-family:'Courier Prime',monospace; font-weight:700; font-size:26px; letter-spacing:1px; margin:4px 0 2px;}
+.doc-sub{font-size:12px; color:#4a463a;}
+.meta-row{margin-top:14px; display:grid; grid-template-columns:repeat(3,1fr); gap:0; border:1px solid var(--rule);}
+.meta-cell{padding:6px 10px; border-right:1px solid var(--rule);}
+.meta-cell:last-child{border-right:none;}
+.meta-cell .k{font-size:8.5px; letter-spacing:1px; text-transform:uppercase; color:var(--stamp-purple); font-weight:700;}
+.meta-cell input{width:100%; border:none; background:transparent; font-family:'IBM Plex Mono',monospace; font-size:13px; padding:2px 0 0; color:var(--ink);}
+.meta-cell input:focus{outline:none;}
+
+.field{padding:16px 34px; border-bottom:1px solid var(--rule);}
+.field-num{display:inline-block; font-family:'Courier Prime', monospace; font-weight:700; font-size:11px; color:var(--paper-light); background:var(--ink); padding:2px 7px; margin-right:8px;}
+.field-title{font-family:'Courier Prime', monospace; font-weight:700; font-size:13px; letter-spacing:1.5px; text-transform:uppercase; display:flex; align-items:center; gap:2px; margin-bottom:12px; cursor:default;}
+summary.field-title{cursor:pointer; list-style:none;}
+summary.field-title::-webkit-details-marker{display:none;}
+summary.field-title::after{content:"[ − ]"; margin-left:auto; font-size:10px; color:var(--stamp-purple);}
+details:not([open]) summary.field-title::after{content:"[ + ]";}
+
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+.grid3{display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px;}
+.lline{display:flex; flex-direction:column; gap:3px;}
+.lline label{font-size:9px; letter-spacing:1px; text-transform:uppercase; color:var(--stamp-purple); font-weight:700;}
+.lline input, .lline textarea, .lline select{
+  font-family:'IBM Plex Mono',monospace; font-size:13px; background:var(--field-bg); border:none;
+  border-bottom:1px solid var(--rule); padding:6px 6px; color:var(--ink);
+}
+.lline input:focus, .lline textarea:focus{outline:1px solid var(--stamp-purple);}
+
+.attrs{display:grid; grid-template-columns:repeat(6,1fr); gap:10px;}
+.attr-box{background:var(--field-bg); border:1px solid var(--rule); text-align:center; padding:8px 4px 10px;}
+.attr-box .lbl{font-size:8.5px; letter-spacing:0.5px; text-transform:uppercase; color:var(--stamp-purple); font-weight:700;}
+.attr-box input{width:100%; text-align:center; font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:20px; border:none; background:transparent; padding:4px 0 0; color:var(--ink);}
+.attr-box .mod{font-size:10px; opacity:0.7; margin-top:2px;}
+.attr-sum{font-size:10px; margin-top:8px; color:var(--stamp-purple);}
+.attr-sum.bad{color:var(--stamp-red); font-weight:700;}
+.attr-sum.ok{color:#33691e; font-weight:700;}
+
+.skills{border:1px solid var(--rule);}
+.skill-row{display:grid; grid-template-columns:22px 1fr 34px 44px; align-items:center; gap:8px; padding:5px 10px; border-bottom:1px solid var(--rule); font-size:12.5px;}
+.skill-row:last-child{border-bottom:none;}
+.skill-row input[type=checkbox]{appearance:none; width:13px; height:13px; border:1.5px solid var(--ink); background:var(--field-bg); cursor:pointer;}
+.skill-row input[type=checkbox]:checked{background:var(--stamp-red); border-color:var(--stamp-red);}
+.skill-row .satr{font-size:9px; color:var(--stamp-purple); font-weight:700;}
+.skill-row input[type=text]{width:100%; text-align:center; border:none; border-bottom:1px solid var(--rule); background:transparent; font-family:'IBM Plex Mono',monospace; font-size:12px;}
+
+.meter{background:var(--field-bg); border:1px solid var(--rule); padding:10px 12px;}
+.meter .lbl{font-size:9px; letter-spacing:1px; text-transform:uppercase; color:var(--stamp-purple); font-weight:700; display:flex; justify-content:space-between;}
+.pips{display:flex; gap:5px; flex-wrap:wrap; margin-top:8px;}
+.pip{width:15px; height:15px; border:1.5px solid var(--ink); cursor:pointer; background:var(--paper);}
+.pip.on{background:var(--stamp-red); border-color:var(--stamp-red);}
+.pip.fatal{border-color:var(--stamp-purple);}
+.pip.fatal.on{background:var(--stamp-purple);}
+.wound-tier{display:flex; align-items:center; gap:8px; font-size:10.5px; margin-top:6px; text-transform:uppercase; font-weight:700; color:#4a463a;}
+.wound-tier .lab{width:44px;}
+
+.power-uses{display:flex; gap:8px; margin-top:6px;}
+.use-box{width:24px;height:24px; border:2px solid var(--ink); display:flex;align-items:center;justify-content:center; font-family:'IBM Plex Mono',monospace; cursor:pointer; background:var(--paper);}
+.use-box.on{background:var(--stamp-purple); border-color:var(--stamp-purple); color:var(--paper-light);}
+
+table.equip{width:100%; border-collapse:collapse; font-size:12px;}
+table.equip th{font-size:9px; letter-spacing:0.5px; text-transform:uppercase; color:var(--stamp-purple); text-align:left; border-bottom:2px solid var(--ink); padding:5px 6px;}
+table.equip td{padding:4px 6px; border-bottom:1px solid var(--rule);}
+table.equip input{border:none; background:transparent; font-family:'IBM Plex Mono',monospace; font-size:12px; width:100%;}
+
+.notes-area{width:100%; min-height:80px; resize:vertical; background:var(--field-bg); border:1px solid var(--rule); padding:8px; font-family:'IBM Plex Mono',monospace; font-size:12.5px;}
+
+.doc-foot{padding:14px 34px 22px; display:flex; justify-content:space-between; font-size:9px; letter-spacing:0.5px; color:var(--stamp-purple); text-transform:uppercase; font-weight:700;}
+
+@media (max-width:860px){
+  body{flex-direction:column;}
+  nav{width:100%; height:auto; position:relative; border-right:none; border-bottom:1px solid var(--rule);}
+  .docwrap{padding:16px 10px 60px;}
+  .field{padding:12px 16px;}
+  .cover{padding:16px 16px 12px;}
+  .doc-title{font-size:20px;}
+  .attrs{grid-template-columns:repeat(3,1fr);}
+  .grid2, .grid3{grid-template-columns:1fr;}
+  .meta-row{grid-template-columns:1fr;}
+  .meta-cell{border-right:none; border-bottom:1px solid var(--rule);}
+  .skill-row{grid-template-columns:20px 1fr 30px 38px; font-size:11.5px;}
+  .toolbar{flex-direction:column; align-items:stretch;}
+  .toolbar input, .toolbar select{min-width:0; width:100%;}
+}
+@media print{
+  nav{display:none;}
+  .toolbar{display:none;}
+  body{background:#fff;}
+  .doc{box-shadow:none; border:none;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="navtitle">SUMÁRIO</div>
+  <a href="index.html">· Página Inicial ·</a>
+  <a href="#c01">01 · Identificação</a>
+  <a href="#c02">02 · Filiação e Progressão</a>
+  <a href="#c03">03 · Atributos</a>
+  <a href="#c04">04 · Perícias</a>
+  <a href="#c05">05 · Condição de Combate</a>
+  <a href="#c06">06 · Poder Manifesto</a>
+  <a href="#c07">07 · Equipamento</a>
+  <a href="#c08">08 · Vínculo com a Gangue</a>
+  <a href="#c09">09 · Observações</a>
+</nav>
+
+<main>
+  <div class="toolbar no-print">
+    <div class="tgroup">
+      <label>Ficha salva neste navegador</label>
+      <select id="slotList"><option value="">— nova ficha —</option></select>
+    </div>
+    <div class="tgroup">
+      <label>Nome pra salvar</label>
+      <input type="text" id="slotName" placeholder="ex: Rose Belladonna">
+    </div>
+    <button id="btnSave">Salvar</button>
+    <button id="btnLoad" class="secondary">Carregar</button>
+    <button id="btnNew" class="secondary">Ficha em Branco</button>
+    <button id="btnDownload" class="secondary">Baixar .html editável</button>
+    <button id="btnExportJson" class="secondary">Exportar .json</button>
+    <button id="btnImportJson" class="secondary">Importar .json</button>
+    <input type="file" id="importFile" accept=".json" style="display:none;">
+    <button id="btnLock" class="secondary">🔒 Travar Ficha</button>
+    <span class="status" id="saveStatus"></span>
+  </div>
+
+  <div class="docwrap">
+  <div class="doc">
+
+    <div class="cover">
+      <div class="org-line">Ficha de Personagem</div>
+      <div class="doc-title">SPINA DI ROSULA</div>
+      <div class="doc-sub">Le Voleur — Registro Interno de Membro</div>
+    </div>
+
+    <div class="field" id="c01">
+      <div class="field-title"><span class="field-num">01</span> Identificação</div>
+      <div style="display:grid; grid-template-columns:110px 1fr; gap:16px;">
+        <div>
+          <div id="photoBox" style="width:110px; height:130px; border:1.5px dashed var(--rule); background:var(--field-bg); display:flex; align-items:center; justify-content:center; cursor:pointer; overflow:hidden; text-align:center; font-size:9px; color:var(--stamp-purple); text-transform:uppercase; letter-spacing:0.5px; padding:6px;">
+            Clique p/ adicionar foto
+          </div>
+          <input type="file" id="photoInput" accept="image/*" style="display:none;">
+          <button type="button" id="btnRemovePhoto" class="secondary" style="margin-top:6px; font-size:9px; padding:5px 6px; width:110px; font-family:'IBM Plex Mono',monospace; border:1px solid var(--ink); background:var(--paper); cursor:pointer;">Remover foto</button>
+        </div>
+        <div class="grid3" style="grid-template-columns:1fr 1fr; align-content:start;">
+          <div class="lline"><label>Nome / Codinome</label><input type="text" placeholder="Como te chamam na rua"></div>
+          <div class="lline">
+            <label>Origem</label>
+            <select id="originSelect">
+              <option value="">— selecione —</option>
+              <option value="ex-detento">Ex-detento</option>
+              <option value="comerciante">Filho de Comerciante</option>
+              <option value="orfao">Órfão de Rua</option>
+              <option value="informante">Ex-policial/Informante</option>
+              <option value="nascido">Nascido na Gangue</option>
+              <option value="autodidata">Autodidata/Fugido da Escola</option>
+              <option value="bracal">Trabalhador Braçal</option>
+              <option value="trapaceiro">Trapaceiro de Rua</option>
+            </select>
+          </div>
+          <div class="lline" style="grid-column:1/-1;"><label>Posto</label><input type="text" placeholder="Recruta"></div>
+          <div class="attr-sum" id="originEffectLabel" style="grid-column:1/-1;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="field" id="c02">
+      <div class="field-title"><span class="field-num">02</span> Filiação e Progressão</div>
+      <div class="grid3">
+        <div class="lline"><label>Categoria de Poder</label><input type="text" placeholder="Verdade, Corpo, Vínculo..."></div>
+        <div class="lline"><label>Nível</label><input type="text" id="levelInput" placeholder="1" value="1"></div>
+        <div class="lline"><label>XP Atual</label><input type="text" id="xpInput" placeholder="0" value="0"></div>
+      </div>
+      <div class="grid3" style="margin-top:12px;">
+        <div class="lline"><label>Calibre</label><input type="text" id="profBonus" placeholder="2" value="2"></div>
+        <div class="lline">
+          <label>Especialização de Combate</label>
+          <select id="specSelect">
+            <option value="">— nenhuma —</option>
+            <option value="combatente">Combatente (força física)</option>
+            <option value="pistoleiro">Pistoleiro (pistolas/escopetas)</option>
+            <option value="atirador">Atirador (armas pesadas/distância)</option>
+          </select>
+        </div>
+        <div class="lline"><label>Progresso até o próx. nível</label><input type="text" id="xpNextLabel" readonly></div>
+      </div>
+      <div class="attr-sum" id="specEffectLabel" style="margin-top:10px;"></div>
+    </div>
+
+    <details class="field" id="c03" open>
+      <summary class="field-title"><span class="field-num">03</span> Atributos</summary>
+      <div class="attrs">
+        <div class="attr-box" data-attr="FOR"><div class="lbl">Força</div><input type="text" class="attr-score"><div class="mod">mod. —</div></div>
+        <div class="attr-box" data-attr="DES"><div class="lbl">Destreza</div><input type="text" class="attr-score"><div class="mod">mod. —</div></div>
+        <div class="attr-box" data-attr="CON"><div class="lbl">Constituição</div><input type="text" class="attr-score"><div class="mod">mod. —</div></div>
+        <div class="attr-box" data-attr="INT"><div class="lbl">Inteligência</div><input type="text" class="attr-score"><div class="mod">mod. —</div></div>
+        <div class="attr-box" data-attr="SAB"><div class="lbl">Sabedoria</div><input type="text" class="attr-score"><div class="mod">mod. —</div></div>
+        <div class="attr-box" data-attr="CAR"><div class="lbl">Carisma</div><input type="text" class="attr-score"><div class="mod">mod. —</div></div>
+      </div>
+      <div class="attr-sum" id="attrSumStatus">Soma: — / 74</div>
+    </details>
+
+    <details class="field" id="c04" open>
+      <summary class="field-title"><span class="field-num">04</span> Perícias</summary>
+      <div class="skills">
+        <div class="skill-row" data-attr="FOR" data-physical="1"><input type="checkbox"><span>Vigor</span><span class="satr">FOR</span><input type="text" class="skill-bonus" readonly></div>
+        <div class="skill-row" data-attr="DES" data-physical="1"><input type="checkbox"><span>Furtividade</span><span class="satr">DES</span><input type="text" class="skill-bonus" readonly></div>
+        <div class="skill-row" data-attr="DES" data-physical="1"><input type="checkbox"><span>Equilíbrio</span><span class="satr">DES</span><input type="text" class="skill-bonus" readonly></div>
+        <div class="skill-row" data-attr="DES" data-physical="1"><input type="checkbox"><span>Roubo</span><span class="satr">DES</span><input type="text" class="skill-bonus" readonly></div>
+        <div class="skill-row" data-attr="INT"><input type="checkbox"><span>Faro</span><span class="satr">INT</span><input type="text" class="skill-bonus" readonly></div>
+        <div class="skill-row" data-attr="INT"><input type="checkbox" checked><span>Manha de Rua</span><span class="satr">INT</span><input type="text" class="skill-bonus" readonly></div>
+        <div class="skill-row" data-attr="INT"><input type="checkbox"><span>Mecânica</span><span class="satr">INT</span><input type="text" class="skill-bonus" readonly></div>
+        <div class="skill-row" data-attr="SAB"><input type="checkbox"><span>Alerta</span><span class="satr">SAB</span><input type="text" class="skill-bonus" readonly></div>
+        <div class="skill-row" data-attr="SAB"><input type="checkbox"><span>Leitura</span><span class="satr">SAB</span><input type="text" class="skill-bonus" readonly></div>
+        <div class="skill-row" data-attr="SAB"><input type="checkbox"><span>Resistência</span><span class="satr">SAB</span><input type="text" class="skill-bonus" readonly></div>
+        <div class="skill-row" data-attr="CAR"><input type="checkbox"><span>Lábia</span><span class="satr">CAR</span><input type="text" class="skill-bonus" readonly></div>
+        <div class="skill-row" data-attr="CAR"><input type="checkbox"><span>Ameaça</span><span class="satr">CAR</span><input type="text" class="skill-bonus" readonly></div>
+        <div class="skill-row" data-attr="CAR"><input type="checkbox"><span>Disfarce</span><span class="satr">CAR</span><input type="text" class="skill-bonus" readonly></div>
+        <div class="skill-row" data-attr="CAR"><input type="checkbox"><span>Presença</span><span class="satr">CAR</span><input type="text" class="skill-bonus" readonly></div>
+      </div>
+      <div class="attr-sum" id="woundPenaltyLabel"></div>
+    </details>
+
+    <div class="field" id="c05">
+      <div class="field-title"><span class="field-num">05</span> Condição de Combate</div>
+      <div class="grid3">
+        <div class="meter">
+          <div class="lbl">Defesa / CA</div>
+          <input type="text" id="caValue" readonly style="font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:20px; border:none; background:transparent; width:60px; margin-top:6px;">
+          <div style="margin-top:8px;">
+            <label style="font-size:9px; text-transform:uppercase; color:var(--stamp-purple); font-weight:700;">Proteção</label><br>
+            <input type="text" id="caArmor" value="0" style="font-family:'IBM Plex Mono',monospace; font-size:13px; width:50px; margin-top:2px;">
+          </div>
+        </div>
+        <div class="meter">
+          <div class="lbl">HP <span id="hpLabel">— / —</span></div>
+          <div class="pips" id="hp"></div>
+          <button type="button" id="btnHealAll" class="secondary" style="margin-top:8px; font-size:9px; padding:5px 8px; font-family:'IBM Plex Mono',monospace; border:1px solid var(--ink); background:var(--paper); cursor:pointer;">Curar Tudo</button>
+        </div>
+        <div class="meter">
+          <div class="lbl">Ferida</div>
+          <div class="wound-tier"><span class="lab">Leve</span><div class="pips"><div class="pip" id="woundLeve"></div></div></div>
+          <div class="wound-tier"><span class="lab">Grave</span><div class="pips"><div class="pip" id="woundGrave"></div></div></div>
+          <div class="wound-tier"><span class="lab">Fatal</span><div class="pips"><div class="pip fatal" id="woundFatal"></div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="field" id="c06">
+      <div class="field-title"><span class="field-num">06</span> Poder Manifesto</div>
+      <div class="grid2">
+        <div>
+          <div class="lline"><label>Nome do Poder</label><input type="text" placeholder='ex: "Mrs. Dalloway"'></div>
+          <div class="lline" style="margin-top:10px;"><label>Autor / Obra de Referência</label><input type="text" placeholder="ex: Virginia Woolf"></div>
+          <div class="lline" style="margin-top:10px;"><label>Efeito</label><textarea rows="3" placeholder="O que o poder faz, mecanicamente"></textarea></div>
+        </div>
+        <div>
+          <label style="font-size:9px; letter-spacing:1px; text-transform:uppercase; color:var(--stamp-purple); font-weight:700;">Usos (4 por descanso curto)</label>
+          <div class="power-uses">
+            <div class="use-box"></div><div class="use-box"></div><div class="use-box"></div><div class="use-box"></div>
+          </div>
+          <div class="lline" style="margin-top:14px;"><label>Origem do Poder</label><textarea rows="4" placeholder="O trauma/desejo/crença que deu forma ao poder"></textarea></div>
+        </div>
+      </div>
+    </div>
+
+    <details class="field" id="c07" open>
+      <summary class="field-title"><span class="field-num">07</span> Equipamento Registrado</summary>
+      <table class="equip">
+        <thead><tr><th>Item</th><th>Categoria</th><th>Dano</th><th>Notas</th></tr></thead>
+        <tbody>
+          <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+          <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+          <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+          <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+        </tbody>
+      </table>
+    </details>
+
+    <details class="field" id="c08" open>
+      <summary class="field-title"><span class="field-num">08</span> Vínculo com a Organização</summary>
+      <div class="grid2">
+        <div>
+          <label style="font-size:9px; letter-spacing:1px; text-transform:uppercase; color:var(--stamp-purple); font-weight:700;">Reputação da Gangue (0–5)</label>
+          <div class="pips" style="margin-top:6px;">
+            <div class="pip"></div><div class="pip"></div><div class="pip"></div><div class="pip"></div><div class="pip"></div>
+          </div>
+        </div>
+        <div class="lline"><label>Respeito Pessoal</label><input type="text" placeholder="0"></div>
+      </div>
+      <div class="lline" style="margin-top:14px;"><label>Zonas Controladas</label><textarea class="notes-area" placeholder="Esconderijo, Fonte de Renda, Rede de Contatos, Arsenal..."></textarea></div>
+    </details>
+
+    <details class="field" id="c09" style="border-bottom:none;">
+      <summary class="field-title"><span class="field-num">09</span> Observações Adicionais</summary>
+      <textarea class="notes-area" style="min-height:110px;"></textarea>
+    </details>
+
+  </div>
+  </div>
+</main>
+
+<script>
+function attrMod(score){
+  const n = parseInt(score, 10);
+  if(isNaN(n)) return null;
+  return Math.floor((n - 10) / 2);
+}
+function fmtMod(n){ return n === null ? '—' : (n >= 0 ? '+' + n : String(n)); }
+
+let hpUsed = 0;
+function currentHPMax(){
+  const conMod = attrMod(document.querySelector('.attr-box[data-attr="CON"] .attr-score').value) ?? 0;
+  const forMod = attrMod(document.querySelector('.attr-box[data-attr="FOR"] .attr-score').value) ?? 0;
+  const vigorRow = [...document.querySelectorAll('.skill-row')].find(r=> r.querySelector('span:not(.satr)').textContent === 'Vigor');
+  const trained = vigorRow ? vigorRow.querySelector('input[type=checkbox]').checked : false;
+  const calibre = parseInt(document.getElementById('profBonus').value,10) || 0;
+  const vigorBonus = forMod + (trained ? calibre : 0);
+  return Math.max(1, 10 + conMod + vigorBonus);
+}
+function renderHP(){
+  const max = currentHPMax();
+  hpUsed = Math.min(hpUsed, max);
+  const cont = document.getElementById('hp');
+  cont.innerHTML = '';
+  for(let i=0;i<max;i++){
+    const p = document.createElement('div');
+    p.className = 'pip' + (i < hpUsed ? ' on' : '');
+    p.addEventListener('click', ()=>{
+      hpUsed = (i < hpUsed) ? i : i+1;
+      renderHP();
+      autoSave();
+    });
+    cont.appendChild(p);
+  }
+  document.getElementById('hpLabel').textContent = (max-hpUsed) + ' / ' + max;
+}
+document.getElementById('btnHealAll').addEventListener('click', ()=>{ hpUsed = 0; renderHP(); autoSave(); });
+
+const XP_TABLE = [0,300,900,2000,3500,5500,8000,11000,15000,20000];
+function updateXpNext(){
+  const lvl = Math.max(1, Math.min(10, parseInt(document.getElementById('levelInput').value,10) || 1));
+  const xp = parseInt(document.getElementById('xpInput').value,10) || 0;
+  const label = document.getElementById('xpNextLabel');
+  if(lvl >= 10){ label.value = 'Nível máximo'; return; }
+  const need = XP_TABLE[lvl] - xp;
+  label.value = need > 0 ? ('Faltam ' + need + ' XP p/ nível ' + (lvl+1)) : 'Pronto p/ subir de nível';
+}
+
+const ORIGIN_DATA = {
+  'ex-detento': {skill:'Ameaça', text:'Ex-detento: proficiência em Ameaça. Reputação temida — quem sabe do seu passado hesita em te desafiar.'},
+  'comerciante': {skill:'Lábia', text:'Filho de Comerciante: proficiência em Lábia. Começa com mais dinheiro/contatos comerciais.'},
+  'orfao': {skill:'Furtividade', text:'Órfão de Rua: proficiência em Furtividade. Vantagem em perseguições urbanas.'},
+  'informante': {skill:'Faro', text:'Ex-policial/Informante: proficiência em Faro. Tem 1 contato dentro da polícia.'},
+  'nascido': {skill:'Manha de Rua', text:'Nascido na Gangue: proficiência em Manha de Rua. Reputação inicial mais alta na facção.'},
+  'autodidata': {skill:'Mecânica', text:'Autodidata/Fugido da Escola: proficiência em Mecânica. Lê documentos complexos com facilidade.'},
+  'bracal': {skill:'Vigor', text:'Trabalhador Braçal: proficiência em Vigor. Aguenta trabalho físico extremo sem penalidade.'},
+  'trapaceiro': {skill:'Disfarce', text:'Trapaceiro de Rua: proficiência em Disfarce. Se passa por outra pessoa com muito mais facilidade.'}
+};
+let lastOriginSkillChecked = null;
+function applyOriginSkill(value){
+  if(lastOriginSkillChecked){
+    const prevRow = [...document.querySelectorAll('.skill-row')].find(r=> r.querySelector('span:not(.satr)').textContent === lastOriginSkillChecked);
+    if(prevRow) prevRow.querySelector('input[type=checkbox]').dataset.fromOrigin = '';
+  }
+  const data = ORIGIN_DATA[value];
+  document.getElementById('originEffectLabel').textContent = data ? data.text : '';
+  if(data){
+    const row = [...document.querySelectorAll('.skill-row')].find(r=> r.querySelector('span:not(.satr)').textContent === data.skill);
+    if(row){
+      const cb = row.querySelector('input[type=checkbox]');
+      cb.checked = true;
+      cb.dataset.fromOrigin = '1';
+    }
+    lastOriginSkillChecked = data.skill;
+  } else {
+    lastOriginSkillChecked = null;
+  }
+  recalcAll();
+}
+document.getElementById('originSelect').addEventListener('change', (e)=>{ applyOriginSkill(e.target.value); autoSave(); });
+
+let photoDataUrl = '';
+const photoBox = document.getElementById('photoBox');
+photoBox.addEventListener('click', ()=> document.getElementById('photoInput').click());
+document.getElementById('photoInput').addEventListener('change', (e)=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = ()=>{
+    photoDataUrl = reader.result;
+    photoBox.style.backgroundImage = 'url(' + photoDataUrl + ')';
+    photoBox.style.backgroundSize = 'cover';
+    photoBox.style.backgroundPosition = 'center';
+    photoBox.textContent = '';
+    autoSave();
+  };
+  reader.readAsDataURL(file);
+  e.target.value = '';
+});
+document.getElementById('btnRemovePhoto').addEventListener('click', ()=>{
+  photoDataUrl = '';
+  photoBox.style.backgroundImage = '';
+  photoBox.textContent = 'Clique p/ adicionar foto';
+  autoSave();
+});
+
+const SPEC_EFFECTS = {
+  combatente: 'Combatente: +1 no dano com Armas Brancas e Armas de Impacto · Vantagem em Vigor pra lutar desarmado ou desarmar um oponente.',
+  pistoleiro: 'Pistoleiro: recarregar arma leve não gasta Ação (usa a Ação Bônus) · Vantagem no primeiro ataque de cada combate com arma leve.',
+  atirador: 'Atirador: ignora penalidade de mira contra alvo em movimento ou parcialmente coberto · Vantagem em ataques contra alvo a mais de 15m.'
+};
+function updateSpecEffect(){
+  const val = document.getElementById('specSelect').value;
+  document.getElementById('specEffectLabel').textContent = SPEC_EFFECTS[val] || '';
+}
+document.getElementById('specSelect').addEventListener('change', ()=>{ updateSpecEffect(); autoSave(); });
+
+function recalcAll(){
+  const mods = {};
+  document.querySelectorAll('.attr-box').forEach(box=>{
+    const attr = box.dataset.attr;
+    const m = attrMod(box.querySelector('.attr-score').value);
+    mods[attr] = m;
+    box.querySelector('.mod').textContent = 'mod. ' + fmtMod(m);
+  });
+
+  const sumEl = document.getElementById('attrSumStatus');
+  const scores = [...document.querySelectorAll('.attr-score')].map(el=>parseInt(el.value,10));
+  if(scores.every(n=>!isNaN(n))){
+    const sum = scores.reduce((a,b)=>a+b,0);
+    sumEl.textContent = 'Soma: ' + sum + ' / 74' + (sum===74 ? '  \u2713 válido' : '  \u26A0 não bate com o array padrão');
+    sumEl.className = 'attr-sum ' + (sum===74 ? 'ok' : 'bad');
+  } else {
+    sumEl.textContent = 'Soma: — / 74';
+    sumEl.className = 'attr-sum';
+  }
+
+  const prof = parseInt(document.getElementById('profBonus').value, 10) || 0;
+  const woundGrave = document.getElementById('woundGrave').classList.contains('on');
+  const woundLeve = document.getElementById('woundLeve').classList.contains('on');
+  const woundPenalty = woundGrave ? -4 : (woundLeve ? -2 : 0);
+  document.getElementById('woundPenaltyLabel').textContent = woundPenalty !== 0
+    ? ('Penalidade de Ferida ativa: ' + woundPenalty + ' em perícias físicas (Força/Destreza)')
+    : '';
+
+  document.querySelectorAll('.skill-row').forEach(row=>{
+    const attr = row.dataset.attr;
+    const m = mods[attr];
+    const trained = row.querySelector('input[type=checkbox]').checked;
+    const bonusField = row.querySelector('.skill-bonus');
+    if(m === null){ bonusField.value = ''; return; }
+    const physical = row.dataset.physical === '1';
+    bonusField.value = fmtMod(m + (trained ? prof : 0) + (physical ? woundPenalty : 0));
+  });
+
+  const armor = parseInt(document.getElementById('caArmor').value, 10) || 0;
+  document.getElementById('caValue').value = 10 + (mods['DES'] ?? 0) + armor;
+
+  updateXpNext();
+  renderHP();
+  updateSpecEffect();
+}
+
+document.querySelectorAll('.attr-score, #profBonus, #caArmor, #levelInput, #xpInput').forEach(el=>{
+  el.addEventListener('input', ()=>{ recalcAll(); autoSave(); });
+});
+document.querySelectorAll('.skill-row input[type=checkbox]').forEach(el=> el.addEventListener('change', ()=>{ recalcAll(); autoSave(); }));
+[document.getElementById('woundLeve'), document.getElementById('woundGrave'), document.getElementById('woundFatal')].forEach(el=>{
+  el.addEventListener('click', ()=>{ el.classList.toggle('on'); recalcAll(); autoSave(); });
+});
+document.querySelectorAll('.use-box').forEach(p=>{
+  p.addEventListener('click', ()=>{ p.classList.toggle('on'); autoSave(); });
+});
+
+const PREFIX = 'levoleur-relatorio:';
+const FIELD_SEL = '.doc input[type=text], .doc textarea';
+const TOGGLE_SEL = '.doc .pip, .doc .use-box';
+const CHECK_SEL = '.doc input[type=checkbox]';
+
+function getState(){
+  return {
+    text: [...document.querySelectorAll(FIELD_SEL)].map(el => el.value),
+    toggle: [...document.querySelectorAll(TOGGLE_SEL)].map(el => el.classList.contains('on')),
+    check: [...document.querySelectorAll(CHECK_SEL)].map(el => el.checked),
+    hpUsed: hpUsed,
+    spec: document.getElementById('specSelect').value,
+    origin: document.getElementById('originSelect').value,
+    photo: photoDataUrl
+  };
+}
+function applyState(state){
+  if(!state) return;
+  document.querySelectorAll(FIELD_SEL).forEach((el,i)=> el.value = state.text?.[i] ?? '');
+  document.querySelectorAll(CHECK_SEL).forEach((el,i)=> el.checked = !!state.check?.[i]);
+  hpUsed = state.hpUsed || 0;
+  document.getElementById('specSelect').value = state.spec || '';
+  document.getElementById('originSelect').value = state.origin || '';
+  applyOriginSkill(state.origin || '');
+  photoDataUrl = state.photo || '';
+  if(photoDataUrl){
+    photoBox.style.backgroundImage = 'url(' + photoDataUrl + ')';
+    photoBox.style.backgroundSize = 'cover';
+    photoBox.style.backgroundPosition = 'center';
+    photoBox.textContent = '';
+  } else {
+    photoBox.style.backgroundImage = '';
+    photoBox.textContent = 'Clique p/ adicionar foto';
+  }
+  recalcAll();
+  document.querySelectorAll(TOGGLE_SEL).forEach((el,i)=>{
+    if(el.closest('#hp')) return;
+    el.classList.toggle('on', !!state.toggle?.[i]);
+  });
+}
+function listSlots(){ return Object.keys(localStorage).filter(k=>k.startsWith(PREFIX)).map(k=>k.slice(PREFIX.length)).sort(); }
+function refreshSlotList(selected){
+  const sel = document.getElementById('slotList');
+  sel.innerHTML = '<option value="">— nova ficha —</option>';
+  listSlots().forEach(name=>{
+    const opt = document.createElement('option'); opt.value = name; opt.textContent = name;
+    if(name === selected) opt.selected = true;
+    sel.appendChild(opt);
+  });
+}
+function currentSlotName(){ return document.getElementById('slotName').value.trim(); }
+function setStatus(msg){
+  const s = document.getElementById('saveStatus'); s.textContent = msg;
+  setTimeout(()=>{ if(s.textContent===msg) s.textContent=''; }, 2500);
+}
+function saveTo(name){
+  if(!name){ setStatus('Dê um nome pra ficha antes de salvar.'); return; }
+  localStorage.setItem(PREFIX+name, JSON.stringify(getState()));
+  refreshSlotList(name); setStatus('Salvo: '+name);
+}
+function loadFrom(name){
+  if(!name){ setStatus('Escolha uma ficha salva.'); return; }
+  const raw = localStorage.getItem(PREFIX+name);
+  if(!raw){ setStatus('Ficha não encontrada.'); return; }
+  applyState(JSON.parse(raw));
+  document.getElementById('slotName').value = name;
+  setStatus('Carregado: '+name);
+}
+let autoSaveTimer=null;
+function autoSave(){
+  const name = currentSlotName();
+  if(!name) return;
+  clearTimeout(autoSaveTimer);
+  autoSaveTimer = setTimeout(()=> saveTo(name), 500);
+}
+document.getElementById('btnSave').addEventListener('click', ()=> saveTo(currentSlotName()));
+document.getElementById('btnLoad').addEventListener('click', ()=> loadFrom(document.getElementById('slotList').value || currentSlotName()));
+document.getElementById('btnNew').addEventListener('click', ()=>{
+  if(!confirm('Limpar todos os campos desta ficha em tela? (o que já foi salvo continua salvo)')) return;
+  applyState({text:[], toggle:[], check:[], hpUsed:0});
+  document.getElementById('slotName').value=''; document.getElementById('slotList').value='';
+  setStatus('Ficha em branco.');
+});
+document.getElementById('slotList').addEventListener('change', (e)=>{ if(e.target.value) loadFrom(e.target.value); });
+document.querySelectorAll(FIELD_SEL+', '+CHECK_SEL).forEach(el=>{ el.addEventListener('input', autoSave); el.addEventListener('change', autoSave); });
+
+document.getElementById('btnExportJson').addEventListener('click', ()=>{
+  const name = currentSlotName() || 'personagem';
+  const blob = new Blob([JSON.stringify(getState(), null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'relatorio-'+name.toLowerCase().replace(/[^a-z0-9]+/g,'-')+'.json';
+  document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+});
+document.getElementById('btnImportJson').addEventListener('click', ()=> document.getElementById('importFile').click());
+document.getElementById('importFile').addEventListener('change', (e)=>{
+  const file = e.target.files[0]; if(!file) return;
+  const reader = new FileReader();
+  reader.onload = ()=>{ try{ applyState(JSON.parse(reader.result)); setStatus('Importado: '+file.name); } catch(err){ setStatus('Arquivo inválido.'); } };
+  reader.readAsText(file);
+  e.target.value = '';
+});
+
+function downloadFilledHtml(){
+  const clone = document.documentElement.cloneNode(true);
+  const liveFields = document.querySelectorAll(FIELD_SEL);
+  const cloneFields = clone.querySelectorAll(FIELD_SEL);
+  liveFields.forEach((el,i)=>{
+    if(el.tagName==='TEXTAREA'){ cloneFields[i].textContent = el.value; } else { cloneFields[i].setAttribute('value', el.value); }
+  });
+  const liveChecks = document.querySelectorAll(CHECK_SEL);
+  const cloneChecks = clone.querySelectorAll(CHECK_SEL);
+  liveChecks.forEach((el,i)=>{ if(el.checked) cloneChecks[i].setAttribute('checked',''); else cloneChecks[i].removeAttribute('checked'); });
+  const liveToggles = document.querySelectorAll(TOGGLE_SEL);
+  const cloneToggles = clone.querySelectorAll(TOGGLE_SEL);
+  liveToggles.forEach((el,i)=> cloneToggles[i].classList.toggle('on', el.classList.contains('on')));
+  const html = '<!DOCTYPE html>\n' + clone.outerHTML;
+  const blob = new Blob([html], {type:'text/html'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const name = currentSlotName() || 'personagem';
+  a.href = url; a.download = 'relatorio-levoleur-'+name.toLowerCase().replace(/[^a-z0-9]+/g,'-')+'.html';
+  document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+}
+document.getElementById('btnDownload').addEventListener('click', downloadFilledHtml);
+
+let locked = false;
+document.getElementById('btnLock').addEventListener('click', function(){
+  locked = !locked;
+  document.querySelectorAll('.doc input, .doc textarea').forEach(el=> el.readOnly = locked);
+  document.querySelectorAll('.doc input[type=checkbox], .doc select').forEach(el=> el.disabled = locked);
+  document.querySelectorAll(TOGGLE_SEL).forEach(el=> el.style.pointerEvents = locked ? 'none' : 'auto');
+  this.textContent = locked ? '🔓 Destravar Ficha' : '🔒 Travar Ficha';
+  setStatus(locked ? 'Ficha travada.' : 'Ficha destravada.');
+});
+
+refreshSlotList();
+recalcAll();
+</script>
+
+</body>
+</html>

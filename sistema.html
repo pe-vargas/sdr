@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sistema de Spina di Rosula</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
+
+:root{
+  --paper:#e7e3d6; --paper-light:#f1eee2; --ink:#1c1a16;
+  --stamp-red:#a3271f; --stamp-purple:#4b3e6b; --rule:#8a8471;
+  --field-bg:#dcd7c6; --night:#100e0b;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0; background:var(--night); font-family:'IBM Plex Mono', monospace;
+  color:var(--ink); display:flex; min-height:100vh;
+}
+
+/* ---------- sidebar nav ---------- */
+nav{
+  width:220px; flex-shrink:0; background:var(--paper-light); border-right:1px solid var(--rule);
+  padding:20px 14px; position:sticky; top:0; height:100vh; overflow-y:auto;
+}
+nav .navtitle{font-family:'Courier Prime',monospace; font-weight:700; font-size:13px; letter-spacing:1px; margin-bottom:14px; color:var(--stamp-purple);}
+nav a{
+  display:block; font-size:11px; text-decoration:none; color:var(--ink); padding:6px 8px;
+  border-left:2px solid transparent; margin-bottom:2px;
+}
+nav a:hover{border-left-color:var(--stamp-red); background:var(--field-bg);}
+
+/* ---------- main doc ---------- */
+main{flex:1; padding:32px 20px 90px; display:flex; justify-content:center;}
+.doc{max-width:760px; width:100%; background:var(--paper); border:1px solid #55503f; box-shadow:0 30px 70px rgba(0,0,0,0.6);}
+
+.cover{padding:36px 34px 26px; border-bottom:3px double var(--ink); position:relative;}
+.org-line{font-size:10px; letter-spacing:2.5px; text-transform:uppercase; color:var(--stamp-purple); font-weight:700;}
+.doc-title{font-family:'Courier Prime',monospace; font-weight:700; font-size:28px; letter-spacing:1px; margin:4px 0 2px;}
+.doc-sub{font-size:12px; color:#4a463a;}
+.stamp{
+  position:absolute; top:20px; right:26px; border:3px solid var(--stamp-red); color:var(--stamp-red);
+  font-family:'Courier Prime',monospace; font-weight:700; font-size:12px; letter-spacing:2px;
+  padding:6px 12px; transform:rotate(-8deg); opacity:0.82;
+}
+
+section{padding:20px 34px; border-bottom:1px solid var(--rule);}
+h2{
+  font-family:'Courier Prime',monospace; font-weight:700; font-size:15px; letter-spacing:1.5px;
+  text-transform:uppercase; margin:0 0 14px; display:flex; align-items:center; gap:8px;
+}
+h2 .num{display:inline-block; font-size:11px; color:var(--paper-light); background:var(--ink); padding:2px 7px;}
+h3{font-family:'Courier Prime',monospace; font-size:12.5px; letter-spacing:0.5px; text-transform:uppercase; color:var(--stamp-purple); margin:16px 0 8px;}
+p{font-size:13px; line-height:1.6; margin:0 0 10px;}
+strong{color:var(--stamp-purple);}
+code{background:var(--field-bg); padding:1px 5px; font-size:12px;}
+
+table{width:100%; border-collapse:collapse; font-size:12px; margin:8px 0 14px;}
+th{font-size:9.5px; letter-spacing:0.5px; text-transform:uppercase; color:var(--stamp-purple); text-align:left; border-bottom:2px solid var(--ink); padding:5px 7px;}
+td{padding:5px 7px; border-bottom:1px solid var(--rule); vertical-align:top;}
+
+ul{margin:0 0 10px; padding-left:20px; font-size:13px; line-height:1.6;}
+
+.pill-row{display:flex; flex-wrap:wrap; gap:6px; margin:8px 0 14px;}
+.pill{background:var(--field-bg); border:1px solid var(--rule); padding:4px 10px; font-size:11px;}
+
+.power-card{background:var(--field-bg); border:1px solid var(--rule); padding:12px 14px; margin-bottom:10px;}
+.power-card .pname{font-family:'Courier Prime',monospace; font-weight:700; font-size:13px;}
+.power-card .pmeta{font-size:10px; color:var(--stamp-purple); margin:4px 0 8px; letter-spacing:0.3px;}
+.power-card .peffect{font-size:12.5px; line-height:1.55;}
+
+details{margin:6px 0 14px;}
+summary{
+  cursor:pointer; font-family:'Courier Prime',monospace; font-weight:700; font-size:11.5px;
+  letter-spacing:0.5px; text-transform:uppercase; color:var(--stamp-purple); padding:8px 0;
+  list-style:none;
+}
+summary::-webkit-details-marker{display:none;}
+summary::before{content:"▸ "; }
+details[open] summary::before{content:"▾ ";}
+.crit-tier{font-size:11.5px; line-height:1.6; margin-bottom:6px;}
+.crit-tier b{color:var(--ink);}
+
+.doc-foot{padding:16px 34px 26px; display:flex; justify-content:space-between; font-size:9px; letter-spacing:0.5px; color:var(--stamp-purple); text-transform:uppercase; font-weight:700;}
+
+@media (max-width:860px){
+  body{flex-direction:column;}
+  nav{width:100%; height:auto; position:relative; border-right:none; border-bottom:1px solid var(--rule);}
+  main{padding:16px 10px 60px;}
+  section{padding:16px 18px;}
+  .cover{padding:22px 18px 16px;}
+  .stamp{position:static; display:inline-block; margin-top:10px; transform:rotate(-3deg);}
+  .doc-title{font-size:20px;}
+}
+@media print{
+  nav{display:none;}
+  body{background:#fff;}
+  .doc{box-shadow:none; border:none;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="navtitle">SUMÁRIO</div>
+  <a href="index.html">· Página Inicial ·</a>
+  <a href="#conceito">01 · Conceito</a>
+  <a href="#atributos">02 · Atributos</a>
+  <a href="#pericias">03 · Perícias</a>
+  <a href="#hp">04 · HP e Ferida</a>
+  <a href="#poder">05 · Poder</a>
+  <a href="#combate">06 · Combate</a>
+  <a href="#critico">07 · Crítico</a>
+  <a href="#progressao">08 · Progressão</a>
+  <a href="#criacao">09 · Criação de Personagem</a>
+  <a href="#equipamento">10 · Equipamento e Armas</a>
+  <a href="#gangues">11 · Gangues de Ashgate</a>
+  <a href="#mecanica-gangue">12 · Mecânica de Gangue</a>
+  <a href="#social">13 · Regras Sociais</a>
+</nav>
+
+<main>
+<div class="doc">
+
+  <div class="cover">
+    <div class="org-line">SISTEMA</div>
+    <div class="doc-title">SPINA DI ROSULA</div>
+  </div>
+
+  <section id="conceito">
+    <h2><span class="num">01</span> Conceito</h2>
+    <p>Todos os jogadores são recrutas de <strong>Le Voleur</strong> <em>(lê vo-LÖR)</em>, a menor e mais perseguida das gangues de Ashgate. Enquanto três potências ideológicas rivais dominam o território com doutrina, dinheiro e história, Le Voleur não tem nada disso — sobrevive na frincha, no submundo que ninguém mais olha.</p>
+    <p>Cada personagem carrega um <strong>poder pessoal único</strong>, discreto e conceitual — nunca um espetáculo visual — nascido de sua identidade e referenciando uma obra literária mundial.</p>
+    <p>O combate é <strong>letal de verdade</strong>: ferimentos graves matam rápido, e ninguém é páreo pra bala perdida.</p>
+  </section>
+
+  <section id="atributos">
+    <h2><span class="num">02</span> Atributos</h2>
+    <p>Seis atributos clássicos, definidos por <strong>array fixo</strong> na criação: <code>15, 14, 13, 12, 10, 8</code> (distribua como quiser).</p>
+    <div class="pill-row">
+      <span class="pill">Força</span><span class="pill">Destreza</span><span class="pill">Constituição</span>
+      <span class="pill">Inteligência</span><span class="pill">Sabedoria</span><span class="pill">Carisma</span>
+    </div>
+    <p><strong>Teste base:</strong> <code>d20 + mod. atributo (+ Calibre, se treinado) vs CD</code></p>
+  </section>
+
+  <section id="pericias">
+    <h2><span class="num">03</span> Perícias</h2>
+    <p>13 perícias, cada uma treinável. O bônus de treino se chama <strong>Calibre</strong> e cresce com o nível (começa em +2), igual proficiência do D&D 5e.</p>
+    <table>
+      <thead><tr><th>Atributo</th><th>Perícia</th><th>Cobre</th></tr></thead>
+      <tbody>
+        <tr><td>Força</td><td><strong>Vigor</strong></td><td>Força física, correr, escalar, arrombar</td></tr>
+        <tr><td>Destreza</td><td><strong>Furtividade</strong></td><td>Se esconder, seguir sem ser visto</td></tr>
+        <tr><td>Destreza</td><td><strong>Equilíbrio</strong></td><td>Cair de pé, se manter firme no caos</td></tr>
+        <tr><td>Destreza</td><td><strong>Roubo</strong></td><td>Mãos rápidas, destravar, bater carteira</td></tr>
+        <tr><td>Inteligência</td><td><strong>Faro</strong></td><td>Juntar pista, dedução</td></tr>
+        <tr><td>Inteligência</td><td><strong>Manha de Rua</strong></td><td>Código do submundo, território, gíria</td></tr>
+        <tr><td>Inteligência</td><td><strong>Mecânica</strong></td><td>Consertar, montar, forjar documento</td></tr>
+        <tr><td>Sabedoria</td><td><strong>Alerta</strong></td><td>Notar perigo, reagir rápido</td></tr>
+        <tr><td>Sabedoria</td><td><strong>Leitura</strong></td><td>Perceber mentira, ler intenção</td></tr>
+        <tr><td>Sabedoria</td><td><strong>Resistência</strong></td><td>Aguentar dor, pressão psicológica</td></tr>
+        <tr><td>Carisma</td><td><strong>Lábia</strong></td><td>Convencer sem ameaçar</td></tr>
+        <tr><td>Carisma</td><td><strong>Ameaça</strong></td><td>Convencer com medo</td></tr>
+        <tr><td>Carisma</td><td><strong>Disfarce</strong></td><td>Mentir, blefar, se passar por outra pessoa</td></tr>
+        <tr><td>Carisma</td><td><strong>Presença</strong></td><td>Magnetismo, dominar uma cena</td></tr>
+      </tbody>
+    </table>
+    <p>Personagem começa com <strong>6 proficiências</strong> no nível 1: 4 escolhidas livremente + 1 de Origem + 1 fixa de gangue (Manha de Rua).</p>
+  </section>
+
+  <section id="hp">
+    <h2><span class="num">04</span> HP e Ferida</h2>
+    <p><strong>HP:</strong> <code>10 + mod. Constituição + bônus de Vigor</code>. Todo acerto consome HP primeiro.</p>
+    <p><strong>Ferida</strong> <em>(ocorre quando o HP chega a 0)</em> — cada acerto a partir daí vira Ferida real, em 3 graus:</p>
+    <ul>
+      <li><strong>Leve</strong> — penalidade de -2 em testes físicos</li>
+      <li><strong>Grave</strong> — penalidade de -4 em testes físicos + teste de Morte obrigatório (Constituição; falha = sangra e morre em poucos turnos sem socorro)</li>
+      <li><strong>Fatal</strong> — morte imediata</li>
+    </ul>
+  </section>
+
+  <section id="poder">
+    <h2><span class="num">05</span> Poder</h2>
+    <p>Cada personagem tem <strong>um poder único</strong>, discreto e conceitual, de uma das 5 categorias abaixo. É uma <strong>ação com custo de recurso</strong>: pool fixo de <strong>4 usos por descanso curto</strong>. Todo poder é nomeado por uma obra literária, e o personagem inteiro é inspirado no autor daquela obra.</p>
+
+    <div class="power-card">
+      <div class="pname">"O Coração Delator" — Corpo</div>
+      <div class="pmeta">Edgar Allan Poe · Custo: 1 uso · Ação Bônus · Pessoal · 1 cena</div>
+      <div class="peffect">Ignora a penalidade de uma Ferida Grave até o fim da cena, e seu próximo ataque corpo a corpo causa +1d6 de dano.</div>
+    </div>
+    <div class="power-card">
+      <div class="pname">"Mrs. Dalloway" — Verdade</div>
+      <div class="pmeta">Virginia Woolf · Custo: 1 uso · Ação Bônus · 9m · Instantâneo</div>
+      <div class="peffect">Seu próximo ataque contra um alvo específico tem vantagem; em Acerto Crítico, a Ferida causada sobe um grau adicional.</div>
+    </div>
+    <div class="power-card">
+      <div class="pname">"O Morro dos Ventos Uivantes" — Vínculo</div>
+      <div class="pmeta">Emily Brontë · Custo: 1 uso · Reação · 9m · 1 rodada</div>
+      <div class="peffect">Quando um aliado é atacado, torne-se o alvo no lugar dele, com vantagem na sua Defesa contra esse ataque específico.</div>
+    </div>
+    <div class="power-card">
+      <div class="pname">"A Metamorfose" — Ausência</div>
+      <div class="pmeta">Franz Kafka · Custo: 1 uso · Ação Bônus · Pessoal · 1 rodada</div>
+      <div class="peffect">Qualquer ataque contra você tem desvantagem por 1 rodada, e você pode se mover através de inimigos livremente.</div>
+    </div>
+    <div class="power-card">
+      <div class="pname">"O Conde de Monte Cristo" — Consequência</div>
+      <div class="pmeta">Alexandre Dumas · Custo: 1 uso · Reação · 9m · Instantâneo</div>
+      <div class="peffect">Force a rerrolagem de qualquer teste ou ataque à vista — seu ou de um inimigo — usando o novo resultado, mesmo que seja pior.</div>
+    </div>
+  </section>
+
+  <section id="combate">
+    <h2><span class="num">06</span> Combate</h2>
+    <h3>Rodada (estilo D&D 5e)</h3>
+    <ul>
+      <li><strong>Ação</strong> — atacar, usar Poder, ajudar, esconder</li>
+      <li><strong>Ação Bônus</strong> — padrão pra todos os personagens</li>
+      <li><strong>Movimento</strong></li>
+      <li><strong>Reação</strong></li>
+    </ul>
+    <p><strong>Iniciativa:</strong> <code>d20 + mod. Destreza</code></p>
+    <p><strong>Ataque:</strong> <code>d20 + mod. atributo vs Defesa/CA</code> — CA = <code>10 + mod. Destreza + proteção</code></p>
+    <p><strong>Vantagem/Desvantagem:</strong> role 2d20, use o melhor ou o pior conforme a situação.</p>
+  </section>
+
+  <section id="critico">
+    <h2><span class="num">07</span> Crítico</h2>
+    <h3>Acerto Crítico (natural 20)</h3>
+    <p>Em vez de rolar o dano, aplique o <strong>valor máximo de todos os dados envolvidos</strong> — arma + qualquer dado bônus de poder — somado aos modificadores normais. Se causar Ferida, ela sobe um grau automaticamente.</p>
+    <h3>Erro Crítico (natural 1)</h3>
+    <p>Role 1d100 numa tabela de complicações — na maioria dos resultados, quem errou sofre dano. Faixas gerais:</p>
+    <details>
+      <summary>Ver faixas da tabela de Erro Crítico</summary>
+      <div class="crit-tier"><b>01–10</b> — recuo/erro fere você mesmo (dano leve a moderado)</div>
+      <div class="crit-tier"><b>11–20</b> — você tropeça e cai, exposto ao próximo ataque</div>
+      <div class="crit-tier"><b>21–30</b> — a arma escapa da sua mão</div>
+      <div class="crit-tier"><b>31–40</b> — exposição tática (vantagem pro inimigo, sem dano)</div>
+      <div class="crit-tier"><b>41–50</b> — dano leve na própria mão/braço</div>
+      <div class="crit-tier"><b>51–60</b> — acerta o alvo errado (cenário, item ou aliado)</div>
+      <div class="crit-tier"><b>61–70</b> — chama atenção indesejada (barulho, testemunha)</div>
+      <div class="crit-tier"><b>71–80</b> — a arma quebra ou fica sem munição</div>
+      <div class="crit-tier"><b>81–90</b> — a arma some de vista</div>
+      <div class="crit-tier"><b>91–100</b> — autoferimento grave, incluindo o dano total da própria arma no 100</div>
+      <p style="margin-top:8px; font-size:11.5px;">Tabela completa (100 entradas únicas) no documento separado <code>tabela-erro-critico-d100.md</code>.</p>
+    </details>
+  </section>
+
+  <section id="progressao">
+    <h2><span class="num">08</span> Progressão (Nível 1–10)</h2>
+    <p>Sobe de nível por <strong>XP numérico</strong> (missões, combates, etc.)</p>
+    <table>
+      <thead><tr><th>Nível</th><th>XP</th><th>Calibre</th><th>Usos de Poder</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>0</td><td>+2</td><td>4</td></tr>
+        <tr><td>2</td><td>300</td><td>+2</td><td>4</td></tr>
+        <tr><td>3</td><td>900</td><td>+2</td><td>4</td></tr>
+        <tr><td>4</td><td>2.000</td><td>+3</td><td>5</td></tr>
+        <tr><td>5</td><td>3.500</td><td>+3</td><td>5</td></tr>
+        <tr><td>6</td><td>5.500</td><td>+3</td><td>5</td></tr>
+        <tr><td>7</td><td>8.000</td><td>+4</td><td>6</td></tr>
+        <tr><td>8</td><td>11.000</td><td>+4</td><td>6</td></tr>
+        <tr><td>9</td><td>15.000</td><td>+4</td><td>6</td></tr>
+        <tr><td>10</td><td>20.000</td><td>+5</td><td>7</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="criacao">
+    <h2><span class="num">09</span> Criação de Personagem</h2>
+    <ul>
+      <li>Todo personagem é de Le Voleur → proficiência automática em <strong>Manha de Rua</strong></li>
+      <li>Distribuir array fixo (15,14,13,12,10,8) nos 6 atributos</li>
+      <li>Escolher <strong>Origem</strong> (tabela abaixo, +1 proficiência)</li>
+      <li>Escolher <strong>Categoria de Poder</strong> + autor/obra pessoal</li>
+      <li>Escolher <strong>4 perícias</strong> treinadas livremente</li>
+      <li>Escolher <strong>Especialização de Combate</strong> (opcional, tabela abaixo)</li>
+      <li>Calcular HP, Defesa/CA, anotar os 4 usos de Poder</li>
+    </ul>
+
+    <h3>Tabela de Origens</h3>
+    <table>
+      <thead><tr><th>Origem</th><th>Proficiência</th><th>Benefício extra</th></tr></thead>
+      <tbody>
+        <tr><td>Ex-detento</td><td>Ameaça</td><td>Reputação temida</td></tr>
+        <tr><td>Filho de Comerciante</td><td>Lábia</td><td>Mais dinheiro/contatos</td></tr>
+        <tr><td>Órfão de Rua</td><td>Furtividade</td><td>Vantagem em perseguições urbanas</td></tr>
+        <tr><td>Ex-policial/Informante</td><td>Faro</td><td>1 contato na polícia</td></tr>
+        <tr><td>Nascido na Gangue</td><td>Manha de Rua</td><td>Reputação inicial mais alta</td></tr>
+        <tr><td>Autodidata</td><td>Mecânica</td><td>Lê documentos complexos</td></tr>
+        <tr><td>Trabalhador Braçal</td><td>Vigor</td><td>Aguenta trabalho físico extremo</td></tr>
+        <tr><td>Trapaceiro de Rua</td><td>Disfarce</td><td>Se passa por outra pessoa fácil</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Especialização de Combate (opcional)</h3>
+    <table>
+      <thead><tr><th>Especialização</th><th>Foco</th><th>Bônus</th></tr></thead>
+      <tbody>
+        <tr><td>Combatente</td><td>Força física</td><td>+1 dano c/ Armas Brancas e de Impacto · vantagem em Vigor desarmado</td></tr>
+        <tr><td>Pistoleiro</td><td>Pistolas/escopetas</td><td>Recarga não gasta Ação · vantagem no 1º ataque do combate</td></tr>
+        <tr><td>Atirador</td><td>Armas pesadas/distância</td><td>Ignora penalidade de alvo em movimento/coberto · vantagem a 15m+</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="equipamento">
+    <h2><span class="num">10</span> Equipamento e Armas</h2>
+    <table>
+      <thead><tr><th>Categoria</th><th>Dano</th></tr></thead>
+      <tbody>
+        <tr><td>Improvisadas</td><td>1d4</td></tr>
+        <tr><td>Armas Brancas</td><td>1d6</td></tr>
+        <tr><td>Armas de Impacto</td><td>1d8</td></tr>
+        <tr><td>Armas de Fogo Leves (pistolas, espingardas, rifles automáticos)</td><td>1d10</td></tr>
+        <tr><td>Armas de Fogo Pesadas (rifles de precisão, snipers)</td><td>1d12</td></tr>
+        <tr><td>Explosivos</td><td>1d12 (área)</td></tr>
+      </tbody>
+    </table>
+    <h3>Itens especiais</h3>
+    <p><strong>Adrenalina</strong> — restaura HP instantaneamente em combate; segundo uso na cena arrisca colapso.</p>
+    <p><strong>Kit Médico</strong> — fora de combate, estabiliza Ferida Grave ou cura Ferida Leve com teste de Mecânica/Resistência.</p>
+    <p><strong>Estimulante</strong> — 3 rodadas: ação extra, vantagem em Destreza/Iniciativa, ignora Ferida Leve. Crash na rodada seguinte: desvantagem em tudo. Segundo uso na cena exige Resistência CD 15 ou Ferida Grave por overdose.</p>
+  </section>
+
+  <section id="gangues">
+    <h2><span class="num">11</span> Gangues de Ashgate</h2>
+    <table>
+      <thead><tr><th>Gangue</th><th>Ideologia</th><th>Nome/Idioma</th><th>Região</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Il Piacere</strong> <em>(eel pya-TCHÉ-re)</em></td><td>Só a Vontade é Real</td><td>Italiano — "O Prazer" (D'Annunzio)</td><td>Norte</td></tr>
+        <tr><td><strong>Besy</strong> <em>(BIÉ-si)</em></td><td>A Dor Redime</td><td>Russo — "Os Possuídos" (Dostoiévski)</td><td>Leste</td></tr>
+        <tr><td><strong>Der Prozess</strong> <em>(dér PRÓ-tsess)</em></td><td>A Palavra é Lei</td><td>Alemão — "O Processo" (Kafka)</td><td>Oeste</td></tr>
+        <tr><td><strong>Le Voleur</strong> <em>(lê vo-LÖR)</em></td><td>O Lixo Também Brilha</td><td>Francês — "O Ladrão" (Genet)</td><td>Sul</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:11.5px; opacity:0.85;">Il Piacere é a mais forte das quatro; Le Voleur, a menor e mais perseguida.</p>
+  </section>
+
+  <section id="mecanica-gangue">
+    <h2><span class="num">12</span> Mecânica de Gangue</h2>
+    <p><strong>Reputação da Gangue</strong> <em>(compartilhada, 0–5)</em> — sobe/desce com missões, vitórias, exposição pública.</p>
+    <p><strong>Território</strong> <em>(compartilhado, em Zonas)</em> — cada Zona dá um benefício fixo: Esconderijo, Fonte de Renda, Rede de Contatos ou Arsenal.</p>
+    <p><strong>Respeito Pessoal</strong> <em>(individual)</em> — sobe arriscando-se por alguém do grupo, cai traindo confiança. Liga ao <strong>Posto</strong>: Recruta → Soldado → Braço de Confiança → Círculo Interno.</p>
+  </section>
+
+  <section id="social" style="border-bottom:none;">
+    <h2><span class="num">13</span> Regras Sociais</h2>
+    <p>Conflito social resolvido com <strong>teste único</strong> de perícia vs CD — sem estrutura de rodadas.</p>
+    <table>
+      <thead><tr><th>Dificuldade</th><th>CD</th></tr></thead>
+      <tbody>
+        <tr><td>Fácil</td><td>10</td></tr>
+        <tr><td>Médio</td><td>15</td></tr>
+        <tr><td>Difícil</td><td>20</td></tr>
+        <tr><td>Muito Difícil</td><td>25</td></tr>
+      </tbody>
+    </table>
+    <p><strong>Contra NPCs importantes:</strong> teste oposto — sua perícia social vs a <strong>Leitura</strong> do alvo.</p>
+    <p><strong>Falha:</strong> piora a situação — o alvo fica mais desconfiado, hostil, ou a informação chega errada.</p>
+  </section>
+
+</div>
+</main>
+
+</body>
+</html>
