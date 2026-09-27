@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Spina di Rosula — Ashgate</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+
+:root{
+  --page:#f3ead4;
+  --page-dark:#e5d8b8;
+  --ink:#2b2318;
+  --muted:#6b5d40;
+  --rule:#a9976b;
+  --accent:#7a4a2b;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+
+  background:#1b160f;
+
+  color:var(--ink);
+  font-family:'EB Garamond', serif;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  padding:30px 16px 60px;
+}
+
+/* =========================
+   LIVRO
+========================= */
+
+.book{
+  width:100%;
+  max-width:720px;
+
+  background:var(--page);
+
+  border:1px solid var(--page-dark);
+
+  box-shadow:
+    0 40px 90px rgba(0,0,0,.65),
+    inset 0 0 60px rgba(0,0,0,.04);
+
+  position:relative;
+}
+
+.book::before{
+  content:"";
+
+  position:absolute;
+  inset:18px;
+
+  border:1px solid rgba(122,74,43,.22);
+
+  pointer-events:none;
+}
+
+/* =========================
+   CAPA
+========================= */
+
+.cover{
+  min-height:calc(100vh - 90px);
+  min-height:620px;
+
+  padding:70px 50px;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+
+  text-align:center;
+}
+
+/* =========================
+   IDENTIFICAÇÃO
+========================= */
+
+.kicker{
+  font-size:12px;
+
+  letter-spacing:5px;
+  text-transform:uppercase;
+
+  color:var(--accent);
+
+  margin-bottom:25px;
+}
+
+/* =========================
+   TÍTULO
+========================= */
+
+h1{
+  font-family:'Playfair Display', serif;
+
+  font-size:clamp(42px, 8vw, 68px);
+
+  line-height:1.05;
+
+  letter-spacing:2px;
+
+  margin:0;
+}
+
+/* cidade */
+
+.location{
+  margin-top:12px;
+
+  font-size:17px;
+
+  letter-spacing:3px;
+
+  text-transform:uppercase;
+
+  color:var(--muted);
+}
+
+/* =========================
+   ORNAMENTO
+========================= */
+
+.ornament{
+  width:130px;
+  height:1px;
+
+  background:var(--rule);
+
+  margin:30px 0;
+
+  position:relative;
+}
+
+.ornament::before{
+  content:"❧";
+
+  position:absolute;
+
+  top:-12px;
+  left:50%;
+
+  transform:translateX(-50%);
+
+  padding:0 10px;
+
+  background:var(--page);
+
+  color:var(--accent);
+
+  font-size:18px;
+}
+
+/* =========================
+   SUBTÍTULO
+========================= */
+
+.subtitle{
+  max-width:450px;
+
+  font-size:19px;
+  font-style:italic;
+
+  line-height:1.6;
+
+  color:#4a3d28;
+
+  margin-bottom:42px;
+}
+
+/* =========================
+   MENU
+========================= */
+
+.menu{
+  width:100%;
+  max-width:430px;
+
+  display:flex;
+  flex-direction:column;
+
+  gap:10px;
+}
+
+.menu a{
+  display:flex;
+  align-items:center;
+
+  width:100%;
+
+  padding:15px 18px;
+
+  border:1px solid var(--rule);
+
+  color:var(--ink);
+
+  text-decoration:none;
+
+  transition:
+    background .2s ease,
+    color .2s ease,
+    transform .2s ease;
+}
+
+.menu .number{
+  width:34px;
+
+  font-size:13px;
+
+  color:var(--accent);
+
+  font-variant:small-caps;
+}
+
+.menu .name{
+  font-family:'Playfair Display', serif;
+
+  font-size:16px;
+
+  letter-spacing:.5px;
+
+  text-align:left;
+}
+
+.menu .description{
+  margin-left:auto;
+
+  font-size:13px;
+
+  font-style:italic;
+
+  color:var(--muted);
+}
+
+.menu a:hover{
+  background:var(--accent);
+
+  color:var(--page);
+
+  transform:translateX(4px);
+}
+
+.menu a:hover .number,
+.menu a:hover .description{
+  color:var(--page);
+}
+
+/* =========================
+   RODAPÉ
+========================= */
+
+.footer{
+  margin-top:45px;
+
+  font-size:11px;
+
+  letter-spacing:1px;
+
+  color:var(--muted);
+
+  line-height:1.7;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:600px){
+
+  body{
+    padding:15px 10px 30px;
+  }
+
+  .book{
+    max-width:100%;
+  }
+
+  .book::before{
+    inset:10px;
+  }
+
+  .cover{
+    min-height:calc(100vh - 45px);
+    min-height:580px;
+
+    padding:55px 25px;
+  }
+
+  .kicker{
+    font-size:10px;
+    letter-spacing:3px;
+
+    margin-bottom:20px;
+  }
+
+  h1{
+    font-size:44px;
+    letter-spacing:1px;
+  }
+
+  .location{
+    font-size:14px;
+    letter-spacing:2px;
+  }
+
+  .subtitle{
+    font-size:17px;
+
+    max-width:320px;
+
+    margin-bottom:35px;
+  }
+
+  .ornament{
+    margin:25px 0;
+  }
+
+  .menu{
+    max-width:100%;
+  }
+
+  .menu a{
+    padding:14px 13px;
+  }
+
+  .menu .number{
+    width:29px;
+    font-size:12px;
+  }
+
+  .menu .name{
+    font-size:15px;
+  }
+
+  .menu .description{
+    font-size:11px;
+  }
+
+  .footer{
+    margin-top:35px;
+  }
+}
+
+/* =========================
+   CELULARES PEQUENOS
+========================= */
+
+@media(max-width:400px){
+
+  .cover{
+    padding:45px 20px;
+  }
+
+  h1{
+    font-size:38px;
+  }
+
+  .subtitle{
+    font-size:16px;
+  }
+
+  .menu .description{
+    display:none;
+  }
+
+  .menu a{
+    justify-content:flex-start;
+  }
+}
+
+/* =========================
+   IMPRESSÃO
+========================= */
+
+@media print{
+
+  body{
+    background:#fff;
+    padding:0;
+  }
+
+  .book{
+    box-shadow:none;
+    border:none;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="book">
+
+  <main class="cover">
+
+    <div class="kicker">
+      Arquivo Municipal de Ashgate
+    </div>
+
+    <h1>SPINA DI ROSULA</h1>
+
+    <div class="location">
+      Ashgate
+    </div>
+
+    <div class="ornament"></div>
+
+    <div class="subtitle">
+      Registros, documentos e informações
+      sobre a cidade e aqueles que nela vivem.
+    </div>
+
+    <nav class="menu">
+
+      <a href="lore.html">
+        <span class="number">I.</span>
+
+        <span class="name">
+          História de Ashgate
+        </span>
+
+        <span class="description">
+          Lore
+        </span>
+      </a>
+
+      <a href="sistema.html">
+        <span class="number">II.</span>
+
+        <span class="name">
+          Sistema
+        </span>
+
+        <span class="description">
+          Regras
+        </span>
+      </a>
+
+      <a href="ficha.html">
+        <span class="number">III.</span>
+
+        <span class="name">
+          Ficha do Personagem
+        </span>
+
+        <span class="description">
+          Registro
+        </span>
+      </a>
+
+    </nav>
+
+    <div class="footer">
+      Documento de circulação restrita<br>
+      Ashgate · 1990
+    </div>
+
+  </main>
+
+</div>
+
+</body>
+</html>
