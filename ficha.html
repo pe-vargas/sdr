@@ -311,6 +311,18 @@ table.equip input{border:none; background:transparent; font-family:'IBM Plex Mon
 
     <div class="field" id="c06">
       <div class="field-title"><span class="field-num">06</span> Poder Manifesto</div>
+      <div class="lline" style="margin-bottom:14px;">
+        <label>Escolher Poder (das 5 categorias)</label>
+        <select id="powerSelect">
+          <option value="">— nenhum / criar o próprio —</option>
+          <option value="coracao">"O Coração Delator" — Corpo (Edgar Allan Poe)</option>
+          <option value="dalloway">"Mrs. Dalloway" — Verdade (Virginia Woolf)</option>
+          <option value="morro">"O Morro dos Ventos Uivantes" — Vínculo (Emily Brontë)</option>
+          <option value="metamorfose">"A Metamorfose" — Ausência (Franz Kafka)</option>
+          <option value="montecristo">"O Conde de Monte Cristo" — Consequência (Alexandre Dumas)</option>
+        </select>
+        <div class="attr-sum" id="powerMetaLabel" style="margin-top:4px;"></div>
+      </div>
       <div class="grid2">
         <div>
           <div class="lline"><label>Nome do Poder</label><input type="text" placeholder='ex: "Mrs. Dalloway"'></div>
@@ -437,6 +449,52 @@ function updateXpNext(){
   label.value = need > 0 ? ('Faltam ' + need + ' XP p/ nível ' + (lvl+1)) : 'Pronto p/ subir de nível';
 }
 
+const POWER_DATA = {
+  coracao: {
+    name: '"O Coração Delator"',
+    author: 'Edgar Allan Poe',
+    meta: 'Corpo · Custo: 1 uso · Ação Bônus · Pessoal · 1 cena',
+    effect: 'Ignora a penalidade de uma Ferida Grave até o fim da cena, e seu próximo ataque corpo a corpo causa +1d6 de dano.'
+  },
+  dalloway: {
+    name: '"Mrs. Dalloway"',
+    author: 'Virginia Woolf',
+    meta: 'Verdade · Custo: 1 uso · Ação Bônus · 9m · Instantâneo',
+    effect: 'Seu próximo ataque contra um alvo específico tem vantagem; em Acerto Crítico, a Ferida causada sobe um grau adicional.'
+  },
+  morro: {
+    name: '"O Morro dos Ventos Uivantes"',
+    author: 'Emily Brontë',
+    meta: 'Vínculo · Custo: 1 uso · Reação · 9m · 1 rodada',
+    effect: 'Quando um aliado é atacado, torne-se o alvo no lugar dele, com vantagem na sua Defesa contra esse ataque específico.'
+  },
+  metamorfose: {
+    name: '"A Metamorfose"',
+    author: 'Franz Kafka',
+    meta: 'Ausência · Custo: 1 uso · Ação Bônus · Pessoal · 1 rodada',
+    effect: 'Qualquer ataque contra você tem desvantagem por 1 rodada, e você pode se mover através de inimigos livremente.'
+  },
+  montecristo: {
+    name: '"O Conde de Monte Cristo"',
+    author: 'Alexandre Dumas',
+    meta: 'Consequência · Custo: 1 uso · Reação · 9m · Instantâneo',
+    effect: 'Force a rerrolagem de qualquer teste ou ataque à vista — seu ou de um inimigo — usando o novo resultado, mesmo que seja pior.'
+  }
+};
+function applyPower(value){
+  const data = POWER_DATA[value];
+  const c06 = document.getElementById('c06');
+  const nameInput = c06.querySelector('.lline input[placeholder*="Mrs"]');
+  const authorInput = c06.querySelector('.lline input[placeholder*="Virginia"]');
+  const effectArea = c06.querySelector('.lline textarea[placeholder*="mecanicamente"]');
+  document.getElementById('powerMetaLabel').textContent = data ? data.meta : '';
+  if(data){
+    nameInput.value = data.name;
+    authorInput.value = data.author;
+    effectArea.value = data.effect;
+  }
+}
+
 const ORIGIN_DATA = {
   'ex-detento': {skill:'Ameaça', text:'Ex-detento: proficiência em Ameaça. Reputação temida — quem sabe do seu passado hesita em te desafiar.'},
   'comerciante': {skill:'Lábia', text:'Filho de Comerciante: proficiência em Lábia. Começa com mais dinheiro/contatos comerciais.'},
@@ -478,6 +536,8 @@ function applyOriginSkill(value){
   }
   recalcAll();
 }
+document.getElementById('powerSelect').addEventListener('change', (e)=>{ applyPower(e.target.value); autoSave(); });
+
 document.getElementById('originSelect').addEventListener('change', (e)=>{
   applyOriginSkill(e.target.value);
   const k = document.getElementById('kitOrigin');
@@ -639,6 +699,7 @@ function getState(){
     origin: document.getElementById('originSelect').value,
     kitSpec: document.getElementById('kitSpec').value,
     kitOrigin: document.getElementById('kitOrigin').value,
+    power: document.getElementById('powerSelect').value,
     photo: photoDataUrl
   };
 }
@@ -651,6 +712,8 @@ function applyState(state){
   document.getElementById('originSelect').value = state.origin || '';
   document.getElementById('kitSpec').value = state.kitSpec || '';
   document.getElementById('kitOrigin').value = state.kitOrigin || '';
+  document.getElementById('powerSelect').value = state.power || '';
+  document.getElementById('powerMetaLabel').textContent = POWER_DATA[state.power]?.meta || '';
   kitArmor = KIT_SPEC[state.kitSpec]?.armor || 0;
   document.getElementById('kitOriginDesc').textContent = ORIGIN_DESC[state.kitOrigin] || '';
   applyOriginSkill(state.origin || '');
