@@ -329,6 +329,33 @@ table.equip input{border:none; background:transparent; font-family:'IBM Plex Mon
 
     <details class="field" id="c07" open>
       <summary class="field-title"><span class="field-num">07</span> Equipamento Registrado</summary>
+      <div class="grid2" style="margin-bottom:12px;">
+        <div class="lline">
+          <label>Kit de Especialização (linhas 1–2)</label>
+          <select id="kitSpec">
+            <option value="">— nenhum —</option>
+            <option value="combatente">Combatente — cano de ferro + jaqueta</option>
+            <option value="pistoleiro">Pistoleiro — pistola + faca</option>
+            <option value="atirador">Atirador — rifle de caça + binóculos</option>
+            <option value="generalista">Sem especialização — faca + revólver velho</option>
+          </select>
+        </div>
+        <div class="lline">
+          <label>Kit de Origem (linhas 3–4)</label>
+          <select id="kitOrigin">
+            <option value="">— nenhum —</option>
+            <option value="ex-detento">Ex-detento</option>
+            <option value="comerciante">Filho de Comerciante</option>
+            <option value="orfao">Órfão de Rua</option>
+            <option value="informante">Ex-policial/Informante</option>
+            <option value="nascido">Nascido na Gangue</option>
+            <option value="autodidata">Autodidata/Fugido da Escola</option>
+            <option value="bracal">Trabalhador Braçal</option>
+            <option value="trapaceiro">Trapaceiro de Rua</option>
+          </select>
+          <div class="attr-sum" id="kitOriginDesc" style="margin-top:4px;"></div>
+        </div>
+      </div>
       <table class="equip">
         <thead><tr><th>Item</th><th>Categoria</th><th>Dano</th><th>Notas</th></tr></thead>
         <tbody>
@@ -420,6 +447,16 @@ const ORIGIN_DATA = {
   'bracal': {skill:'Vigor', text:'Trabalhador Braçal: proficiência em Vigor. Aguenta trabalho físico extremo sem penalidade.'},
   'trapaceiro': {skill:'Disfarce', text:'Trapaceiro de Rua: proficiência em Disfarce. Se passa por outra pessoa com muito mais facilidade.'}
 };
+const ORIGIN_DESC = {
+  'ex-detento': 'Passou anos preso e saiu com a fama de quem não se intimida.',
+  'comerciante': 'Cresceu atrás de um balcão que a decadência levou. Sabe o preço de tudo e como fazer alguém pagar.',
+  'orfao': 'Ninguém veio buscar. Aprendeu a sumir pelas frestas da cidade antes de aprender a ler.',
+  'informante': 'Já trabalhou do outro lado da lei ou vendeu o que ouvia. Ainda tem gente que lhe deve um favor.',
+  'nascido': 'Nasceu debaixo do teto da Le Voleur. Conhece os códigos e os esconderijos desde criança.',
+  'autodidata': 'Largou a escola, ou foi largado por ela. Aprendeu sozinho desmontando, lendo e forjando o que precisava.',
+  'bracal': 'Anos de fábrica, doca ou obra. O corpo aprendeu a aguentar o que o salário nunca cobriu.',
+  'trapaceiro': 'Vive de ser outra pessoa. Sabe que a maioria acredita no que quer ver.'
+};
 let lastOriginSkillChecked = null;
 function applyOriginSkill(value){
   if(lastOriginSkillChecked){
@@ -427,7 +464,7 @@ function applyOriginSkill(value){
     if(prevRow) prevRow.querySelector('input[type=checkbox]').dataset.fromOrigin = '';
   }
   const data = ORIGIN_DATA[value];
-  document.getElementById('originEffectLabel').textContent = data ? data.text : '';
+  document.getElementById('originEffectLabel').innerHTML = data ? '<em>' + ORIGIN_DESC[value] + '</em><br>' + data.text : '';
   if(data){
     const row = [...document.querySelectorAll('.skill-row')].find(r=> r.querySelector('.sname').textContent.trim() === data.skill);
     if(row){
@@ -441,7 +478,12 @@ function applyOriginSkill(value){
   }
   recalcAll();
 }
-document.getElementById('originSelect').addEventListener('change', (e)=>{ applyOriginSkill(e.target.value); autoSave(); });
+document.getElementById('originSelect').addEventListener('change', (e)=>{
+  applyOriginSkill(e.target.value);
+  const k = document.getElementById('kitOrigin');
+  if(e.target.value && !k.value){ k.value = e.target.value; applyOriginKit(); }
+  autoSave();
+});
 
 let photoDataUrl = '';
 const photoBox = document.getElementById('photoBox');
@@ -477,7 +519,53 @@ function updateSpecEffect(){
   const val = document.getElementById('specSelect').value;
   document.getElementById('specEffectLabel').textContent = SPEC_EFFECTS[val] || '';
 }
-document.getElementById('specSelect').addEventListener('change', ()=>{ updateSpecEffect(); autoSave(); });
+// ---------- kits iniciais ----------
+const KIT_SPEC = {
+  combatente:  {armor:1, items:[['Cano de ferro','Impacto','1d8 (+1)','Bônus de Combatente'],['Jaqueta reforçada','Proteção','—','+1 na CA']]},
+  pistoleiro:  {armor:0, items:[['Pistola','Fogo Leve','1d10','2 pentes'],['Faca de reserva','Branca','1d6','Pra quando acabar a munição']]},
+  atirador:    {armor:0, items:[['Rifle de caça','Fogo Pesada','1d12','6 cartuchos'],['Binóculos','Utilitário','—','Ajuda a mirar a 15m+']]},
+  generalista: {armor:0, items:[['Faca de cozinha','Branca','1d6',''],['Revólver velho','Fogo Leve','1d10','6 balas, sem recarga rápida']]}
+};
+const KIT_ORIGIN = {
+  'ex-detento':  [['Corrente de aço','Improvisada','1d4','Exibir reforça a reputação'],['Adrenalina','Especial','—','1 uso']],
+  'comerciante': [['Relógio de bolso + maço de dinheiro','Utilitário','—','Dá pra vender ou subornar'],['Kit Médico','Especial','—','1 uso']],
+  'orfao':       [['Mochila (lanterna, corda e gancho)','Utilitário','—',''],['Estimulante','Especial','—','1 uso · risco de overdose']],
+  'informante':  [['Rádio policial + caderneta','Utilitário','—','Contato na polícia'],['Kit Médico','Especial','—','1 uso']],
+  'nascido':     [['Emblema Le Voleur + mapa','Utilitário','—','Esconderijos do Sul'],['Adrenalina','Especial','—','1 uso']],
+  'autodidata':  [['Ferramentas de bolso + manual','Utilitário','—','Chaves, alicate, fita'],['Kit Médico','Especial','—','1 uso']],
+  'bracal':      [['Pé de cabra + luvas de trabalho','Improvisada','1d4','Bom pra arrombar'],['Adrenalina','Especial','—','1 uso']],
+  'trapaceiro':  [['Kit de disfarce + documento falso','Utilitário','—','Roupas, peruca'],['Estimulante','Especial','—','1 uso · risco de overdose']]
+};
+let kitArmor = 0;
+function fillEquipRows(start, items){
+  const rows = document.querySelectorAll('table.equip tbody tr');
+  for(let i=0;i<2;i++){
+    const inputs = rows[start+i].querySelectorAll('input');
+    (items?.[i] || ['','','','']).forEach((v,j)=> inputs[j].value = v);
+  }
+}
+function applySpecKit(){
+  const kit = KIT_SPEC[document.getElementById('kitSpec').value];
+  fillEquipRows(0, kit?.items);
+  const armorEl = document.getElementById('caArmor');
+  armorEl.value = (parseInt(armorEl.value,10) || 0) - kitArmor + (kit?.armor || 0);
+  kitArmor = kit?.armor || 0;
+  recalcAll();
+}
+function applyOriginKit(){
+  const v = document.getElementById('kitOrigin').value;
+  fillEquipRows(2, KIT_ORIGIN[v]);
+  document.getElementById('kitOriginDesc').textContent = ORIGIN_DESC[v] || '';
+}
+document.getElementById('kitSpec').addEventListener('change', ()=>{ applySpecKit(); autoSave(); });
+document.getElementById('kitOrigin').addEventListener('change', ()=>{ applyOriginKit(); autoSave(); });
+
+document.getElementById('specSelect').addEventListener('change', (e)=>{
+  updateSpecEffect();
+  const k = document.getElementById('kitSpec');
+  if(e.target.value && !k.value){ k.value = e.target.value; applySpecKit(); }
+  autoSave();
+});
 
 function recalcAll(){
   const mods = {};
@@ -549,6 +637,8 @@ function getState(){
     hpUsed: hpUsed,
     spec: document.getElementById('specSelect').value,
     origin: document.getElementById('originSelect').value,
+    kitSpec: document.getElementById('kitSpec').value,
+    kitOrigin: document.getElementById('kitOrigin').value,
     photo: photoDataUrl
   };
 }
@@ -559,6 +649,10 @@ function applyState(state){
   hpUsed = state.hpUsed || 0;
   document.getElementById('specSelect').value = state.spec || '';
   document.getElementById('originSelect').value = state.origin || '';
+  document.getElementById('kitSpec').value = state.kitSpec || '';
+  document.getElementById('kitOrigin').value = state.kitOrigin || '';
+  kitArmor = KIT_SPEC[state.kitSpec]?.armor || 0;
+  document.getElementById('kitOriginDesc').textContent = ORIGIN_DESC[state.kitOrigin] || '';
   applyOriginSkill(state.origin || '');
   photoDataUrl = state.photo || '';
   if(photoDataUrl){
