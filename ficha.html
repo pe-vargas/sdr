@@ -587,14 +587,14 @@ const KIT_SPEC = {
   generalista: {armor:0, items:[['Faca de cozinha','Branca','1d6',''],['Revólver velho','Fogo Leve','1d10','6 balas, sem recarga rápida']]}
 };
 const KIT_ORIGIN = {
-  'ex-detento':  [['Corrente de aço','Improvisada','1d4','Exibir reforça a reputação'],['Adrenalina','Especial','—','1 uso']],
-  'comerciante': [['Relógio de bolso + maço de dinheiro','Utilitário','—','Dá pra vender ou subornar'],['Kit Médico','Especial','—','1 uso']],
-  'orfao':       [['Mochila (lanterna, corda e gancho)','Utilitário','—',''],['Estimulante','Especial','—','1 uso · risco de overdose']],
-  'informante':  [['Rádio policial + caderneta','Utilitário','—','Contato na polícia'],['Kit Médico','Especial','—','1 uso']],
-  'nascido':     [['Emblema Le Voleur + mapa','Utilitário','—','Esconderijos do Sul'],['Adrenalina','Especial','—','1 uso']],
-  'autodidata':  [['Ferramentas de bolso + manual','Utilitário','—','Chaves, alicate, fita'],['Kit Médico','Especial','—','1 uso']],
-  'bracal':      [['Pé de cabra + luvas de trabalho','Improvisada','1d4','Bom pra arrombar'],['Adrenalina','Especial','—','1 uso']],
-  'trapaceiro':  [['Kit de disfarce + documento falso','Utilitário','—','Roupas, peruca'],['Estimulante','Especial','—','1 uso · risco de overdose']]
+  'ex-detento':  [['Corrente de aço','Improvisada','1d4','Exibir reforça a reputação'],['Med-Kit Pequeno','Especial','—','Restaura 1d6+2 HP']],
+  'comerciante': [['Relógio de bolso + maço de dinheiro','Utilitário','—','Dá pra vender ou subornar'],['Med-Kit Médio','Especial','—','2d6+4 HP ou estabiliza Ferida Grave']],
+  'orfao':       [['Mochila (lanterna, corda e gancho)','Utilitário','—',''],['Metanfetamina','Especial','—','Celeridade por 3 rodadas · risco de overdose']],
+  'informante':  [['Rádio policial + caderneta','Utilitário','—','Contato na polícia'],['Med-Kit Médio','Especial','—','2d6+4 HP ou estabiliza Ferida Grave']],
+  'nascido':     [['Emblema Le Voleur + mapa','Utilitário','—','Esconderijos do Sul'],['Med-Kit Pequeno','Especial','—','Restaura 1d6+2 HP']],
+  'autodidata':  [['Ferramentas de bolso + manual','Utilitário','—','Chaves, alicate, fita'],['Med-Kit Médio','Especial','—','2d6+4 HP ou estabiliza Ferida Grave']],
+  'bracal':      [['Pé de cabra + luvas de trabalho','Improvisada','1d4','Bom pra arrombar'],['Med-Kit Pequeno','Especial','—','Restaura 1d6+2 HP']],
+  'trapaceiro':  [['Kit de disfarce + documento falso','Utilitário','—','Roupas, peruca'],['Metanfetamina','Especial','—','Celeridade por 3 rodadas · risco de overdose']]
 };
 let kitArmor = 0;
 function fillEquipRows(start, items){
