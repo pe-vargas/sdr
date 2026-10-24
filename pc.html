@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LV-TERM 01 — Le Voleur</title>
+  <link rel="stylesheet" href="css/terminal.css">
+</head>
+<body>
+  <main class="machine" aria-label="Terminal antigo da Le Voleur">
+    <header class="machine-label">
+      <span>LEV-TECH / REAPROVEITADO</span>
+      <span>MODELO: LV-TERM 01</span>
+    </header>
+    <section class="screen">
+      <div class="screen-top"><span>LE VOLEUR — TERMINAL LOCAL</span><span id="clock">00:00</span></div>
+      <div id="boot" class="boot-screen">
+        <pre id="bootText"></pre>
+        <p class="blink">PRESSIONE QUALQUER TECLA PARA CONTINUAR_</p>
+      </div>
+      <div id="desktop" class="desktop hidden">
+        <div class="statusline">LV-DOS 2.1  |  MEMÓRIA: 640 KB  |  DISCO: 10 MB  |  REDE: NÃO DISPONÍVEL</div>
+        <h1>ARQUIVO LOCAL — LE VOLEUR</h1>
+        <p class="subtitle">Terminal recuperado da antiga secretaria escolar. Uso interno.</p>
+        <div class="menu-grid">
+          <button class="file-button" data-file="readme"><span class="icon">[TXT]</span><span>LEIA-ME.TXT</span></button>
+          <button class="file-button" data-file="mapa"><span class="icon">[MAP]</span><span>ASHGATE.MAP</span></button>
+          <button class="file-button" data-file="missao"><span class="icon">[LOG]</span><span>TRABALHOS.DAT</span></button>
+          <button class="file-button" data-file="inventario"><span class="icon">[INV]</span><span>INVENTARIO.DAT</span></button>
+          <button class="file-button" data-file="relatorios"><span class="icon">[DOC]</span><span>RELATORIOS.DIR</span></button>
+          <button class="file-button" data-file="sistema"><span class="icon">[SYS]</span><span>SISTEMA.TXT</span></button>
+        </div>
+        <div class="notice"><strong>AVISO:</strong> este terminal não possui ligação com a rede municipal. Os dados podem estar incompletos ou desatualizados.</div>
+        <div class="command-row">
+          <label for="command">C:\LEVOLEUR&gt;</label>
+          <input id="command" autocomplete="off" spellcheck="false" maxlength="40" aria-label="Comando">
+          <button id="runCommand">EXECUTAR</button>
+        </div>
+        <div id="commandHelp">Comandos: HELP, DIR, STATUS, CLEAR, OPEN nome-do-arquivo</div>
+        <div id="output" aria-live="polite"></div>
+      </div>
+      <section id="fileWindow" class="file-window hidden" role="dialog" aria-modal="true" aria-labelledby="fileTitle">
+        <div class="window-bar"><span id="fileTitle">ARQUIVO</span><button id="closeWindow" aria-label="Fechar arquivo">[ X ]</button></div>
+        <pre id="fileContent"></pre>
+        <div class="window-footer"><span id="fileMeta">ARQUIVO LOCAL</span><span>ESC: FECHAR</span></div>
+      </section>
+      <div class="screen-bottom"><span id="message">SISTEMA PRONTO</span><span>F1: AJUDA</span></div>
+    </section>
+    <footer class="machine-footer">
+      <div class="brand">LV<span>•</span></div>
+      <div class="drive">FDD <i></i></div>
+      <div class="power"><i></i> POWER</div>
+      <div class="sticker">NÃO DESLIGAR PUXANDO O CABO</div>
+    </footer>
+  </main>
+  <script src="js/terminal.js"></script>
+</body>
+</html>
