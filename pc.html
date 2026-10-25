@@ -1,0 +1,739 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terminal 01</title>
+
+<style>
+:root {
+    --green: #80ff91;
+    --dark-green: #173d25;
+    --black: #080d09;
+    --gray: #aaa99d;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: #181a18;
+    color: var(--green);
+    font-family: "Courier New", monospace;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.computer {
+    width: 100%;
+    max-width: 1050px;
+    background: #b6b4a6;
+    border: 4px solid #d0cec0;
+    border-right-color: #68695f;
+    border-bottom-color: #68695f;
+    padding: 18px;
+    box-shadow: 0 20px 70px #0009;
+}
+
+.brand {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #292b26;
+    font-weight: bold;
+    padding: 0 4px 14px;
+    letter-spacing: 2px;
+}
+
+.brand small {
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+.monitor {
+    background: #050905;
+    border: 12px solid #34362f;
+    border-radius: 8px;
+    padding: 20px;
+    min-height: 570px;
+    box-shadow: inset 0 0 20px #000;
+    position: relative;
+    overflow: hidden;
+}
+
+.monitor::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        transparent 0px,
+        transparent 3px,
+        #80ff9108 4px
+    );
+}
+
+.screen {
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 0 5px #80ff9180;
+}
+
+.topbar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px;
+    border-bottom: 1px solid var(--dark-green);
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    font-size: 12px;
+}
+
+h1 {
+    font-size: clamp(19px, 3vw, 28px);
+    margin: 20px 0 8px;
+    letter-spacing: 3px;
+}
+
+.subtitle {
+    color: #72b87d;
+    font-size: 12px;
+    margin-bottom: 25px;
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 210px 1fr;
+    gap: 20px;
+}
+
+.panel {
+    border: 1px solid #31553a;
+    padding: 12px;
+    min-width: 0;
+}
+
+.panel-title {
+    color: #b5ffbd;
+    border-bottom: 1px solid #31553a;
+    padding-bottom: 8px;
+    margin-bottom: 10px;
+    font-size: 12px;
+}
+
+.file {
+    display: block;
+    width: 100%;
+    border: none;
+    background: transparent;
+    color: var(--green);
+    text-align: left;
+    padding: 9px 4px;
+    font: inherit;
+    font-size: 12px;
+    cursor: pointer;
+    overflow-wrap: anywhere;
+}
+
+.file:hover, .file.active {
+    background: #183d23;
+    color: white;
+}
+
+.file::before {
+    content: "> ";
+}
+
+.document {
+    min-height: 300px;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    line-height: 1.7;
+    font-size: 13px;
+}
+
+.document h2 {
+    font-size: 17px;
+    color: white;
+}
+
+.document .muted {
+    color: #6fa77a;
+}
+
+.command-area {
+    margin-top: 18px;
+    border-top: 1px solid #31553a;
+    padding-top: 12px;
+}
+
+.command-line {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.prompt {
+    white-space: nowrap;
+}
+
+input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    font: inherit;
+    font-size: 13px;
+    caret-color: var(--green);
+}
+
+.hint {
+    font-size: 11px;
+    color: #6fa77a;
+    margin-top: 10px;
+}
+
+.statusbar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px;
+    border-top: 1px solid #31553a;
+    padding-top: 10px;
+    margin-top: 18px;
+    font-size: 10px;
+    color: #6fa77a;
+}
+
+.hardware {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    color: #33352e;
+    padding: 12px 3px 0;
+    font-size: 10px;
+    flex-wrap: wrap;
+}
+
+.power {
+    width: 7px;
+    height: 7px;
+    display: inline-block;
+    border-radius: 50%;
+    background: #49a94b;
+    box-shadow: 0 0 5px #49a94b;
+    margin-right: 5px;
+}
+
+#boot {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    background: #030603;
+    padding: 25px;
+    white-space: pre-wrap;
+    line-height: 1.8;
+    font-size: 13px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+@media (max-width: 650px) {
+    body {
+        padding: 5px;
+    }
+
+    .computer {
+        padding: 8px;
+    }
+
+    .monitor {
+        padding: 12px;
+        border-width: 6px;
+    }
+
+    .layout {
+        grid-template-columns: 1fr;
+    }
+
+    .file-list {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2px;
+    }
+
+    .document {
+        min-height: 220px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="computer">
+    <div class="brand">
+        <span>LV / COMPUTADORES</span>
+        <small>MODELO DOMÉSTICO — 1990</small>
+    </div>
+
+    <div class="monitor">
+        <div id="boot">LE VOLEUR COMPUTING SYSTEM
+BIOS VERSION 1.04
+--------------------------------
+MEMORY TEST: 640 KB OK
+FLOPPY DRIVE: READY
+HARD DISK: 10 MB
+NETWORK: NOT INSTALLED
+
+LOADING SYSTEM...
+
+</div>
+
+        <div class="screen" id="mainScreen">
+            <div class="topbar">
+                <span><span class="power"></span>LV-DOS 1.4</span>
+                <span>TERMINAL: LV-01</span>
+                <span id="clock">00:00:00</span>
+            </div>
+
+            <h1>LE VOLEUR</h1>
+            <div class="subtitle">
+                LOCAL INFORMATION SYSTEM // INTERNAL USE
+            </div>
+
+            <div class="layout">
+                <aside class="panel">
+                    <div class="panel-title">DRIVE C:\FILES</div>
+                    <div class="file-list" id="fileList"></div>
+                </aside>
+
+                <section class="panel">
+                    <div class="panel-title" id="docTitle">
+                        TERMINAL READY
+                    </div>
+
+                    <div class="document" id="document">SYSTEM STARTED.
+
+Este computador pertence à Le Voleur.
+
+Selecione um arquivo à esquerda para consultar
+os registros disponíveis.
+
+AVISO: informações incompletas podem estar
+desatualizadas ou ter sido alteradas.
+
+Digite HELP para consultar os comandos.</div>
+                </section>
+            </div>
+
+            <div class="command-area">
+                <div class="panel-title">COMMAND LINE</div>
+                <div class="command-line">
+                    <span class="prompt">C:\&gt;</span>
+                    <input id="command" autocomplete="off"
+                           spellcheck="false"
+                           placeholder="Type HELP and press Enter">
+                </div>
+                <div class="hint" id="hint">
+                    LOCAL SYSTEM // AWAITING COMMAND
+                </div>
+            </div>
+
+            <div class="statusbar">
+                <span>RAM: 640 KB</span>
+                <span>HD: 10 MB</span>
+                <span>NETWORK: UNAVAILABLE</span>
+                <span>USER: LE VOLEUR</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="hardware">
+        <span>LV-386 PERSONAL COMPUTER</span>
+        <span>640 KB RAM · 10 MB HDD · 5¼" FLOPPY</span>
+        <span>● POWER</span>
+    </div>
+</div>
+
+<script>
+const files = {
+    "LEIA-ME.TXT": {
+        title: "LEIA-ME.TXT",
+        text: `SISTEMA DA LE VOLEUR
+====================
+
+Este terminal é propriedade da Le Voleur.
+
+A escola abandonada funciona como nosso ponto
+de encontro, armazenamento e distribuição.
+
+Não confie cegamente em registros antigos.
+A cidade muda. As pessoas mentem.
+
+RECOMENDAÇÃO:
+Faça uma cópia dos documentos importantes
+em disquetes e mantenha-os protegidos.`
+    },
+
+    "ASHGATE.MAP": {
+        title: "ASHGATE.MAP — MAPA DA CIDADE",
+        text: `ASHGATE // MAPA ESQUEMÁTICO
+===========================
+
+                 [ NORTE ]
+                 IL PIACERE
+                     |
+ [ OESTE ] ---- ESTAÇÃO ---- [ LESTE ]
+ DER PROZESS    CENTRAL        BESY
+                     |
+                 LE VOLEUR
+                  [ SUL ]
+
+IL PIACERE:
+Região rica, fortificada e controlada pela
+indústria ferroviária.
+
+BESY:
+Distrito industrial a leste. Fábricas, oficinas
+e estruturas de produção.
+
+DER PROZESS:
+Região ocidental, organizada em ruas e quadras.
+Informações sobre sua administração são escassas.
+
+LE VOLEUR:
+Região sul. Poucos recursos, estruturas
+abandonadas e presença constante de pessoas
+que não têm outro lugar para ir.
+
+ESTAÇÃO CENTRAL:
+Parcialmente destruída após a Noite das Cinzas.
+
+NOTA:
+Este mapa é aproximado. Rotas seguras não
+são garantidas.`
+    },
+
+    "TRABALHOS.DAT": {
+        title: "TRABALHOS.DAT — SERVIÇOS",
+        text: `LE VOLEUR — REGISTRO DE TRABALHOS
+Arquivo: TRABALHOS.DAT
+Última atualização: 17/10/1990
+
+================================
+
+[001] — ENTREGA DE SUPRIMENTOS
+Status: CONCLUÍDO
+Recompensa: 180 ₵
+
+Entrega de alimentos e medicamentos a um pequeno grupo de moradores. O pagamento foi recebido integralmente.
+
+[002] — RECUPERAÇÃO DE MERCADORIA
+Status: CONCLUÍDO
+Recompensa: 120 ₵
+
+Localização e recuperação de duas caixas de ferramentas desaparecidas durante o transporte. Mercadoria devolvida ao contratante.
+
+[003] — REPAROS NA REDE ELÉTRICA
+Status: CONCLUÍDO
+Recompensa: 90 ₵
+
+Acompanhamento de um eletricista durante o reparo da instalação elétrica de um estabelecimento. Nenhum incidente registrado.
+
+[004] — BUSCA POR DESAPARECIDO
+Status: CONCLUÍDO
+Recompensa: 75 ₵
+
+Localização de um homem que não retornou para casa após um turno de trabalho. Encontrado nas proximidades de um alojamento. Caso encerrado.
+
+[005] — PROTEÇÃO DE ESTOQUE
+Status: CONCLUÍDO
+Recompensa: 150 ₵
+
+Vigilância noturna de um depósito de materiais. Nenhuma tentativa de invasão registrada.
+
+[006] — COLETA DE MATERIAIS
+Status: CONCLUÍDO
+Recompensa: 60 ₵
+
+Coleta de madeira, peças metálicas e outros materiais reutilizáveis para um morador local. Pagamento realizado em dinheiro.
+
+================================
+
+[007] — RECUPERAÇÃO DE EQUIPAMENTOS
+Status: PENDENTE
+Recompensa: 200 ₵
+
+Um pequeno lote de ferramentas e equipamentos de manutenção foi deixado em um edifício desocupado. O contratante solicita que os materiais sejam recuperados e entregues em segurança.
+
+LOCALIZAÇÃO: A CONFIRMAR
+RISCOS: DESCONHECIDOS
+PAGAMENTO: APÓS A ENTREGA
+
+Observação: o contratante afirma que os materiais pertencem a ele, mas não apresentou comprovantes de propriedade.
+
+================================
+
+[008] — COBRANÇA DE DÍVIDA
+Status: PENDENTE
+Recompensa: 150 ₵
+
+Um comerciante local solicita ajuda para recuperar uma quantia em dinheiro emprestada a um antigo conhecido. O devedor continua circulando pela cidade, mas evita contato com o contratante.
+
+LOCALIZAÇÃO: A CONFIRMAR
+RISCOS: CONFLITO POTENCIAL
+PAGAMENTO: APÓS A RESOLUÇÃO
+
+Observação: o contratante prefere que a situação seja resolvida sem chamar a atenção de terceiros.
+
+================================
+
+OBSERVAÇÕES INTERNAS
+
+Os trabalhos registrados foram realizados ou recebidos pela organização antes do início das operações atuais.
+
+Os valores correspondem ao pagamento total de cada serviço, não necessariamente ao lucro obtido.
+
+A ausência de incidentes registrados não garante que nenhum tenha ocorrido.
+
+Alguns serviços foram registrados apenas para controle de pagamento. Não existem relatórios detalhados para todas as operações.`
+    },
+
+    "INVENTARIO.DAT": {
+        title: "INVENTARIO.DAT — ESTOQUE",
+        text: `INVENTÁRIO LOCAL
+================
+
+O estoque deve ser atualizado manualmente.
+
+ARMAS:
+Registro incompleto.
+
+MUNIÇÃO:
+Registro incompleto.
+
+MEDICAMENTOS:
+Prioridade para feridos graves.
+
+ALIMENTOS:
+Distribuição controlada.
+
+EQUIPAMENTOS:
+Consultar os responsáveis pelo depósito.
+
+AVISO:
+A disponibilidade real dos itens deve ser
+confirmada com os mercadores da escola.`
+    },
+
+    "RELATORIOS.DIR": {
+        title: "RELATORIOS.DIR — OCORRÊNCIAS",
+        text: `REGISTROS DE OCORRÊNCIAS
+========================
+
+[ARQUIVO 001]
+A estação central permanece como um ponto
+de risco. Há relatos contraditórios sobre
+movimentações em seus arredores.
+
+[ARQUIVO 002]
+Pessoas desaparecidas nas regiões industriais.
+As circunstâncias não foram confirmadas.
+
+[ARQUIVO 003]
+A circulação de informações falsas aumentou.
+Verifique relatos antes de agir.
+
+--------------------------------
+Alguns registros podem ter sido perdidos,
+danificados ou deliberadamente removidos.`
+    },
+
+    "SISTEMA.TXT": {
+        title: "SISTEMA.TXT — CONFIGURAÇÕES",
+        text: `LE VOLEUR DOS — VERSÃO 1.4
+===========================
+
+COMPUTADOR:
+Modelo doméstico antigo.
+
+MEMÓRIA:
+640 KB RAM.
+
+ARMAZENAMENTO:
+Disco rígido de 10 MB.
+
+UNIDADE DE DISQUETE:
+5¼ polegadas.
+
+CONEXÃO:
+Nenhuma conexão externa disponível.
+
+SEGURANÇA:
+Acesso local. Não há autenticação avançada.
+
+NOTA TÉCNICA:
+Este terminal contém apenas cópias locais
+dos documentos disponíveis à Le Voleur.`
+    }
+};
+
+const fileList = document.getElementById("fileList");
+const documentView = document.getElementById("document");
+const docTitle = document.getElementById("docTitle");
+const commandInput = document.getElementById("command");
+const hint = document.getElementById("hint");
+
+function renderFiles() {
+    fileList.innerHTML = "";
+
+    Object.keys(files).forEach(name => {
+        const button = document.createElement("button");
+        button.className = "file";
+        button.textContent = name;
+        button.onclick = () => openFile(name);
+        fileList.appendChild(button);
+    });
+}
+
+function openFile(name) {
+    const key = name.toUpperCase();
+    const file = files[key];
+
+    if (!file) {
+        writeOutput(
+            "ERRO: ARQUIVO NÃO ENCONTRADO.\n\n" +
+            "Digite DIR para listar os arquivos disponíveis."
+        );
+        return;
+    }
+
+    docTitle.textContent = file.title;
+    documentView.textContent = file.text;
+    hint.textContent = "ARQUIVO ABERTO: " + key;
+
+    document.querySelectorAll(".file").forEach(button => {
+        button.classList.toggle(
+            "active",
+            button.textContent === key
+        );
+    });
+}
+
+function writeOutput(text) {
+    docTitle.textContent = "SAÍDA DO SISTEMA";
+    documentView.textContent = text;
+    document.querySelectorAll(".file").forEach(button => {
+        button.classList.remove("active");
+    });
+}
+
+function runCommand(raw) {
+    const parts = raw.trim().split(/\s+/);
+    const cmd = (parts[0] || "").toUpperCase();
+    const arg = parts.slice(1).join(" ").toUpperCase();
+
+    if (!cmd) return;
+
+    hint.textContent = "COMANDO: " + raw;
+
+    switch (cmd) {
+        case "HELP":
+            writeOutput(`COMANDOS DISPONÍVEIS
+====================
+
+HELP          List of commands
+DIR           List of files
+OPEN nome     Opens a file
+STATUS        Shows the system status
+CLEAR         Clears the output area
+
+EXAMPLES:
+OPEN READ-ME.TXT
+OPEN ASHGATE.MAP
+OPEN INVENTORY.DAT`);
+            break;
+
+        case "DIR":
+            writeOutput(
+                "DIRECTORY C:\\FILES\n" +
+                "=====================\n\n" +
+                Object.keys(files).map(name => {
+                    return name.padEnd(22, " ") + "FILE";
+                }).join("\n") +
+                "\n\n" + Object.keys(files).length +
+                "file(s) found"
+            );
+            break;
+
+        case "OPEN":
+            if (!arg) {
+                writeOutput("SINTAXE: OPEN file_name");
+            } else {
+                openFile(arg);
+            }
+            break;
+
+        case "STATUS":
+            writeOutput(`SYSTEM STATUS
+=================
+
+OPERATING SYSTEM
+MEMORY: 640 KB
+DISK: 10 MB
+FLOPPY DISK DRIVE: READY
+NETWORK: NOT AVAILABLE
+LOCAL FILES: ${Object.keys(files).length}
+
+NO EXTERNAL CONNECTION DETECTED.`);
+            break;
+
+        case "CLEAR":
+            writeOutput("CLEAR SCREAM.\n\nC:\\> SYSTEM READY.");
+            break;
+
+        default:
+            writeOutput(
+                "COMMAND NOT RECOGNIZED: " + cmd +
+                "\n\nType HELP to see the available commands."
+            );
+    }
+}
+
+commandInput.addEventListener("keydown", event => {
+    if (event.key === "Enter") {
+        const value = commandInput.value;
+        commandInput.value = "";
+        runCommand(value);
+    }
+});
+
+function updateClock() {
+    const now = new Date();
+    document.getElementById("clock").textContent =
+        now.toLocaleTimeString("pt-BR", { hour12: false });
+}
+
+renderFiles();
+updateClock();
+setInterval(updateClock, 1000);
+
+setTimeout(() => {
+    document.getElementById("boot").classList.add("hidden");
+    commandInput.focus();
+}, 2200);
+</script>
+
+</body>
+</html>
