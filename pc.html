@@ -426,88 +426,188 @@ são garantidas.`
     },
 
     "TRABALHOS.DAT": {
-        title: "TRABALHOS.DAT — SERVIÇOS",
-        text: `LE VOLEUR — REGISTRO DE TRABALHOS
+        title: "TRABALHOS.DAT — ÍNDICE DE SERVIÇOS",
+        text: `LE VOLEUR — QUADRO DE TRABALHOS
 Arquivo: TRABALHOS.DAT
 Última atualização: 17/10/1990
+
+================================
+
+Este arquivo funciona como índice dos serviços
+registrados pela organização.
+
+TRABALHOS_REALIZADOS.DAT
+Lista de serviços concluídos e pagamentos recebidos.
+
+TRABALHOS_PENDENTES.DAT
+Lista de serviços disponíveis para avaliação.
+Os membros devem escolher um trabalho e confirmar
+as condições com o responsável antes de partir.
+
+================================
+
+NOTA INTERNA
+Os valores registrados correspondem ao pagamento
+total, não necessariamente ao lucro obtido.
+Alguns serviços foram anotados apenas para controle
+de pagamento e não possuem relatórios detalhados.`
+    },
+
+    "TRABALHOS_REALIZADOS.DAT": {
+        title: "TRABALHOS_REALIZADOS.DAT — CONCLUÍDOS",
+        text: `LE VOLEUR — TRABALHOS REALIZADOS
+Arquivo: TRABALHOS_REALIZADOS.DAT
 
 ================================
 
 [001] — ENTREGA DE SUPRIMENTOS
 Status: CONCLUÍDO
 Recompensa: 180 ₵
-
-Entrega de alimentos e medicamentos a um pequeno grupo de moradores. O pagamento foi recebido integralmente.
+Entrega de alimentos e medicamentos a um pequeno
+grupo de moradores. Pagamento recebido integralmente.
 
 [002] — RECUPERAÇÃO DE MERCADORIA
 Status: CONCLUÍDO
 Recompensa: 120 ₵
-
-Localização e recuperação de duas caixas de ferramentas desaparecidas durante o transporte. Mercadoria devolvida ao contratante.
+Recuperação de duas caixas de ferramentas desaparecidas
+durante o transporte. Mercadoria devolvida.
 
 [003] — REPAROS NA REDE ELÉTRICA
 Status: CONCLUÍDO
 Recompensa: 90 ₵
-
-Acompanhamento de um eletricista durante o reparo da instalação elétrica de um estabelecimento. Nenhum incidente registrado.
+Acompanhamento de um eletricista durante reparos na
+instalação elétrica de um estabelecimento.
+Nenhum incidente registrado.
 
 [004] — BUSCA POR DESAPARECIDO
 Status: CONCLUÍDO
 Recompensa: 75 ₵
-
-Localização de um homem que não retornou para casa após um turno de trabalho. Encontrado nas proximidades de um alojamento. Caso encerrado.
+Localização de um homem que não retornou para casa após
+um turno de trabalho. Encontrado perto de um alojamento.
 
 [005] — PROTEÇÃO DE ESTOQUE
 Status: CONCLUÍDO
 Recompensa: 150 ₵
-
-Vigilância noturna de um depósito de materiais. Nenhuma tentativa de invasão registrada.
+Vigilância noturna de um depósito de materiais.
+Nenhuma tentativa de invasão registrada.
 
 [006] — COLETA DE MATERIAIS
 Status: CONCLUÍDO
 Recompensa: 60 ₵
+Coleta de madeira, peças metálicas e materiais
+reutilizáveis para um morador local. Pagamento realizado.
 
-Coleta de madeira, peças metálicas e outros materiais reutilizáveis para um morador local. Pagamento realizado em dinheiro.
+================================
+
+OBSERVAÇÃO:
+Os registros não identificam todos os membros que
+participaram de cada serviço.`
+    },
+
+    "TRABALHOS_PENDENTES.DAT": {
+        title: "TRABALHOS_PENDENTES.DAT — DISPONÍVEIS",
+        text: `LE VOLEUR — TRABALHOS PENDENTES
+Arquivo: TRABALHOS_PENDENTES.DAT
 
 ================================
 
 [007] — RECUPERAÇÃO DE EQUIPAMENTOS
-Status: PENDENTE
+Status: DISPONÍVEL
 Recompensa: 200 ₵
 
-Um pequeno lote de ferramentas e equipamentos de manutenção foi deixado em um edifício desocupado. O contratante solicita que os materiais sejam recuperados e entregues em segurança.
+Um pequeno lote de ferramentas e equipamentos de
+manutenção foi deixado em um edifício desocupado.
+O contratante solicita que os materiais sejam
+recuperados e entregues em segurança.
 
 LOCALIZAÇÃO: A CONFIRMAR
 RISCOS: DESCONHECIDOS
 PAGAMENTO: APÓS A ENTREGA
 
-Observação: o contratante afirma que os materiais pertencem a ele, mas não apresentou comprovantes de propriedade.
+Observação: o contratante afirma que os materiais
+lhe pertencem, mas não apresentou comprovantes.
 
 ================================
 
 [008] — COBRANÇA DE DÍVIDA
-Status: PENDENTE
+Status: DISPONÍVEL
 Recompensa: 150 ₵
 
-Um comerciante local solicita ajuda para recuperar uma quantia em dinheiro emprestada a um antigo conhecido. O devedor continua circulando pela cidade, mas evita contato com o contratante.
+Um comerciante local solicita ajuda para recuperar
+uma quantia emprestada a um antigo conhecido.
+O devedor continua circulando pela cidade, mas evita
+contato com o contratante.
 
 LOCALIZAÇÃO: A CONFIRMAR
 RISCOS: CONFLITO POTENCIAL
 PAGAMENTO: APÓS A RESOLUÇÃO
 
-Observação: o contratante prefere que a situação seja resolvida sem chamar a atenção de terceiros.
+Observação: o contratante prefere resolver a situação
+sem chamar a atenção de terceiros.
 
 ================================
 
-OBSERVAÇÕES INTERNAS
+INSTRUÇÕES
+Escolha um serviço e converse com o responsável
+pela distribuição dos trabalhos antes de partir.
+As informações disponíveis podem estar incompletas.`
+    },
 
-Os trabalhos registrados foram realizados ou recebidos pela organização antes do início das operações atuais.
+    "MEMBROS.DAT": {
+        title: "MEMBROS.DAT — REGISTRO INTERNO",
+        text: `LE VOLEUR — MEMBROS E FUNÇÕES
+Arquivo: MEMBROS.DAT
+Acesso: INTERNO
 
-Os valores correspondem ao pagamento total de cada serviço, não necessariamente ao lucro obtido.
+================================
 
-A ausência de incidentes registrados não garante que nenhum tenha ocorrido.
+O registro nominal dos integrantes está incompleto.
+As funções abaixo descrevem responsabilidades gerais,
+não uma lista de nomes confirmados.
 
-Alguns serviços foram registrados apenas para controle de pagamento. Não existem relatórios detalhados para todas as operações.`
+[01] — COORDENAÇÃO
+Organiza as prioridades da gangue, distribui tarefas
+e decide quais trabalhos serão aceitos.
+
+[02] — RESPONSÁVEIS POR OPERAÇÕES
+Planejam deslocamentos, avaliam riscos e coordenam
+os membros durante trabalhos fora da escola.
+
+[03] — COMBATENTES / SEGURANÇA
+Protegem os integrantes, os suprimentos e a base.
+Podem acompanhar trabalhos considerados arriscados.
+
+[04] — EXPLORAÇÃO E RECONHECIMENTO
+Reúnem informações sobre rotas, locais e movimentações.
+Devem relatar mudanças antes de uma operação.
+
+[05] — MERCADORES E ESTOQUE
+Controlam armas, munições, equipamentos, alimentos
+e outros itens disponíveis para troca ou venda.
+
+[06] — MANUTENÇÃO
+Cuida de reparos, ferramentas, instalações e materiais
+reutilizáveis sempre que houver recursos.
+
+[07] — CONTATOS E NEGOCIAÇÃO
+Recebem pedidos externos, conversam com contratantes
+e registram pagamentos e condições dos serviços.
+
+[08] — APOIO E CUIDADOS
+Organiza medicamentos, auxilia feridos e acompanha
+a distribuição de suprimentos essenciais.
+
+================================
+
+NOTAS
+- Um integrante pode acumular mais de uma função.
+- Nem todas as funções possuem um responsável fixo.
+- Os nomes dos membros não constam nesta cópia.
+- A distribuição de tarefas depende da disponibilidade
+  e da experiência de cada integrante.
+
+AVISO: não presumir que todos os cargos estejam
+ocupados permanentemente.`
     },
 
     "INVENTARIO.DAT": {
