@@ -109,8 +109,9 @@ h1 {
 
 .layout {
     display: grid;
-    grid-template-columns: 210px 1fr;
+    grid-template-columns: 245px minmax(0, 1fr);
     gap: 20px;
+    align-items: start;
 }
 
 .panel {
@@ -119,24 +120,79 @@ h1 {
     min-width: 0;
 }
 
-.panel-title {
+/* Explorador de arquivos organizado por pastas */
+.file-panel {
+    padding: 10px;
+    align-self: start;
+}
+
+.file-panel .panel-title {
+    margin-bottom: 8px;
+}
+
+.file-list {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    max-height: 420px;
+    overflow-y: auto;
+    padding-right: 3px;
+}
+
+.file-group {
+    border: 1px solid #24452d;
+    background: #071008;
+}
+
+.folder-toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 7px;
+    border: 0;
+    background: #102416;
     color: #b5ffbd;
-    border-bottom: 1px solid #31553a;
-    padding-bottom: 8px;
-    margin-bottom: 10px;
-    font-size: 12px;
+    font: inherit;
+    font-size: 11px;
+    text-align: left;
+    cursor: pointer;
+}
+
+.folder-toggle:hover {
+    background: #183d23;
+}
+
+.folder-arrow {
+    width: 10px;
+    color: var(--green);
+}
+
+.folder-count {
+    margin-left: auto;
+    color: #6fa77a;
+    font-size: 10px;
+}
+
+.folder-files {
+    padding: 3px;
+}
+
+.folder-files.collapsed {
+    display: none;
 }
 
 .file {
     display: block;
     width: 100%;
     border: none;
+    border-left: 2px solid transparent;
     background: transparent;
     color: var(--green);
     text-align: left;
-    padding: 9px 4px;
+    padding: 7px 5px 7px 12px;
     font: inherit;
-    font-size: 12px;
+    font-size: 11px;
     cursor: pointer;
     overflow-wrap: anywhere;
 }
@@ -144,10 +200,19 @@ h1 {
 .file:hover, .file.active {
     background: #183d23;
     color: white;
+    border-left-color: var(--green);
 }
 
 .file::before {
-    content: "> ";
+    content: "";
+}
+
+.panel-title {
+    color: #b5ffbd;
+    border-bottom: 1px solid #31553a;
+    padding-bottom: 8px;
+    margin-bottom: 10px;
+    font-size: 12px;
 }
 
 .document {
@@ -267,8 +332,12 @@ input {
 
     .file-list {
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 2px;
+        grid-template-columns: 1fr;
+        max-height: 280px;
+    }
+
+    .layout {
+        grid-template-columns: 1fr;
     }
 
     .document {
@@ -312,7 +381,7 @@ LOADING SYSTEM...
             </div>
 
             <div class="layout">
-                <aside class="panel">
+                <aside class="panel file-panel">
                     <div class="panel-title">DRIVE C:\FILES</div>
                     <div class="file-list" id="fileList"></div>
                 </aside>
@@ -553,60 +622,310 @@ As informações disponíveis podem estar incompletas.`
     },
 
     "MEMBROS.DAT": {
-        title: "MEMBROS.DAT — REGISTRO INTERNO",
-        text: `LE VOLEUR — MEMBROS E FUNÇÕES
+        title: "MEMBROS.DAT — BANCO DE DADOS",
+        text: `LE VOLEUR — CADASTRO DE INTEGRANTES
 Arquivo: MEMBROS.DAT
 Acesso: INTERNO
+Registros disponíveis: 5
 
 ================================
 
-O registro nominal dos integrantes está incompleto.
-As funções abaixo descrevem responsabilidades gerais,
-não uma lista de nomes confirmados.
+Este arquivo reúne os dados conhecidos dos integrantes
+cadastrados neste terminal. Selecione um dos arquivos
+MEMBRO_00X.DAT na lista para consultar uma ficha.
 
-[01] — COORDENAÇÃO
-Organiza as prioridades da gangue, distribui tarefas
-e decide quais trabalhos serão aceitos.
+CAMPOS DO CADASTRO:
+- Nome completo e apelido
+- Idade e data de nascimento
+- Local de nascimento
+- Função principal e responsabilidades
+- Habilidades e observações
+- Situação atual
 
-[02] — RESPONSÁVEIS POR OPERAÇÕES
-Planejam deslocamentos, avaliam riscos e coordenam
-os membros durante trabalhos fora da escola.
+NOTA: cadastro provisório. As fichas abaixo são registros
+locais e podem estar incompletas ou desatualizadas.`
+    },
 
-[03] — COMBATENTES / SEGURANÇA
-Protegem os integrantes, os suprimentos e a base.
-Podem acompanhar trabalhos considerados arriscados.
+    "MEMBRO_001.DAT": {
+        title: "MEMBRO_001.DAT — FICHA INDIVIDUAL",
+        text: `LE VOLEUR — REGISTRO DE INTEGRANTE
+Identificação: LV-001
+Situação: ATIVO
 
-[04] — EXPLORAÇÃO E RECONHECIMENTO
-Reúnem informações sobre rotas, locais e movimentações.
-Devem relatar mudanças antes de uma operação.
+NOME: Mara Vuković
+APELIDO: Mara
+IDADE: 32 anos
+DATA DE NASCIMENTO: 04/02/1958
+LOCAL DE NASCIMENTO: Ashgate — distrito sul
 
-[05] — MERCADORES E ESTOQUE
-Controlam armas, munições, equipamentos, alimentos
-e outros itens disponíveis para troca ou venda.
+FUNÇÃO PRINCIPAL: Coordenação e distribuição de tarefas
 
-[06] — MANUTENÇÃO
-Cuida de reparos, ferramentas, instalações e materiais
-reutilizáveis sempre que houver recursos.
+DESCRIÇÃO:
+Organiza as prioridades cotidianas da Le Voleur, registra
+novos serviços e tenta garantir que os recursos limitados
+sejam distribuídos de forma razoável. Prefere soluções
+práticas e não costuma aceitar trabalhos sem informações
+mínimas sobre o contratante.
 
-[07] — CONTATOS E NEGOCIAÇÃO
-Recebem pedidos externos, conversam com contratantes
-e registram pagamentos e condições dos serviços.
+HABILIDADES REGISTRADAS:
+Organização, negociação básica e avaliação de riscos.
 
-[08] — APOIO E CUIDADOS
-Organiza medicamentos, auxilia feridos e acompanha
-a distribuição de suprimentos essenciais.
+OBSERVAÇÕES:
+Mantém os registros de trabalho. Não é necessariamente
+a pessoa mais experiente em combate.
 
-================================
+NOTA: personagem provisória; os dados podem ser editados.`
+    },
+
+    "MEMBRO_002.DAT": {
+        title: "MEMBRO_002.DAT — FICHA INDIVIDUAL",
+        text: `LE VOLEUR — REGISTRO DE INTEGRANTE
+Identificação: LV-002
+Situação: ATIVO
+
+NOME: Tomasz Zieliński
+APELIDO: Tomas
+IDADE: 27 anos
+DATA DE NASCIMENTO: 19/09/1963
+LOCAL DE NASCIMENTO: Ashgate — distrito oeste
+
+FUNÇÃO PRINCIPAL: Segurança e acompanhamento de operações
+
+DESCRIÇÃO:
+Acompanha integrantes em serviços que podem envolver
+confrontos ou deslocamentos perigosos. É cauteloso e
+prefere planejar uma rota de saída antes de entrar em
+um lugar desconhecido.
+
+HABILIDADES REGISTRADAS:
+Vigilância, manutenção básica de armas e proteção de grupo.
+
+OBSERVAÇÕES:
+Não deve ser enviado sozinho para trabalhos que exijam
+negociação delicada.
+
+NOTA: personagem provisória; os dados podem ser editados.`
+    },
+
+    "MEMBRO_003.DAT": {
+        title: "MEMBRO_003.DAT — FICHA INDIVIDUAL",
+        text: `LE VOLEUR — REGISTRO DE INTEGRANTE
+Identificação: LV-003
+Situação: ATIVO
+
+NOME: Elena Rossi
+APELIDO: Lena
+IDADE: 24 anos
+DATA DE NASCIMENTO: 11/06/1966
+LOCAL DE NASCIMENTO: Ashgate — distrito leste
+
+FUNÇÃO PRINCIPAL: Estoque e comércio
+
+DESCRIÇÃO:
+Registra entradas e saídas de equipamentos, confere
+pagamentos e conversa com os mercadores instalados na
+escola. Conhece o valor de peças usadas e costuma
+recuperar materiais que outros considerariam inúteis.
+
+HABILIDADES REGISTRADAS:
+Inventário, avaliação de mercadorias e contabilidade simples.
+
+OBSERVAÇÕES:
+Os números do estoque dependem das atualizações dela.
+
+NOTA: personagem provisória; os dados podem ser editados.`
+    },
+
+    "MEMBRO_004.DAT": {
+        title: "MEMBRO_004.DAT — FICHA INDIVIDUAL",
+        text: `LE VOLEUR — REGISTRO DE INTEGRANTE
+Identificação: LV-004
+Situação: ATIVO
+
+NOME: Pavel Morozov
+APELIDO: Pasha
+IDADE: 21 anos
+DATA DE NASCIMENTO: 28/01/1969
+LOCAL DE NASCIMENTO: Ashgate — região ferroviária
+
+FUNÇÃO PRINCIPAL: Exploração e reconhecimento
+
+DESCRIÇÃO:
+Percorre rotas conhecidas, observa mudanças no movimento
+das ruas e verifica locais antes de uma entrega. Costuma
+anotar caminhos alternativos e pontos onde é possível
+se abrigar temporariamente.
+
+HABILIDADES REGISTRADAS:
+Orientação urbana, observação e deslocamento discreto.
+
+OBSERVAÇÕES:
+Seus relatórios são curtos e às vezes deixam detalhes
+importantes de fora.
+
+NOTA: personagem provisória; os dados podem ser editados.`
+    },
+
+    "MEMBRO_005.DAT": {
+        title: "MEMBRO_005.DAT — FICHA INDIVIDUAL",
+        text: `LE VOLEUR — REGISTRO DE INTEGRANTE
+Identificação: LV-005
+Situação: ATIVO
+
+NOME: Irina Petrov
+APELIDO: Ira
+IDADE: 29 anos
+DATA DE NASCIMENTO: 07/12/1960
+LOCAL DE NASCIMENTO: Ashgate — distrito sul
+
+FUNÇÃO PRINCIPAL: Manutenção e apoio
+
+DESCRIÇÃO:
+Cuida de pequenos reparos na escola, recupera ferramentas
+e organiza os materiais que ainda podem ser utilizados.
+Quando necessário, ajuda a separar medicamentos e
+suprimentos para os integrantes feridos.
+
+HABILIDADES REGISTRADAS:
+Reparos básicos, improvisação e organização de suprimentos.
+
+OBSERVAÇÕES:
+A falta de peças e ferramentas limita o que consegue reparar.
+
+NOTA: personagem provisória; os dados podem ser editados.`
+    },
+
+    "MERCADORES.DAT": {
+        title: "MERCADORES.DAT — SERVIÇOS DA BASE",
+        text: `LE VOLEUR — COMÉRCIO INTERNO
+============================
+
+Há três pontos de atendimento registrados na escola.
+Os estoques são pequenos e podem mudar sem aviso.
+
+ENFERMARIA.DAT
+Atendimento básico, curativos e medicamentos.
+
+ARMAS_MUNICAO.DAT
+Armas usadas, manutenção simples e munições.
+
+EQUIPAMENTO_MISSAO.DAT
+Ferramentas, iluminação, proteção e suprimentos
+para operações fora da base.
+
+PAGAMENTO:
+Valores em ₵. Confirme o estoque e o preço com o
+responsável antes de retirar qualquer item.
+
+AVISO:
+A Le Voleur não garante a qualidade de materiais
+recuperados nem a disponibilidade de reposição.`
+    },
+
+    "ENFERMARIA.DAT": {
+        title: "ENFERMARIA.DAT — ATENDIMENTO E MEDICAMENTOS",
+        text: `POSTO DE ENFERMAGEM — ESCOLA
+Responsável: equipe de apoio médico
+====================================
+
+SERVIÇOS
+Avaliação de ferimentos leves: 10 ₵
+Curativo e limpeza de ferimento: 15 ₵
+Tratamento de ferimento moderado: 35 ₵
+Estabilização de emergência: 50 ₵
+
+SUPRIMENTOS
+Kit de primeiros socorros: 25 ₵
+Bandagens: 5 ₵
+Antisséptico: 8 ₵
+Analgésicos comuns: 10 ₵
+Gaze e esparadrapo: 6 ₵
+
+REGRAS
+- O atendimento depende dos materiais disponíveis.
+- Ferimentos graves podem exigir mais de um item.
+- Medicamentos não substituem tratamento adequado.
+- Não retire suprimentos sem registrar a quantidade.
+
+ESTOQUE: LIMITADO
+Preços e disponibilidade sujeitos a alteração.`
+    },
+
+    "ARMAS_MUNICAO.DAT": {
+        title: "ARMAS_MUNICAO.DAT — BALCÃO DE ARMAMENTO",
+        text: `BALCÃO DE ARMAS E MUNIÇÕES
+Responsável: armeiro da base
+============================
+
+ARMAS USADAS
+Faca de serviço: 20 ₵
+Revólver usado: 120 ₵
+Pistola usada: 150 ₵
+Espingarda usada: 180 ₵
+
+MUNIÇÕES
+Munição de pistola (caixa pequena): 15 ₵
+Munição de revólver (caixa pequena): 15 ₵
+Cartuchos de espingarda (pacote pequeno): 20 ₵
+
+SERVIÇOS
+Limpeza e inspeção de arma: 10 ₵
+Reparo simples: a partir de 20 ₵
+
+CONDIÇÕES
+- Armas usadas podem apresentar desgaste.
+- Munição é vendida conforme disponibilidade.
+- O armeiro pode recusar equipamento sem condições
+  mínimas de segurança.
+- Toda retirada deve ser registrada no estoque.
+
+ESTOQUE: VARIÁVEL
+Confirme o calibre e a compatibilidade antes da compra.`
+    },
+
+    "EQUIPAMENTO_MISSAO.DAT": {
+        title: "EQUIPAMENTO_MISSAO.DAT — SUPRIMENTOS DE CAMPO",
+        text: `EQUIPAMENTO PARA MISSÕES
+Responsável: depósito da escola
+============================
+
+ILUMINAÇÃO E ORIENTAÇÃO
+Lanterna usada: 15 ₵
+Pilhas (conjunto): 5 ₵
+Mapa local impresso: 3 ₵
+Bússola simples: 12 ₵
+
+PROTEÇÃO E FERRAMENTAS
+Máscara de gás usada: 45 ₵
+Filtro de reposição: 18 ₵
+Luvas de trabalho: 8 ₵
+Ferramentas básicas: 20 ₵
+Corda (10 metros): 12 ₵
+
+SUPRIMENTOS
+Mochila de campo: 25 ₵
+Cantíl: 8 ₵
+Rações para um dia: 10 ₵
+Kit de reparo improvisado: 15 ₵
 
 NOTAS
-- Um integrante pode acumular mais de uma função.
-- Nem todas as funções possuem um responsável fixo.
-- Os nomes dos membros não constam nesta cópia.
-- A distribuição de tarefas depende da disponibilidade
-  e da experiência de cada integrante.
+- Equipamentos usados podem estar danificados.
+- Máscaras e filtros devem ser inspecionados antes
+  de entrar em áreas contaminadas.
+- Itens emprestados devem ser devolvidos após a missão.
+- A base não garante reposição imediata.
 
-AVISO: não presumir que todos os cargos estejam
-ocupados permanentemente.`
+ESTOQUE: LIMITADO
+Preços em ₵. Consulte o responsável antes de partir.`
+    },
+
+    "VICTOR_VALE.DAT": {
+        title: "VICTOR_VALE.DAT — REGISTRO DE INTEGRANTE",
+        text: `LE VOLEUR — REGISTRO DE INTEGRANTE
+
+NOME: Victor Vale
+IDADE: 38 anos
+FUNÇÃO: Líder da Le Voleur`
     },
 
     "INVENTARIO.DAT": {
@@ -694,15 +1013,82 @@ const docTitle = document.getElementById("docTitle");
 const commandInput = document.getElementById("command");
 const hint = document.getElementById("hint");
 
+const fileGroups = [
+    {
+        name: "DOCUMENTOS GERAIS",
+        icon: "▣",
+        files: ["LEIA-ME.TXT", "ASHGATE.MAP", "INVENTARIO.DAT", "RELATORIOS.DIR"]
+    },
+    {
+        name: "OPERAÇÕES",
+        icon: "▣",
+        files: ["TRABALHOS.DAT", "TRABALHOS_PENDENTES.DAT", "TRABALHOS_REALIZADOS.DAT"]
+    },
+    {
+        name: "INTEGRANTES",
+        icon: "▣",
+        files: ["MEMBROS.DAT", "MEMBRO_001.DAT", "MEMBRO_002.DAT", "MEMBRO_003.DAT", "MEMBRO_004.DAT", "MEMBRO_005.DAT", "VICTOR_VALE.DAT"]
+    },
+    {
+        name: "COMÉRCIO DA BASE",
+        icon: "▣",
+        files: ["MERCADORES.DAT", "ENFERMARIA.DAT", "ARMAS_MUNICAO.DAT", "EQUIPAMENTO_MISSAO.DAT"]
+    },
+    {
+        name: "SISTEMA",
+        icon: "▣",
+        files: ["SISTEMA.TXT"]
+    }
+];
+
 function renderFiles() {
     fileList.innerHTML = "";
 
-    Object.keys(files).forEach(name => {
-        const button = document.createElement("button");
-        button.className = "file";
-        button.textContent = name;
-        button.onclick = () => openFile(name);
-        fileList.appendChild(button);
+    fileGroups.forEach((group, index) => {
+        const wrapper = document.createElement("section");
+        wrapper.className = "file-group";
+
+        const toggle = document.createElement("button");
+        toggle.className = "folder-toggle";
+        toggle.type = "button";
+        toggle.setAttribute("aria-expanded", index < 2 ? "true" : "false");
+
+        const arrow = document.createElement("span");
+        arrow.className = "folder-arrow";
+        arrow.textContent = index < 2 ? "▾" : "▸";
+
+        const label = document.createElement("span");
+        label.textContent = group.name;
+
+        const count = document.createElement("span");
+        count.className = "folder-count";
+        count.textContent = String(group.files.length).padStart(2, "0");
+
+        toggle.append(arrow, label, count);
+
+        const contents = document.createElement("div");
+        contents.className = "folder-files" + (index < 2 ? "" : " collapsed");
+
+        group.files.forEach(name => {
+            if (!files[name]) return;
+            const button = document.createElement("button");
+            button.className = "file";
+            button.type = "button";
+            button.textContent = name;
+            button.dataset.file = name;
+            button.title = "Abrir " + name;
+            button.onclick = () => openFile(name);
+            contents.appendChild(button);
+        });
+
+        toggle.onclick = () => {
+            const isCollapsed = contents.classList.toggle("collapsed");
+            toggle.setAttribute("aria-expanded", String(!isCollapsed));
+            arrow.textContent = isCollapsed ? "▸" : "▾";
+        };
+
+        wrapper.append(toggle, contents);
+        fileList.appendChild(wrapper);
     });
 }
 
@@ -721,6 +1107,19 @@ function openFile(name) {
     docTitle.textContent = file.title;
     documentView.textContent = file.text;
     hint.textContent = "ARQUIVO ABERTO: " + key;
+
+    const selectedButton = [...document.querySelectorAll(".file")]
+        .find(button => button.dataset.file === key);
+    if (selectedButton) {
+        const folderContents = selectedButton.closest(".folder-files");
+        const folderToggle = folderContents?.previousElementSibling;
+        if (folderContents?.classList.contains("collapsed")) {
+            folderContents.classList.remove("collapsed");
+            folderToggle?.setAttribute("aria-expanded", "true");
+            const arrow = folderToggle?.querySelector(".folder-arrow");
+            if (arrow) arrow.textContent = "▾";
+        }
+    }
 
     document.querySelectorAll(".file").forEach(button => {
         button.classList.toggle(
@@ -799,7 +1198,7 @@ NO EXTERNAL CONNECTION DETECTED.`);
             break;
 
         case "CLEAR":
-            writeOutput("CLEAR SCREAM.\n\nC:\\> SYSTEM READY.");
+            writeOutput("TELA LIMPA.\n\nC:\\> SYSTEM READY.");
             break;
 
         default:
