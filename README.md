@@ -69,7 +69,3 @@ O conteúdo está sujeito a alterações conforme a evolução da campanha, a cr
 Este é um projeto pessoal, desenvolvido principalmente para uso privado em uma campanha de RPG entre amigos. Não foi concebido originalmente como produto comercial ou como fonte de renda.
 
 A publicação no GitHub tem como finalidade centralizar os arquivos, manter um histórico de desenvolvimento e documentar o processo de criação. A disponibilização pública do repositório não implica, por si só, autorização para redistribuição, comercialização ou utilização dos materiais em outros projetos.
-
----
-
-*SPINA DI ROSULA — Ashgate não é uma cidade que precisa ser salva. É uma cidade que precisa continuar existindo.*
