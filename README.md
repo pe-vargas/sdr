@@ -39,6 +39,14 @@ O projeto utiliza tecnologias web para construir uma documentação organizada e
 
 Os documentos HTML podem ser abertos diretamente em um navegador, sem a necessidade de um ambiente de execução complexo, quando não houver dependências adicionais.
 
+## 🌐 Publicação com GitHub Pages
+
+Embora o repositório esteja público, **sua disponibilização não tem como objetivo tornar o conteúdo um produto público ou comercial**. A principal razão para manter o projeto público é utilizar o **[GitHub Pages](https://pages.github.com/)**, permitindo hospedar os documentos HTML e acessá-los diretamente pelo navegador.
+
+Essa abordagem facilita significativamente a utilização dos materiais durante as sessões, permitindo consultar páginas, personagens e documentos de ambientação por meio de links, sem precisar abrir arquivos localmente ou compartilhar documentos manualmente.
+
+A hospedagem também contribui para a imersão no RPG, tornando a documentação parte da experiência de jogo e facilitando o acesso dos participantes aos materiais preparados para a campanha.
+
 ## 🤖 Ferramentas de apoio
 
 Durante o desenvolvimento, utilizei ferramentas de inteligência artificial como apoio à elaboração dos documentos, à organização das ideias e à implementação de funcionalidades.
@@ -55,7 +63,8 @@ O uso de inteligência artificial é explicitado por transparência quanto às f
 - Desenvolver um universo original para uma campanha de RPG de mesa.
 - Organizar a documentação narrativa e mecânica em arquivos acessíveis.
 - Aplicar conhecimentos de desenvolvimento web em um projeto prático.
-- Experimentar recursos interativos para facilitar a preparação e a condução das sessões.
+- Utilizar o GitHub Pages para facilitar a hospedagem e a consulta dos materiais.
+- Experimentar recursos interativos que contribuam para a imersão e a condução das sessões.
 - Aprimorar continuamente a organização, a apresentação e a manutenção dos materiais.
 
 ## 📌 Status do projeto
@@ -68,4 +77,7 @@ O conteúdo está sujeito a alterações conforme a evolução da campanha, a cr
 
 Este é um projeto pessoal, desenvolvido principalmente para uso privado em uma campanha de RPG entre amigos. Não foi concebido originalmente como produto comercial ou como fonte de renda.
 
-A publicação no GitHub tem como finalidade centralizar os arquivos, manter um histórico de desenvolvimento e documentar o processo de criação. A disponibilização pública do repositório não implica, por si só, autorização para redistribuição, comercialização ou utilização dos materiais em outros projetos.
+A visibilidade pública do repositório é uma necessidade prática para a hospedagem dos documentos pelo GitHub Pages. Isso não significa que os materiais estejam automaticamente disponíveis para redistribuição, modificação ou comercialização por terceiros. Os direitos de uso dos conteúdos permanecem sujeitos à legislação aplicável e a eventuais licenças específicas.
+
+---
+
