@@ -344,6 +344,30 @@ input {
         min-height: 220px;
     }
 }
+
+/* Central de operações */
+.quick-nav{display:flex;flex-wrap:wrap;gap:7px;margin:-8px 0 18px}
+.quick-nav button,.action-btn,.small-select{font:inherit;font-size:11px;color:var(--green);background:#0b170d;border:1px solid #31553a;padding:8px 10px;cursor:pointer}
+.quick-nav button:hover,.action-btn:hover{background:#183d23;color:#fff}
+.quick-nav button.active{background:#21472a;border-color:var(--green);color:#fff}
+.view-heading{font-size:15px;color:#fff;border-bottom:1px solid #31553a;padding-bottom:8px;margin:0 0 12px}
+.data-table{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0 15px}
+.data-table th,.data-table td{border:1px solid #24452d;padding:8px;text-align:left;vertical-align:top}
+.data-table th{color:#b5ffbd;background:#102416}
+.data-table td{color:var(--green)}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin:10px 0}
+.data-card{border:1px solid #31553a;background:#081109;padding:12px;min-width:0}
+.data-card h3{font-size:13px;color:#fff;margin:0 0 8px}
+.data-card p{font-size:12px;line-height:1.6;margin:5px 0}
+.data-card .muted{color:#79a982}
+.action-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.action-btn:disabled{opacity:.35;cursor:not-allowed}
+.notice{border-left:3px solid #80ff91;padding:8px 10px;background:#0c1b0f;font-size:12px;line-height:1.6;margin:10px 0}
+.badge{display:inline-block;border:1px solid #31553a;padding:2px 5px;font-size:10px;margin:2px 0}
+.input-dark{font:inherit;font-size:12px;color:var(--green);background:#050905;border:1px solid #31553a;padding:7px;max-width:100%}
+.message{border-bottom:1px dashed #31553a;padding:10px 0;font-size:12px;line-height:1.6}
+.message strong{color:#fff}
+@media(max-width:720px){.layout{grid-template-columns:1fr}.file-list{max-height:220px}.monitor{padding:12px}.data-table{font-size:11px}.data-table th,.data-table td{padding:5px}}
 </style>
 </head>
 
@@ -379,6 +403,14 @@ LOADING SYSTEM...
             <div class="subtitle">
                 LOCAL INFORMATION SYSTEM // INTERNAL USE
             </div>
+
+            <nav class="quick-nav" aria-label="Central de operações">
+                <button type="button" data-view="operations" onclick="showView('operations', this)">[ OPERATIONS ]</button>
+                <button type="button" data-view="inventory" onclick="showView('inventory', this)">[ INVENTORY ]</button>
+                <button type="button" data-view="database" onclick="showView('database', this)">[ DATABASE ]</button>
+                <button type="button" data-view="messages" onclick="showView('messages', this)">[ MESSAGES ]</button>
+                <button type="button" data-view="terminal" onclick="showView('terminal', this)">[ FILE VIEWER ]</button>
+            </nav>
 
             <div class="layout">
                 <aside class="panel file-panel">
@@ -443,8 +475,9 @@ const files = {
 
 Este terminal é propriedade da Le Voleur.
 
-A escola abandonada funciona como nosso ponto
-de encontro, armazenamento e distribuição.
+A escola abandonada é abrigo para dezenas de pessoas.
+Também funciona como ponto de encontro, armazenamento
+e distribuição; nem todo residente faz parte da gangue.
 
 Não confie cegamente em registros antigos.
 A cidade muda. As pessoas mentem.
@@ -497,7 +530,7 @@ são garantidas.`
         title: "TRABALHOS.DAT — ÍNDICE DE SERVIÇOS",
         text: `LE VOLEUR — QUADRO DE TRABALHOS
 Arquivo: TRABALHOS.DAT
-Última atualização: 17/10/1990
+Última atualização: 17/01/1990
 
 ================================
 
@@ -622,210 +655,260 @@ As informações disponíveis podem estar incompletas.`
     },
 
     "MEMBROS.DAT": {
-        title: "MEMBROS.DAT — BANCO DE DADOS",
-        text: `LE VOLEUR — CADASTRO DE INTEGRANTES
+        title: "MEMBROS.DAT — QUADRO OPERACIONAL",
+        text: `LE VOLEUR — CADASTRO INTERNO
 Arquivo: MEMBROS.DAT
-Acesso: INTERNO
-Registros disponíveis: 5
+Acesso: USO INTERNO
+Integrantes registrados: 6
 
 ================================
 
-Este arquivo reúne os dados conhecidos dos integrantes
-cadastrados neste terminal. Selecione um dos arquivos
-MEMBRO_00X.DAT na lista para consultar uma ficha.
+REGISTRO DE QUADRO
+Este diretório reúne nomes, funções e recursos humanos
+ligados à base da Le Voleur. Os apelidos são usados no
+cotidiano; nomes completos ficam restritos aos registros.
 
-CAMPOS DO CADASTRO:
-- Nome completo e apelido
-- Idade e data de nascimento
-- Local de nascimento
-- Função principal e responsabilidades
-- Habilidades e observações
-- Situação atual
+COMANDO
+VICTOR_VALE.DAT — liderança geral e decisões estratégicas
 
-NOTA: cadastro provisório. As fichas abaixo são registros
-locais e podem estar incompletas ou desatualizadas.`
+QUADRO OPERACIONAL
+MARA_VUKOVIC.DAT — coordenação, contratos e relações externas
+TOMASZ_ZIELINSKI.DAT — segurança, arsenal e preparação de equipes
+ELENA_ROSSI.DAT — comércio, finanças e controle de recursos
+PAVEL_MOROZOV.DAT — reconhecimento, rotas e logística de campo
+IRINA_PETROV.DAT — enfermaria, reparos e continuidade da base
+
+OBSERVAÇÃO DE COMANDO
+A Le Voleur depende desses cinco postos para manter a escola
+funcionando. Nenhum setor opera isoladamente: uma missão pode
+ser suspensa por falta de suprimentos, risco às rotas ou demanda
+médica na comunidade.
+
+PROCEDIMENTO
+Consultar a ficha nominal antes de encaminhar solicitações.
+Os responsáveis pelos setores da base também constam nos
+registros de comércio e distribuição.
+
+AVISO: informações internas. Alguns dados podem estar
+incompletos ou desatualizados.`
     },
 
-    "MEMBRO_001.DAT": {
-        title: "MEMBRO_001.DAT — FICHA INDIVIDUAL",
-        text: `LE VOLEUR — REGISTRO DE INTEGRANTE
-Identificação: LV-001
-Situação: ATIVO
+    "MARA_VUKOVIC.DAT": {
+        title: "MARA_VUKOVIC.DAT — FICHA INDIVIDUAL",
+        text: `LE VOLEUR — FICHA DE QUADRO
+Identificação: LV-001 / REGISTRO INTERNO
+Situação: ATIVA
 
 NOME: Mara Vuković
 APELIDO: Mara
 IDADE: 32 anos
 DATA DE NASCIMENTO: 04/02/1958
-LOCAL DE NASCIMENTO: Ashgate — distrito sul
+ORIGEM: Distrito Sul, Ashgate
 
-FUNÇÃO PRINCIPAL: Coordenação e distribuição de tarefas
+POSTO: Chefe de coordenação de rua
+RESPONSABILIDADE: Contratos, contatos, prioridades e distribuição de trabalhos
 
-DESCRIÇÃO:
-Organiza as prioridades cotidianas da Le Voleur, registra
-novos serviços e tenta garantir que os recursos limitados
-sejam distribuídos de forma razoável. Prefere soluções
-práticas e não costuma aceitar trabalhos sem informações
-mínimas sobre o contratante.
+NA BASE:
+Mara é o ponto de ligação entre a escola e o resto de Ashgate.
+Recebe pedidos, verifica quem está por trás deles e separa rumor
+de informação útil antes que alguém arrisque a vida por dinheiro.
+Distribui trabalhos considerando experiência, equipamento e o
+risco de cada equipe; também evita que dois grupos disputem o
+mesmo serviço sem saber. Quando um contratante tenta esconder
+parte do acordo, Mara costuma perceber pelas contradições.
 
-HABILIDADES REGISTRADAS:
-Organização, negociação básica e avaliação de riscos.
+IMPORTÂNCIA OPERACIONAL:
+Sem sua coordenação, a Le Voleur perde contratos, desperdiça
+recursos e expõe moradores a retaliações desnecessárias. Victor
+confia a ela a organização cotidiana das operações, mas ela não
+possui autoridade para substituir o comando geral.
 
-OBSERVAÇÕES:
-Mantém os registros de trabalho. Não é necessariamente
-a pessoa mais experiente em combate.
-
-NOTA: personagem provisória; os dados podem ser editados.`
+COMPETÊNCIAS: negociação, leitura de pessoas, avaliação de risco,
+organização de equipes e gestão de contatos.
+VÍNCULOS: TRABALHOS.DAT / TRABALHOS_PENDENTES.DAT
+NOTA DE QUADRO: conhece mais segredos de contratantes do que
+costuma admitir. Não confundir coordenação com comando geral.`
     },
 
-    "MEMBRO_002.DAT": {
-        title: "MEMBRO_002.DAT — FICHA INDIVIDUAL",
-        text: `LE VOLEUR — REGISTRO DE INTEGRANTE
-Identificação: LV-002
+    "TOMASZ_ZIELINSKI.DAT": {
+        title: "TOMASZ_ZIELINSKI.DAT — FICHA INDIVIDUAL",
+        text: `LE VOLEUR — FICHA DE QUADRO
+Identificação: LV-002 / REGISTRO INTERNO
 Situação: ATIVO
 
 NOME: Tomasz Zieliński
 APELIDO: Tomas
 IDADE: 27 anos
 DATA DE NASCIMENTO: 19/09/1963
-LOCAL DE NASCIMENTO: Ashgate — distrito oeste
+ORIGEM: Distrito Oeste, Ashgate
 
-FUNÇÃO PRINCIPAL: Segurança e acompanhamento de operações
+POSTO: Chefe de segurança e armeiro
+RESPONSABILIDADE: Arsenal, munição, inspeção e proteção da base
 
-DESCRIÇÃO:
-Acompanha integrantes em serviços que podem envolver
-confrontos ou deslocamentos perigosos. É cauteloso e
-prefere planejar uma rota de saída antes de entrar em
-um lugar desconhecido.
+NA BASE:
+Tomas mantém o arsenal utilizável e rastreia o que entra e sai.
+Inspeciona armas, identifica defeitos, separa munição por tipo e
+recusa liberar equipamento que possa falhar nas mãos de alguém.
+Também organiza turnos de vigia e revisa com as equipes os pontos
+de entrada e saída antes de uma operação. É severo com descuido,
+mas não desperdiça munição para provar autoridade.
 
-HABILIDADES REGISTRADAS:
-Vigilância, manutenção básica de armas e proteção de grupo.
+IMPORTÂNCIA OPERACIONAL:
+A segurança da escola e a capacidade de resposta da Le Voleur
+passam por ele. Tomas pode recomendar que uma missão não saia
+quando o equipamento é insuficiente; ignorar seu parecer costuma
+transformar um problema pequeno em uma baixa evitável.
 
-OBSERVAÇÕES:
-Não deve ser enviado sozinho para trabalhos que exijam
-negociação delicada.
-
-NOTA: personagem provisória; os dados podem ser editados.`
+COMPETÊNCIAS: manutenção de armas, disciplina de arsenal,
+vigilância, escolta e avaliação de equipamento.
+SETOR VINCULADO: ARMAS_MUNICAO.DAT
+NOTA DE QUADRO: lembra quem devolve material em condições e
+quem costuma devolver apenas desculpas.`
     },
 
-    "MEMBRO_003.DAT": {
-        title: "MEMBRO_003.DAT — FICHA INDIVIDUAL",
-        text: `LE VOLEUR — REGISTRO DE INTEGRANTE
-Identificação: LV-003
-Situação: ATIVO
+    "ELENA_ROSSI.DAT": {
+        title: "ELENA_ROSSI.DAT — FICHA INDIVIDUAL",
+        text: `LE VOLEUR — FICHA DE QUADRO
+Identificação: LV-003 / REGISTRO INTERNO
+Situação: ATIVA
 
 NOME: Elena Rossi
 APELIDO: Lena
 IDADE: 24 anos
 DATA DE NASCIMENTO: 11/06/1966
-LOCAL DE NASCIMENTO: Ashgate — distrito leste
+ORIGEM: Distrito Leste, Ashgate
 
-FUNÇÃO PRINCIPAL: Estoque e comércio
+POSTO: Tesouraria, comércio e inventário
+RESPONSABILIDADE: Compras, vendas, pagamentos, estoque e registros
 
-DESCRIÇÃO:
-Registra entradas e saídas de equipamentos, confere
-pagamentos e conversa com os mercadores instalados na
-escola. Conhece o valor de peças usadas e costuma
-recuperar materiais que outros considerariam inúteis.
+NA BASE:
+Elena controla as entradas e saídas do inventário comum e mantém
+os balcões de troca funcionando. Avalia sucata, ferramentas,
+munição e equipamentos usados; compara preços e negocia com
+fornecedores sem revelar quanto a escola realmente possui.
+Registra dívidas e pagamentos, confere as compras dos setores e
+cobra justificativas quando um item desaparece sem baixa.
 
-HABILIDADES REGISTRADAS:
-Inventário, avaliação de mercadorias e contabilidade simples.
+IMPORTÂNCIA OPERACIONAL:
+É quem transforma recursos escassos em suprimentos utilizáveis.
+Sem seus registros, a Le Voleur não sabe quanto pode gastar, quais
+itens estão acabando ou se uma recompensa foi realmente recebida.
+Elena não decide sozinha as prioridades políticas, mas seus números
+podem provar que uma operação simplesmente não cabe no orçamento.
 
-OBSERVAÇÕES:
-Os números do estoque dependem das atualizações dela.
-
-NOTA: personagem provisória; os dados podem ser editados.`
+COMPETÊNCIAS: contabilidade prática, avaliação de mercadorias,
+negociação, controle de estoque e identificação de desperdício.
+SETOR VINCULADO: MERCADORES.DAT / INVENTARIO.DAT
+NOTA DE QUADRO: não aceita “depois eu pago” sem garantia concreta.`
     },
 
-    "MEMBRO_004.DAT": {
-        title: "MEMBRO_004.DAT — FICHA INDIVIDUAL",
-        text: `LE VOLEUR — REGISTRO DE INTEGRANTE
-Identificação: LV-004
+    "PAVEL_MOROZOV.DAT": {
+        title: "PAVEL_MOROZOV.DAT — FICHA INDIVIDUAL",
+        text: `LE VOLEUR — FICHA DE QUADRO
+Identificação: LV-004 / REGISTRO INTERNO
 Situação: ATIVO
 
 NOME: Pavel Morozov
 APELIDO: Pasha
 IDADE: 21 anos
 DATA DE NASCIMENTO: 28/01/1969
-LOCAL DE NASCIMENTO: Ashgate — região ferroviária
+ORIGEM: Região ferroviária, Ashgate
 
-FUNÇÃO PRINCIPAL: Exploração e reconhecimento
+POSTO: Chefe de reconhecimento e logística de campo
+RESPONSABILIDADE: Rotas, observação, suprimentos e retirada
 
-DESCRIÇÃO:
-Percorre rotas conhecidas, observa mudanças no movimento
-das ruas e verifica locais antes de uma entrega. Costuma
-anotar caminhos alternativos e pontos onde é possível
-se abrigar temporariamente.
+NA BASE:
+Pavel percorre caminhos antes das equipes e registra passagens
+bloqueadas, patrulhas, ruídos incomuns e pontos de observação.
+Procura rotas alternativas para que uma saída não dependa de um
+único acesso. Antes das missões, separa lanternas, filtros, cordas
+e ferramentas conforme o trajeto; depois, recolhe relatos para
+corrigir os mapas. Sua memória visual é melhor do que sua paciência.
 
-HABILIDADES REGISTRADAS:
-Orientação urbana, observação e deslocamento discreto.
+IMPORTÂNCIA OPERACIONAL:
+Ele reduz a chance de a gangue entrar às cegas em território
+hostil e ajuda a manter os caminhos de abastecimento abertos.
+Pavel não comanda todas as equipes em campo, mas suas informações
+podem mudar a rota, o equipamento necessário ou a decisão de partir.
 
-OBSERVAÇÕES:
-Seus relatórios são curtos e às vezes deixam detalhes
-importantes de fora.
-
-NOTA: personagem provisória; os dados podem ser editados.`
+COMPETÊNCIAS: orientação urbana, observação, deslocamento discreto,
+memória de rotas e preparação de cargas.
+SETOR VINCULADO: EQUIPAMENTO_MISSAO.DAT
+NOTA DE QUADRO: nunca trate uma rota marcada como segura como
+uma promessa; em Ashgate, o mapa envelhece depressa.`
     },
 
-    "MEMBRO_005.DAT": {
-        title: "MEMBRO_005.DAT — FICHA INDIVIDUAL",
-        text: `LE VOLEUR — REGISTRO DE INTEGRANTE
-Identificação: LV-005
-Situação: ATIVO
+    "IRINA_PETROV.DAT": {
+        title: "IRINA_PETROV.DAT — FICHA INDIVIDUAL",
+        text: `LE VOLEUR — FICHA DE QUADRO
+Identificação: LV-005 / REGISTRO INTERNO
+Situação: ATIVA
 
 NOME: Irina Petrov
 APELIDO: Ira
 IDADE: 29 anos
 DATA DE NASCIMENTO: 07/12/1960
-LOCAL DE NASCIMENTO: Ashgate — distrito sul
+ORIGEM: Distrito Sul, Ashgate
 
-FUNÇÃO PRINCIPAL: Manutenção e apoio
+POSTO: Chefe da enfermaria e manutenção essencial
+RESPONSABILIDADE: Primeiros socorros, triagem, medicamentos e reparos
 
-DESCRIÇÃO:
-Cuida de pequenos reparos na escola, recupera ferramentas
-e organiza os materiais que ainda podem ser utilizados.
-Quando necessário, ajuda a separar medicamentos e
-suprimentos para os integrantes feridos.
+NA BASE:
+Irina administra a enfermaria, organiza bandagens e medicamentos
+e decide quais feridos precisam de atendimento imediato. Não faz
+milagres: registra o que falta, improvisa quando pode e deixa claro
+quando um ferimento exige recursos que a escola não possui. Além
+disso, coordena pequenos reparos em camas, portas, encanamentos e
+instalações essenciais, para que a base não pare por negligência.
 
-HABILIDADES REGISTRADAS:
-Reparos básicos, improvisação e organização de suprimentos.
+IMPORTÂNCIA OPERACIONAL:
+A sobrevivência dos integrantes e dos moradores depende de sua
+triagem e da conservação dos suprimentos médicos. Irina pode pedir
+que uma equipe retorne mais cedo quando a enfermaria estiver cheia
+ou quando a comunidade precisar de alguém capaz de prestar socorro.
+Sua prioridade é manter pessoas vivas, não proteger reputações.
 
-OBSERVAÇÕES:
-A falta de peças e ferramentas limita o que consegue reparar.
-
-NOTA: personagem provisória; os dados podem ser editados.`
+COMPETÊNCIAS: primeiros socorros, triagem, organização médica,
+reparos práticos e gestão de materiais limitados.
+SETOR VINCULADO: ENFERMARIA.DAT
+NOTA DE QUADRO: não confunda calma com indiferença; ela registra
+cada atendimento porque sabe que a memória falha sob pressão.`
     },
 
     "MERCADORES.DAT": {
         title: "MERCADORES.DAT — SERVIÇOS DA BASE",
-        text: `LE VOLEUR — COMÉRCIO INTERNO
-============================
+        text: `LE VOLEUR — PONTOS DE TROCA DA BASE
+==================================
 
-Há três pontos de atendimento registrados na escola.
-Os estoques são pequenos e podem mudar sem aviso.
+Os balcões funcionam dentro da escola. Estoque curto,
+preço negociável em alguns casos e nada sai sem registro.
 
 ENFERMARIA.DAT
-Atendimento básico, curativos e medicamentos.
+Responsável: Irina Petrov (Ira)
+Curativos, primeiros socorros e medicamentos.
 
 ARMAS_MUNICAO.DAT
-Armas usadas, manutenção simples e munições.
+Responsável: Tomasz Zieliński (Tomas)
+Armas usadas, munições e manutenção básica.
 
 EQUIPAMENTO_MISSAO.DAT
-Ferramentas, iluminação, proteção e suprimentos
-para operações fora da base.
+Responsável: Pavel Morozov (Pasha)
+Lanternas, máscaras, filtros, ferramentas e material de campo.
 
-PAGAMENTO:
-Valores em ₵. Confirme o estoque e o preço com o
-responsável antes de retirar qualquer item.
+CONTROLE DE ESTOQUE
+Elena Rossi (Lena) registra as entradas, saídas e pagamentos.
 
-AVISO:
-A Le Voleur não garante a qualidade de materiais
-recuperados nem a disponibilidade de reposição.`
+PAGAMENTO: valores em ₵. Confira preço e quantidade antes
+ de retirar qualquer item.
+
+REGRA DA CASA: material perdido, danificado ou retirado
+sem registro vira problema de todo mundo.`
     },
 
     "ENFERMARIA.DAT": {
         title: "ENFERMARIA.DAT — ATENDIMENTO E MEDICAMENTOS",
         text: `POSTO DE ENFERMAGEM — ESCOLA
-Responsável: equipe de apoio médico
+Responsável: Irina Petrov (Ira)
 ====================================
 
 SERVIÇOS
@@ -854,7 +937,7 @@ Preços e disponibilidade sujeitos a alteração.`
     "ARMAS_MUNICAO.DAT": {
         title: "ARMAS_MUNICAO.DAT — BALCÃO DE ARMAMENTO",
         text: `BALCÃO DE ARMAS E MUNIÇÕES
-Responsável: armeiro da base
+Responsável: Tomasz Zieliński (Tomas)
 ============================
 
 ARMAS USADAS
@@ -886,7 +969,7 @@ Confirme o calibre e a compatibilidade antes da compra.`
     "EQUIPAMENTO_MISSAO.DAT": {
         title: "EQUIPAMENTO_MISSAO.DAT — SUPRIMENTOS DE CAMPO",
         text: `EQUIPAMENTO PARA MISSÕES
-Responsável: depósito da escola
+Responsável: Pavel Morozov (Pasha)
 ============================
 
 ILUMINAÇÃO E ORIENTAÇÃO
@@ -920,12 +1003,308 @@ Preços em ₵. Consulte o responsável antes de partir.`
     },
 
     "VICTOR_VALE.DAT": {
-        title: "VICTOR_VALE.DAT — REGISTRO DE INTEGRANTE",
-        text: `LE VOLEUR — REGISTRO DE INTEGRANTE
+        title: "VICTOR_VALE.DAT — DOSSIÊ DE COMANDO",
+        text: `LE VOLEUR — DOSSIÊ DE COMANDO
+Arquivo: VICTOR_VALE.DAT
+Acesso: INTERNO / QUADRO OPERACIONAL
+Identificação: LV-CMD-001
+Situação: ATIVO
+
+========================================
+IDENTIFICAÇÃO
 
 NOME: Victor Vale
 IDADE: 38 anos
-FUNÇÃO: Líder da Le Voleur`
+FUNÇÃO: Líder da Le Voleur
+VÍNCULO: Escola / Distrito Sul, Ashgate
+POSTO: Comando geral
+
+========================================
+RESPONSABILIDADE
+
+Victor responde pelas decisões que afetam a gangue e a comunidade
+instalada na escola. Define prioridades, autoriza operações de maior
+risco, arbitra disputas entre setores e decide como responder a
+ameaças externas. Os responsáveis operacionais mantêm autonomia em
+suas áreas, mas conflitos que possam comprometer a base chegam até ele.
+
+Sua liderança não se limita a ordenar saídas. A escola abriga pessoas
+que não fazem parte da gangue — crianças, adolescentes, trabalhadores
+e idosos — e cada operação pode trazer consequências para todos.
+Victor precisa equilibrar segurança, recursos, reputação e a pressão
+de integrantes que esperam resultados imediatos.
+
+========================================
+MÉTODO DE COMANDO
+
+- Solicita informações antes de autorizar decisões importantes.
+- Espera que os responsáveis conheçam os limites de seus setores.
+- Trata a sobrevivência da base como prioridade estratégica.
+- Não considera uma missão bem-sucedida se o pagamento não cobre
+  os custos ou se a retaliação ameaça os moradores.
+- Mantém a decisão final sobre alianças, punições e operações críticas.
+
+Essas diretrizes descrevem o funcionamento esperado, não garantem
+que todas as decisões de Victor sejam populares ou consensuais.
+
+========================================
+RELAÇÃO COM O QUADRO
+
+MARA VUKOVIĆ — coordenação de rua, contratantes e distribuição.
+TOMASZ ZIELIŃSKI — segurança, arsenal e prontidão das equipes.
+ELENA ROSSI — finanças, comércio e disponibilidade de recursos.
+PAVEL MOROZOV — reconhecimento, rotas e logística de campo.
+IRINA PETROV — enfermaria, triagem e manutenção essencial.
+
+Victor depende das informações desses cinco responsáveis. Eles podem
+apresentar objeções e alertar sobre riscos; ocultar problemas de um
+setor costuma comprometer os demais. A palavra final, entretanto,
+permanece com o comando geral.
+
+========================================
+RELAÇÃO COM A COMUNIDADE
+
+A escola é abrigo, ponto de distribuição e território da Le Voleur.
+Moradores não são automaticamente integrantes da gangue, e viver na
+base não equivale a aceitar uma missão. Questões de comida, segurança,
+tratamento médico e disciplina podem chegar diretamente a Victor,
+especialmente quando colocam em risco a confiança na liderança.
+
+O comando precisa considerar não apenas o que a gangue consegue tomar,
+mas o que consegue sustentar depois. Cada recurso gasto em uma operação
+é um recurso que deixa de estar disponível para a escola.
+
+========================================
+AVALIAÇÃO INTERNA
+
+PONTOS FORTES: visão estratégica, autoridade reconhecida e capacidade
+de coordenar setores com interesses diferentes.
+PONTOS DE PRESSÃO: recursos limitados, dependência de informações
+confiáveis e responsabilidade por uma comunidade maior que o quadro
+armado da Le Voleur.
+RISCO ORGANIZACIONAL: concentração excessiva de decisões no comando.
+
+========================================
+PROTOCOLO DE CONTATO
+
+Pedidos comuns devem passar pelo responsável do setor correspondente.
+Acesso direto ao comando é reservado a ameaças urgentes, conflitos
+entre setores, negociações sensíveis ou situações que possam afetar
+a segurança geral da escola.
+
+NOTA: este arquivo reúne informações operacionais disponíveis à
+Le Voleur. Não substitui ordens diretas do comando.`
+    },
+
+    "RESIDENTES.DAT": {
+        title: "RESIDENTES.DAT — REGISTRO DA COMUNIDADE",
+        text: `LE VOLEUR // REGISTRO DE RESIDENTES
+Arquivo: RESIDENTES.DAT
+Última contagem: 27/01/1990
+
+========================================
+
+POPULAÇÃO REGISTRADA: 58 PESSOAS
+
+CRIANÇAS (6–12 ANOS): 14
+Frequentam as salas adaptadas e permanecem nas áreas
+comuns sob supervisão. Não participam de operações.
+
+ADOLESCENTES (13–17 ANOS): 12
+Ajudam em tarefas leves, entregas internas e oficinas.
+Alguns querem entrar para a Le Voleur; nenhum pedido
+é considerado obrigação ou garantia de recrutamento.
+
+ADULTOS (18–59 ANOS): 25
+Inclui cozinheiros, trabalhadores, cuidadores, técnicos,
+comerciantes, moradores sem ocupação fixa e integrantes
+operacionais da Le Voleur.
+
+IDOSOS (60+): 7
+Inclui antigos ferroviários, pessoas aposentadas e
+residentes que precisam de apoio cotidiano.
+
+========================================
+
+ROSTOS CONHECIDOS // NPCs RECORRENTES
+
+ANNA KOWALSKA — 61 anos
+ANTIGA PROFESSORA. Mantém aulas improvisadas para as
+crianças e adolescentes. Exige que a escola continue
+sendo um lugar de aprendizado, não apenas um quartel.
+
+MIKHAIL “MIKA” ORLOV — 47 anos
+COZINHEIRO E RESPONSÁVEL PELA COZINHA. Controla as
+refeições e reclama quando as operações consomem comida
+sem aviso. Sabe quem anda pulando refeições.
+
+ZOFIA NOWAK — 73 anos
+ANTIGA FERROVIÁRIA. Conhece histórias da estação antes
+da Noite das Cinzas. Às vezes confunde datas, mas lembra
+de detalhes que ninguém mais parece guardar.
+
+NIKITA “NIKI” SOKOLOV — 16 anos
+MENSAGEIRO APRENDIZ. Quer ser reconhecido pelos membros
+da gangue e tende a aceitar riscos maiores do que deveria.
+Ainda não é integrante oficial.
+
+ELIAS MORETTI — 39 anos
+ELETRICISTA E RESPONSÁVEL POR REPAROS. Mantém luzes,
+fiação e gerador improvisado funcionando. Não gosta de
+ser chamado para consertar equipamento danificado em missão.
+
+========================================
+
+NOTA:
+Os números são estimativas de residentes presentes.
+Pessoas podem chegar, partir ou permanecer sem cadastro.
+Este registro não representa uma lista completa de nomes.`
+    },
+
+    "DISTRIBUICAO.DAT": {
+        title: "DISTRIBUICAO.DAT — RAÇÕES E SUPRIMENTOS",
+        text: `LE VOLEUR // CONTROLE DE DISTRIBUIÇÃO
+Arquivo: DISTRIBUICAO.DAT
+
+========================================
+
+REGRA GERAL
+A distribuição é feita diariamente, conforme o estoque
+real e o número de pessoas presentes na escola.
+
+PRIORIDADES EM CASO DE ESCASSEZ
+1. Água potável para todos os residentes.
+2. Crianças, idosos, feridos e pessoas doentes.
+3. Refeições coletivas e alimentação dos trabalhadores.
+4. Suprimentos operacionais autorizados.
+
+ESTOQUE DE REFERÊNCIA — CONTAGEM MANUAL
+ALIMENTOS: 3 dias, se não houver novas chegadas.
+ÁGUA POTÁVEL: 2 dias, consumo controlado.
+GAZE / ATADURAS: baixo.
+ANTISSÉPTICO: crítico.
+COBERTORES: 11 unidades disponíveis.
+SABÃO: baixo.
+PILHAS: 8 unidades.
+
+========================================
+
+PROCEDIMENTO
+- Registrar retirada de caixas do depósito.
+- Não reservar alimentos sem comunicar a cozinha.
+- Medicamentos são entregues pela enfermaria.
+- Doações recebidas devem ser contadas por duas pessoas.
+- Divergências devem ser comunicadas a Elena Rossi.
+
+RESPONSÁVEIS
+ELENA ROSSI — estoque, compras e pagamentos.
+MIKHAIL ORLOV — cozinha e refeições.
+IRINA PETROV — materiais médicos.
+
+AVISO:
+Os valores acima são uma fotografia do estoque, não uma
+garantia de disponibilidade. Atualizar após cada entrega.`
+    },
+
+    "ESCOLA.DAT": {
+        title: "ESCOLA.DAT — MAPA INTERNO DA BASE",
+        text: `LE VOLEUR // INSTALAÇÕES DA ESCOLA
+Arquivo: ESCOLA.DAT
+
+========================================
+
+TÉRREO
+- Portão principal: entrada controlada.
+- Antiga secretaria: recepção e registro de chegadas.
+- Refeitório: refeições coletivas e reuniões comunitárias.
+- Cozinha: acesso restrito durante preparo de alimentos.
+- Enfermaria: atendimento e armazenamento médico.
+- Oficina: reparos elétricos e manutenção.
+
+PRIMEIRO ANDAR
+- Salas 01–03: dormitórios familiares.
+- Salas 04–05: dormitórios de adultos e idosos.
+- Sala 06: aulas improvisadas.
+- Sala 07: biblioteca e arquivos comunitários.
+- Sala 08: alojamento temporário para recém-chegados.
+
+SUBSOLO
+- Depósito de alimentos e materiais.
+- Arsenal trancado, acesso autorizado.
+- Sala técnica do gerador.
+- Corredor inundado: NÃO UTILIZAR.
+
+========================================
+
+CONVIVÊNCIA
+A escola é abrigo e residência, não apenas instalação
+operacional. Armas devem permanecer fora das salas de
+aula, da enfermaria e do refeitório, salvo emergência.
+
+HORÁRIOS DE REFERÊNCIA
+06:00 — cozinha começa o preparo.
+08:00 — aulas e tarefas comunitárias.
+12:00 — refeição principal.
+18:00 — distribuição de suprimentos e avisos.
+22:00 — redução de ruído nos dormitórios.
+
+SEGURANÇA
+Não bloquear saídas de emergência.
+Não armazenar combustível perto da cozinha.
+Relatar portas, janelas ou instalações danificadas.
+
+AVISO:
+A planta é incompleta. Algumas salas continuam instáveis.`
+    },
+
+    "OCORRENCIAS.DAT": {
+        title: "OCORRENCIAS.DAT — REGISTRO COMUNITÁRIO",
+        text: `LE VOLEUR // OCORRÊNCIAS INTERNAS
+Arquivo: OCORRENCIAS.DAT
+Acesso: USO INTERNO
+
+========================================
+
+[001] — RAÇÃO EM FALTA
+Data: 21/01/1990
+Duas caixas de alimentos foram contabilizadas a menos.
+Não há confirmação de furto. A cozinha pede conferência
+dupla em todas as entregas.
+
+[002] — DISCUSSÃO NO REFEITÓRIO
+Data: 23/01/1990
+Moradores questionaram a prioridade dada a membros que
+retornaram de uma operação. A discussão terminou sem
+agressões, mas a insatisfação continua.
+
+[003] — ADOLESCENTE FORA DO HORÁRIO
+Data: 24/01/1990
+Nikita Sokolov foi encontrado perto do portão após o
+recolher. Afirma que estava esperando um conhecido.
+A versão ainda não foi confirmada.
+
+[004] — FALHA ELÉTRICA
+Data: 25/01/1990
+Luzes do corredor leste apagaram por onze minutos.
+Elias Moretti suspeita de fiação danificada, não de ação
+intencional. Reparo pendente.
+
+[005] — DESCONHECIDO À PORTA
+Data: 26/01/1990
+Uma pessoa deixou um saco de roupas na entrada e saiu
+antes de ser identificada. As peças foram higienizadas
+e colocadas à disposição dos residentes.
+
+[006] — MEDICAMENTO DESAPARECIDO
+Data: 27/01/1990
+Uma embalagem de antisséptico não foi localizada no
+armário da enfermaria. Inventário em revisão.
+
+========================================
+
+NOTA:
+Relatos não equivalem a fatos confirmados. Evite acusações
+sem evidências e registre atualizações quando disponíveis.`
     },
 
     "INVENTARIO.DAT": {
@@ -1027,12 +1406,17 @@ const fileGroups = [
     {
         name: "INTEGRANTES",
         icon: "▣",
-        files: ["MEMBROS.DAT", "MEMBRO_001.DAT", "MEMBRO_002.DAT", "MEMBRO_003.DAT", "MEMBRO_004.DAT", "MEMBRO_005.DAT", "VICTOR_VALE.DAT"]
+        files: ["VICTOR_VALE.DAT", "MEMBROS.DAT", "MARA_VUKOVIC.DAT", "TOMASZ_ZIELINSKI.DAT", "ELENA_ROSSI.DAT", "PAVEL_MOROZOV.DAT", "IRINA_PETROV.DAT"]
     },
     {
         name: "COMÉRCIO DA BASE",
         icon: "▣",
         files: ["MERCADORES.DAT", "ENFERMARIA.DAT", "ARMAS_MUNICAO.DAT", "EQUIPAMENTO_MISSAO.DAT"]
+    },
+    {
+        name: "COMUNIDADE DA ESCOLA",
+        icon: "▣",
+        files: ["RESIDENTES.DAT", "DISTRIBUICAO.DAT", "ESCOLA.DAT", "OCORRENCIAS.DAT"]
     },
     {
         name: "SISTEMA",
@@ -1223,8 +1607,146 @@ function updateClock() {
         now.toLocaleTimeString("pt-BR", { hour12: false });
 }
 
+
+// Estado persistente: este terminal funciona localmente no navegador.
+const STORAGE_KEY = "lv_pc_state_v1";
+const defaultState = {
+    balance: 500,
+    missionStatus: {"007":"DISPONÍVEL", "008":"DISPONÍVEL"},
+    stock: {
+      "Kit de primeiros socorros": {price:25, qty:8, category:"Enfermaria"},
+      "Bandagens": {price:5, qty:20, category:"Enfermaria"},
+      "Antisséptico": {price:8, qty:10, category:"Enfermaria"},
+      "Analgésicos comuns": {price:10, qty:8, category:"Enfermaria"},
+      "Gaze e esparadrapo": {price:6, qty:15, category:"Enfermaria"},
+      "Faca de serviço": {price:20, qty:4, category:"Arsenal"},
+      "Revólver usado": {price:120, qty:2, category:"Arsenal"},
+      "Pistola usada": {price:150, qty:2, category:"Arsenal"},
+      "Espingarda usada": {price:180, qty:1, category:"Arsenal"},
+      "Munição de pistola (caixa pequena)": {price:15, qty:8, category:"Arsenal"},
+      "Munição de revólver (caixa pequena)": {price:15, qty:8, category:"Arsenal"},
+      "Cartuchos de espingarda (pacote pequeno)": {price:20, qty:5, category:"Arsenal"},
+      "Lanterna usada": {price:15, qty:5, category:"Suprimentos"},
+      "Pilhas (conjunto)": {price:5, qty:12, category:"Suprimentos"},
+      "Mapa local impresso": {price:3, qty:20, category:"Suprimentos"},
+      "Bússola simples": {price:12, qty:3, category:"Suprimentos"},
+      "Máscara de gás usada": {price:45, qty:6, category:"Suprimentos"},
+      "Filtro de reposição": {price:18, qty:12, category:"Suprimentos"},
+      "Luvas de trabalho": {price:8, qty:10, category:"Suprimentos"},
+      "Ferramentas básicas": {price:20, qty:4, category:"Suprimentos"},
+      "Corda (10 metros)": {price:12, qty:5, category:"Suprimentos"},
+      "Mochila de campo": {price:25, qty:4, category:"Suprimentos"},
+      "Cantíl": {price:8, qty:8, category:"Suprimentos"},
+      "Rações para um dia": {price:10, qty:15, category:"Suprimentos"},
+      "Kit de reparo improvisado": {price:15, qty:4, category:"Suprimentos"}
+    },
+    inventory: {},
+    messages: [
+      {date:"27/01/1990", title:"AVISO DA ENFERMARIA", text:"Filtros para máscaras de gás em estoque reduzido."},
+      {date:"26/01/1990", title:"AVISO OPERACIONAL", text:"Evitar a linha ferroviária norte até segunda ordem."},
+      {date:"25/01/1990", title:"ADMINISTRAÇÃO", text:"Inventário de munição atualizado."}
+    ],
+    unlocked: 0,
+    log: []
+};
+function loadState(){
+  try {
+    const saved=JSON.parse(localStorage.getItem(STORAGE_KEY)||"null");
+    if(!saved) return structuredClone(defaultState);
+    return {...structuredClone(defaultState),...saved, stock:{...structuredClone(defaultState.stock),...(saved.stock||{})}, inventory:saved.inventory||{}, missionStatus:{...defaultState.missionStatus,...(saved.missionStatus||{})}};
+  } catch(e){ return structuredClone(defaultState); }
+}
+let state=loadState();
+function saveState(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); updateStatusbar(); }
+function esc(value){return String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function updateStatusbar(){
+  const bar=document.querySelector('.statusbar');
+  if(bar){let spans=bar.querySelectorAll('span'); if(spans[3]) spans[3].textContent='FUNDO: '+state.balance+' ₵';}
+}
+function setActiveNav(view){document.querySelectorAll('.quick-nav button').forEach(b=>b.classList.toggle('active',b.dataset.view===view));}
+function showView(view, button){
+  setActiveNav(view);
+  if(view==='terminal'){docTitle.textContent='TERMINAL / VISUALIZADOR DE ARQUIVOS';documentView.textContent='Selecione um documento na barra lateral ou digite OPEN nome_do_arquivo na linha de comando.';hint.textContent='FILE VIEWER READY';return;}
+  if(view==='operations') renderOperations();
+  if(view==='inventory') renderInventory();
+  if(view==='database') renderDatabase();
+  if(view==='messages') renderMessages();
+}
+function renderOperations(){
+  docTitle.textContent='CENTRAL DE OPERAÇÕES';
+  const missions=[
+    {id:'007',name:'Recuperação de equipamentos',reward:200,desc:'Recuperar ferramentas e equipamentos de manutenção em um edifício desocupado.',risk:'Desconhecido'},
+    {id:'008',name:'Cobrança de dívida',reward:150,desc:'Ajudar um comerciante a recuperar uma quantia emprestada a um antigo conhecido.',risk:'Conflito potencial'}
+  ];
+  documentView.innerHTML=`<h2 class="view-heading">QUADRO DE TRABALHOS</h2><div class="notice">Selecione uma operação para alterar seu estado. O sistema registra essas mudanças neste navegador.</div><div class="card-grid">${missions.map(m=>{const status=state.missionStatus[m.id]||'DISPONÍVEL';return `<article class="data-card"><h3>[${m.id}] ${esc(m.name)}</h3><p>${esc(m.desc)}</p><p><strong>RECOMPENSA:</strong> ${m.reward} ₵</p><p><strong>RISCO:</strong> ${esc(m.risk)}</p><p><span class="badge">${esc(status)}</span></p><div class="action-row"><select class="input-dark" id="mission-${m.id}" aria-label="Estado da missão ${m.id}">${['DISPONÍVEL','EM ANDAMENTO','CONCLUÍDA','FRACASSADA'].map(v=>`<option ${v===status?'selected':''}>${v}</option>`).join('')}</select><button class="action-btn" onclick="updateMission('${m.id}',${m.reward})">REGISTRAR</button></div></article>`}).join('')}</div><p>TRABALHOS CONCLUÍDOS: ${Object.values(state.missionStatus).filter(v=>v==='CONCLUÍDA').length}</p><p>FUNDOS DA ORGANIZAÇÃO: ${state.balance} ₵</p>`;
+  hint.textContent='OPERATIONS // STATUS PERSISTENTE';
+}
+function updateMission(id,reward){
+  const select=document.getElementById('mission-'+id); if(!select)return;
+  const old=state.missionStatus[id], next=select.value;
+  if(next==='CONCLUÍDA' && old!=='CONCLUÍDA') {state.balance+=reward;state.messages.unshift({date:'27/01/1990',title:'OPERAÇÃO '+id+' CONCLUÍDA',text:'Recompensa de '+reward+' ₵ registrada no fundo da organização.'});}
+  if(old==='CONCLUÍDA' && next!=='CONCLUÍDA') {state.balance=Math.max(0,state.balance-reward);}
+  state.missionStatus[id]=next;state.log.unshift({date:new Date().toLocaleString('pt-BR'),action:'Missão '+id+': '+next});saveState();renderOperations();
+}
+function renderInventory(){
+  docTitle.textContent='INVENTÁRIO COMPARTILHADO';
+  const entries=Object.entries(state.inventory).filter(([n,q])=>q>0);
+  documentView.innerHTML=`<h2 class="view-heading">RECURSOS DA LE VOLEUR</h2><div class="notice">Saldo inicial configurado para 500 ₵ (editável). Compras e alterações ficam salvas neste navegador.</div><div class="card-grid"><article class="data-card"><h3>FUNDO DISPONÍVEL</h3><p style="font-size:22px">${state.balance} ₵</p><p class="muted">Caixa coletivo da base</p><div class="action-row"><input id="fund-input" class="input-dark" type="number" min="0" value="${state.balance}" aria-label="Saldo da organização"><button class="action-btn" onclick="setFunds()">ATUALIZAR</button></div></article><article class="data-card"><h3>ITENS REGISTRADOS</h3><p style="font-size:22px">${entries.reduce((n,[,q])=>n+q,0)}</p><p class="muted">Unidades no inventário compartilhado</p></article></div><h3 class="view-heading">ESTOQUE DA GANGUE</h3>${entries.length?`<table class="data-table"><thead><tr><th>ITEM</th><th>QUANTIDADE</th><th>AÇÃO</th></tr></thead><tbody>${entries.map(([n,q])=>`<tr><td>${esc(n)}</td><td>${q}</td><td><button class="action-btn" onclick="consumeItem('${esc(n)}')">BAIXAR 1</button></td></tr>`).join('')}</tbody></table>`:'<p>Nenhum item registrado no inventário compartilhado.</p>'}<div class="action-row"><button class="action-btn" onclick="showView('shop')">ABRIR CATÁLOGO DE COMPRAS</button><button class="action-btn" onclick="resetInventory()">ZERAR INVENTÁRIO</button></div>`;
+  hint.textContent='INVENTORY // LOCAL STORAGE';
+}
+function setFunds(){const v=Number(document.getElementById('fund-input')?.value);if(!Number.isFinite(v)||v<0){alert('Informe um saldo válido.');return;}state.balance=Math.floor(v);saveState();renderInventory();}
+function consumeItem(name){if(!state.inventory[name])return;state.inventory[name]--;if(state.inventory[name]<=0)delete state.inventory[name];saveState();renderInventory();}
+function resetInventory(){if(!confirm('Zerar todos os itens do inventário compartilhado?'))return;state.inventory={};saveState();renderInventory();}
+function renderShop(category='Todos'){
+  setActiveNav('inventory');docTitle.textContent='CATÁLOGO DE MERCADORES';
+  const items=Object.entries(state.stock).filter(([n,item])=>category==='Todos'||item.category===category);
+  documentView.innerHTML=`<h2 class="view-heading">COMÉRCIO DA BASE</h2><p>Saldo coletivo: <strong>${state.balance} ₵</strong></p><div class="action-row">${['Todos','Enfermaria','Arsenal','Suprimentos'].map(c=>`<button class="action-btn" onclick="renderShop('${c}')">${c.toUpperCase()}</button>`).join('')}</div><div class="card-grid">${items.map(([n,it])=>`<article class="data-card"><h3>${esc(n)}</h3><p>${esc(it.category)}</p><p><strong>${it.price} ₵</strong></p><p>ESTOQUE: ${it.qty}</p><div class="action-row"><button class="action-btn" ${it.qty<1||state.balance<it.price?'disabled':''} onclick="buyItem('${esc(n)}')">COMPRAR 1</button></div></article>`).join('')}</div><div class="action-row"><button class="action-btn" onclick="renderInventory()">VOLTAR AO INVENTÁRIO</button></div>`;
+  hint.textContent='SHOP // COMPRAS REGISTRADAS LOCALMENTE';
+}
+function buyItem(name){const it=state.stock[name];if(!it||it.qty<1||state.balance<it.price)return;it.qty--;state.balance-=it.price;state.inventory[name]=(state.inventory[name]||0)+1;state.log.unshift({date:new Date().toLocaleString('pt-BR'),action:'Compra: '+name});saveState();renderShop(it.category);}
+function renderDatabase(){
+  docTitle.textContent='BASE DE DADOS';
+  const docs=[
+    {name:'OCORRENCIAS.DAT',level:1,desc:'Incidentes conhecidos nos arredores da escola e nas rotas locais.',text:'REGISTRO DE OCORRÊNCIAS\n\n[014] — Ruídos e movimento foram relatados perto de um depósito ferroviário desativado.\n\n[015] — Um morador informou ter visto luzes em um edifício oficialmente desocupado.\n\nOs relatos não foram verificados. Não trate rumores como fatos confirmados.'},
+    {name:'PESSOAS_DESAPARECIDAS.DAT',level:1,desc:'Relatos de desaparecimentos reunidos pela gangue.',text:'REGISTRO DE PESSOAS DESAPARECIDAS\n\nArquivo parcial. Alguns registros foram recebidos de moradores e ainda não foram confirmados.\n\nNenhuma relação entre os casos foi estabelecida.'},
+    {name:'FREQUENCIAS.DAT',level:1,desc:'Anotações sobre frequências de rádio conhecidas.',text:'CADERNO DE FREQUÊNCIAS\n\nFrequências locais não verificadas.\n\nNOTA: não há equipamento de comunicação externo conectado a este terminal.'},
+    {name:'REGISTROS_RESTRITOS.DAT',level:3,desc:'Arquivo marcado como acesso restrito.',text:'REGISTROS RESTRITOS\n\nConteúdo indisponível nesta cópia local.'},
+    {name:'ARQUIVO_CORROMPIDO_01.DAT',level:2,desc:'Documento danificado; conteúdo parcial.',text:'RECUPERAÇÃO PARCIAL\n\n... transferência confirmada ...\n... local de encontro alterado ...\n... nome do responsável [DADOS CORROMPIDOS] ...\n\nO restante do arquivo não pôde ser recuperado.'}
+  ];
+  documentView.innerHTML=`<h2 class="view-heading">DIRETÓRIO DE INVESTIGAÇÃO</h2><div class="notice">Os registros abaixo são notas locais e relatos não confirmados. Alguns arquivos exigem um nível de acesso superior.</div><div class="card-grid">${docs.map((d,i)=>`<article class="data-card"><h3>${esc(d.name)}</h3><p>${esc(d.desc)}</p><p><span class="badge">NÍVEL ${d.level}</span> ${d.level>state.unlocked?'<span class="badge">BLOQUEADO</span>':'<span class="badge">DISPONÍVEL</span>'}</p><div class="action-row"><button class="action-btn" ${d.level>state.unlocked?'disabled':''} onclick="openInvestigation(${i})">ABRIR ARQUIVO</button></div></article>`).join('')}</div><div class="action-row"><label for="access-level">Permissão local:</label><select class="input-dark" id="access-level"><option value="0">Nível 0</option><option value="1">Nível 1</option><option value="2">Nível 2</option><option value="3">Nível 3</option></select><button class="action-btn" onclick="setAccess()">ATUALIZAR PERMISSÃO</button></div><p class="muted">A permissão exibida corresponde ao nível de acesso atualmente configurado neste terminal.</p>`;
+  window._investigationDocs=docs;hint.textContent='DATABASE // ARQUIVOS DE INVESTIGAÇÃO';
+}
+function openInvestigation(i){const d=window._investigationDocs?.[i];if(!d||d.level>state.unlocked)return;docTitle.textContent=d.name;documentView.textContent=d.text;hint.textContent='ARQUIVO DE INVESTIGAÇÃO ABERTO';}
+function setAccess(){const v=Number(document.getElementById('access-level')?.value||0);state.unlocked=Math.max(0,Math.min(3,v));saveState();renderDatabase();}
+function renderMessages(){docTitle.textContent='MENSAGENS INTERNAS';documentView.innerHTML=`<h2 class="view-heading">MURAL DA LE VOLEUR</h2><div class="notice">Comunicados administrativos e operacionais. Use o formulário para registrar avisos entre sessões.</div><div>${state.messages.map(m=>`<div class="message"><strong>[${esc(m.date)}] — ${esc(m.title)}</strong><br>${esc(m.text)}</div>`).join('')||'<p>Nenhum comunicado registrado.</p>'}</div><h3 class="view-heading" style="margin-top:18px">NOVO COMUNICADO</h3><div class="action-row"><input id="msg-title" class="input-dark" maxlength="60" placeholder="TÍTULO DO AVISO"><input id="msg-text" class="input-dark" maxlength="240" placeholder="Mensagem"><button class="action-btn" onclick="addMessage()">PUBLICAR</button></div><div class="action-row"><button class="action-btn" onclick="clearMessages()">LIMPAR MURAL</button></div>`;hint.textContent='MESSAGES // MURAL LOCAL';}
+function addMessage(){const title=document.getElementById('msg-title')?.value.trim(),text=document.getElementById('msg-text')?.value.trim();if(!title||!text){alert('Preencha o título e a mensagem.');return;}state.messages.unshift({date:'27/01/1990',title,text});saveState();renderMessages();}
+function clearMessages(){if(!confirm('Apagar todas as mensagens do mural?'))return;state.messages=[];saveState();renderMessages();}
+// Acesso rápido pelo comando OPEN e diretórios de investigação.
+const originalOpenFile=openFile;
+openFile=function(name){
+  const key=name.toUpperCase();
+  if(key==='PESSOAS_DESAPARECIDAS.DAT'||key==='FREQUENCIAS.DAT'||key==='REGISTROS_RESTRITOS.DAT'||key==='ARQUIVO_CORROMPIDO_01.DAT'){showView('database');const docs=window._investigationDocs||[];const i=docs.findIndex(d=>d.name===key);if(i>=0)openInvestigation(i);return;}
+  originalOpenFile(name);setActiveNav('terminal');
+};
+// Complementa o comando HELP com as funções da central.
+const originalRunCommand=runCommand;
+runCommand=function(raw){
+  const parts=raw.trim().split(/\s+/), cmd=(parts[0]||'').toUpperCase(), arg=(parts.slice(1).join(' ')||'').toUpperCase();
+  if(cmd==='SHOP'){renderShop(arg||'Todos');return;}
+  if(cmd==='MISSIONS'){showView('operations');return;}
+  if(cmd==='INVENTORY'){showView('inventory');return;}
+  if(cmd==='MESSAGES'){showView('messages');return;}
+  if(cmd==='DATABASE'){showView('database');return;}
+  if(cmd==='HELP'){writeOutput('COMANDOS DISPONÍVEIS\n====================\nHELP              Ajuda\nDIR               Lista arquivos\nOPEN nome         Abre um arquivo\nSTATUS            Estado do sistema\nCLEAR             Limpa a saída\nMISSIONS          Central de operações\nINVENTORY         Inventário compartilhado\nSHOP              Catálogo dos mercadores\nDATABASE          Arquivos de investigação\nMESSAGES          Mural interno\nOPEN RESIDENTES.DAT  Registro da comunidade\nOPEN ESCOLA.DAT      Instalações da escola\nOPEN DISTRIBUICAO.DAT Rações e suprimentos\nOPEN OCORRENCIAS.DAT Incidentes internos\n\nUse os botões superiores para navegar.');setActiveNav('terminal');return;}
+  originalRunCommand(raw);
+};
+// Encaminha o catálogo a partir do botão de inventário e atualiza a barra de estado.
+const oldShowView=showView;
+showView=function(view,button){if(view==='shop'){renderShop();return;}oldShowView(view,button);};
+
 renderFiles();
 updateClock();
+updateStatusbar();
 setInterval(updateClock, 1000);
 
 setTimeout(() => {
